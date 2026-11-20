@@ -1,0 +1,15 @@
+dim  2 word 2          smin/smax 0.0714
+dim  3 word 3          smin/smax 0.00208
+dim  4 word A2         smin/smax 0.000557
+dim  5 word A3         smin/smax 1.95e-6
+dim  6 word AA2        smin/smax 1.35e-7
+dim  7 word AA3        smin/smax 1.23e-8
+dim  8 word AAA2       smin/smax 8.98e-10
+dim  9 word AAA3       smin/smax 9.59e-11
+dim 10 word AAAA2      smin/smax 2.11e-11
+dim 11 word AAAA3      smin/smax 8.29e-13
+dim 12 word AAAAA2     smin/smax 3.92e-14
+dim 13 word AAAAAA2    smin/smax 1.06e-15
+dim 14 word AAAAAAA2   smin/smax 7.0e-18
+words ['', '2', '3', 'A2', 'A3', 'AA2', 'AA3', 'AAA2', 'AAA3', 'AAAA2', 'AAAA3', 'AAAAA2', 'AAAAAA2', 'AAAAAAA2'] tried 37
+CERTIFICATE det = [+/- 5.15e-292] + [25151680834.3230 +/- 2.37e-5]j  excludes 0: True

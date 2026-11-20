@@ -1,0 +1,1 @@
+{"q": 53, "mu": 5, "prec": 2200, "words": ["", "2", "3", "A2", "A3", "AA2", "AA3", "AAA2", "AAA3", "AAAA2", "AAAA3", "AAAAA2", "AAAAA3", "AAAAAA2"], "det": "[+/- 1.84e+18] + [+/- 1.84e+18]j", "det_excludes_0": false, "note": "diagnostic (default words); the certificate is cert_det.py -> *_det.json", "steps": 311, "max_n0": 40}

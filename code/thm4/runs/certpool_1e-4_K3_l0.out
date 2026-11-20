@@ -1,0 +1,38 @@
+ .. 50000 intervals 34s
+ .. 100000 intervals 74s
+{
+ "src": "C:/Users/Shawn Krisman/math/handoff/log2log3/cdt/range_pilot/runs/p4_D_eps1.0e-04.json",
+ "eps": "1/10000",
+ "m": 37,
+ "tau": "29601442477/7082066992",
+ "r": [
+  "1"
+ ],
+ "theta": [],
+ "delta_max": 0.002,
+ "M0": 16384,
+ "L": "[4.4006730264540998200 +/- 1.28e-20]",
+ "R_mixture_upper": 7.326965123492092,
+ "penalty": "0",
+ "numerator": "[7.32696512349209 +/- 1.44e-15]",
+ "bound_m": "[33.1689065374888 +/- 2.28e-14]",
+ "margin_lower": "[0.0228725187719328 +/- 8.49e-18]",
+ "certified": true,
+ "per_map": [
+  {
+   "r": "1",
+   "intervals": 104564,
+   "splits": 88180,
+   "sup_abs_psi": 0.4685783428609937,
+   "min_log_abs_phi_mid": -7.07429310468045,
+   "max_delta": 0.0019999799507205897,
+   "split_reasons": {
+    "delta": 88180,
+    "ray_branch_entered": 1064
+   },
+   "secs": 75.57627439498901,
+   "max_log_abs_phi_upper": "5103564001709/549755813888",
+   "max_log_abs_phi_upper_float": 9.283328839426758
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+words (i)  : ['', 'A', 'AA', 'AAA', 'AAAA', '3AAA', 'AAAAA', 'A3AAA', 'AAAAAA', 'AA3AAA', 'AAAAAAA', 'AAA3AAA', 'AAAAAAAA'] tried 31
+words (ii) : ['', 'A', 'AA', 'AAA', 'AAAA', '3AAA', 'AAAAA', 'A3AAA', 'AAAAAA', 'AA3AAA', 'AAAAAAA', 'AAA3AAA', 'AAAAAAAA'] tried 31
+det (i)  = [+/- 8.61e-250] + [2.17790979857987e+22 +/- 5.13e+6]j  excludes 0: True
+det (ii) = [+/- 2.52e-227] + [4.20344968888143e+103 +/- 1.29e+87]j  excludes 0: True
+sanity: svals(g2-1) top2 2.176e+6 2.9741e-116 | svals(g3-1) top2 6.5035e+6 2.5727e-115 | max sval(g2^2-1) 0.0
+IRREDUCIBLE (certified): True

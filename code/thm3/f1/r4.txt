@@ -1,0 +1,4 @@
+     1 + 4y - 8a2y - 4aby - 8b2y + 16a2b2y + 4y2 - 12a2y2 + 16a4y2
+                 + 20aby2 - 16a3by2 - 12b2y2 - 16ab3y2 + 16b4y2 - 8a2y3 + 16aby3
+                - 16a3by3 - 8b2y3 + 32a2b2y3 - 16ab3y3 + 4a2y4 - 8aby4 + 4b2y4,
+

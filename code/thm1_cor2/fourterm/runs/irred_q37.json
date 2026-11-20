@@ -1,0 +1,51 @@
+{
+ "pickle": "runs/mono13_q37_cert.pkl",
+ "q": 37,
+ "words_i": [
+  "",
+  "A",
+  "AA",
+  "AAA",
+  "AAAA",
+  "3AAA",
+  "AAAAA",
+  "A3AAA",
+  "AAAAAA",
+  "AA3AAA",
+  "AAAAAAA",
+  "AAA3AAA",
+  "AAAAAAAA"
+ ],
+ "words_ii": [
+  "",
+  "A",
+  "AA",
+  "AAA",
+  "AAAA",
+  "3AAA",
+  "AAAAA",
+  "A3AAA",
+  "AAAAAA",
+  "AA3AAA",
+  "AAAAAAA",
+  "AAA3AAA",
+  "AAAAAAAA"
+ ],
+ "det_i": "[+/- 1.37e-273] + [112032.713520188299365590708281 +/- 3.04e-25]j",
+ "det_ii": "[+/- 1.35e-228] + [4.31087158213628828575250382945e+108 +/- 2.60e+78]j",
+ "excludes_0_i": true,
+ "excludes_0_ii": true,
+ "psi_row": 1,
+ "sanity": {
+  "g2m1_sv12": [
+   "1.49446e+7",
+   "8.96843e-115"
+  ],
+  "g3m1_sv12": [
+   "5.82615e+7",
+   "3.84813e-114"
+  ],
+  "g2sq_m1_svmax": "0.0"
+ },
+ "irreducible_certified": true
+}

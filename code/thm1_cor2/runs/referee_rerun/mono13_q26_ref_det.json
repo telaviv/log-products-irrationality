@@ -1,0 +1,1 @@
+{"pickle": "runs/mono13_q26_ref.pkl", "words": ["", "2", "3", "A2", "A3", "AA2", "AA3", "AAA2", "AAA3", "AAAA2", "AAAA3", "AAAAA2", "AAAAAA2", "AAAAAAA2"], "det": "[+/- 5.65e-291] + [257906186217.156323475542228360 +/- 3.68e-19]j", "excludes_0": true}

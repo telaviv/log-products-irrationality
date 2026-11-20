@@ -1,0 +1,6 @@
+q=26
+CERTIFICATE det = [+/- 8.91e-292] + [257906186217.156 +/- 3.24e-4]j  excludes 0: True
+q=28
+CERTIFICATE det = [+/- 7.69e-292] + [3089951153.73158 +/- 4.10e-6]j  excludes 0: True
+q=30
+CERTIFICATE det = [+/- 4.50e-291] + [44164721.5718111 +/- 4.35e-8]j  excludes 0: True

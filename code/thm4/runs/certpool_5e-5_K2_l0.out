@@ -1,0 +1,39 @@
+ .. 50000 intervals 38s
+ .. 100000 intervals 83s
+{
+ "src": "runs/reopt_e5e-5_m27.json",
+ "eps": "1/20000",
+ "m": 27,
+ "tau": "1106977681/262702440",
+ "r": [
+  "1"
+ ],
+ "theta": [],
+ "delta_max": 0.002,
+ "M0": 16384,
+ "L": "[4.5159123241160010388 +/- 3.94e-21]",
+ "R_mixture_upper": 7.819913903187199,
+ "penalty": "0",
+ "numerator": "[7.81991390318720 +/- 2.92e-16]",
+ "bound_m": "[25.8848251894245 +/- 1.50e-14]",
+ "margin_lower": "[0.0124777397165620 +/- 3.57e-17]",
+ "certified": true,
+ "per_map": [
+  {
+   "r": "1",
+   "intervals": 146952,
+   "splits": 130568,
+   "sup_abs_psi": 0.5268812270745109,
+   "min_log_abs_phi_mid": -9.265160610595144,
+   "max_delta": 0.0019999959204748613,
+   "split_reasons": {
+    "ray_branch_entered": 1954,
+    "delta": 130558,
+    "ray": 10
+   },
+   "secs": 121.82931661605835,
+   "max_log_abs_phi_upper": "2757444398565/274877906944",
+   "max_log_abs_phi_upper_float": 10.031524283713225
+  }
+ ]
+}

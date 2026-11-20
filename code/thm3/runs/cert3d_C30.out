@@ -1,0 +1,91 @@
+ .. 50000 intervals 17s
+ .. 100000 intervals 36s
+ .. 50000 intervals 20s
+ .. 100000 intervals 44s
+ .. 150000 intervals 67s
+ .. 200000 intervals 90s
+ .. 250000 intervals 113s
+ .. 300000 intervals 135s
+ .. 350000 intervals 158s
+ .. 400000 intervals 185s
+ .. 450000 intervals 214s
+{
+ "src": "runs/p4_C_eps3.0e-06.json",
+ "eps": "3/1000000",
+ "r": [
+  "1/2048",
+  "99/256",
+  "215/256",
+  "1"
+ ],
+ "theta": [
+  "61/200",
+  "231/200",
+  "1109/500"
+ ],
+ "delta_max": 0.002,
+ "M0": 16384,
+ "L": "[4.7983738127618231396 +/- 1.10e-20]",
+ "R_mixture_upper": 9.083266299025782,
+ "penalty": "[2.51411255855991 +/- 1.10e-15]",
+ "numerator": "[9.23115527305872 +/- 1.52e-15]",
+ "bound_m": "[16.9519903294600 +/- 1.08e-15]",
+ "margin_lower": "[0.00153785420490066 +/- 4.54e-18]",
+ "certified": true,
+ "per_map": [
+  {
+   "r": "1/2048",
+   "intervals": 16384,
+   "splits": 0,
+   "sup_abs_psi": 0.00023148966243400411,
+   "min_log_abs_phi_mid": -2.8315437179013974,
+   "max_delta": 0.00019286290891582363,
+   "split_reasons": {},
+   "secs": 1.994074821472168,
+   "max_log_abs_phi_upper": "-3101453437675/1099511627776",
+   "max_log_abs_phi_upper_float": -2.820755469360847
+  },
+  {
+   "r": "99/256",
+   "intervals": 23432,
+   "splits": 7048,
+   "sup_abs_psi": 0.21980877617247713,
+   "min_log_abs_phi_mid": -1.004497385528784,
+   "max_delta": 0.00199970288826283,
+   "split_reasons": {
+    "delta": 7048
+   },
+   "secs": 4.678210258483887,
+   "max_log_abs_phi_upper": "8317436816153/1099511627776",
+   "max_log_abs_phi_upper_float": 7.5646647166222465
+  },
+  {
+   "r": "215/256",
+   "intervals": 147978,
+   "splits": 131594,
+   "sup_abs_psi": 0.5545955102915946,
+   "min_log_abs_phi_mid": -11.189648607135833,
+   "max_delta": 0.0019999488396684746,
+   "split_reasons": {
+    "delta": 131594
+   },
+   "secs": 53.11570978164673,
+   "max_log_abs_phi_upper": "12650623816995/1099511627776",
+   "max_log_abs_phi_upper_float": 11.50567533567937
+  },
+  {
+   "r": "1",
+   "intervals": 467864,
+   "splits": 451480,
+   "sup_abs_psi": 0.6988148373444819,
+   "min_log_abs_phi_mid": -20.454192410683643,
+   "max_delta": 0.001999982947894454,
+   "split_reasons": {
+    "delta": 451480
+   },
+   "secs": 223.7656331062317,
+   "max_log_abs_phi_upper": "13801311154345/1099511627776",
+   "max_log_abs_phi_upper_float": 12.552219372396394
+  }
+ ]
+}

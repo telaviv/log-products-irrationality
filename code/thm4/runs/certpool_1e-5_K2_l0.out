@@ -1,0 +1,42 @@
+ .. 50000 intervals 40s
+ .. 100000 intervals 89s
+ .. 150000 intervals 138s
+ .. 200000 intervals 187s
+ .. 250000 intervals 235s
+{
+ "src": "runs/map_B_eps1e-05_r16383.json",
+ "eps": "1/100000",
+ "m": 27,
+ "tau": "1106977681/262702440",
+ "r": [
+  "1"
+ ],
+ "theta": [],
+ "delta_max": 0.002,
+ "M0": 16384,
+ "L": "[4.7056374347070992393 +/- 3.38e-20]",
+ "R_mixture_upper": 8.795130485199666,
+ "penalty": "0",
+ "numerator": "[8.79513048519967 +/- 3.67e-15]",
+ "bound_m": "[17.8824861454281 +/- 3.41e-14]",
+ "margin_lower": "[0.166083717640532 +/- 1.58e-16]",
+ "certified": true,
+ "per_map": [
+  {
+   "r": "1",
+   "intervals": 290684,
+   "splits": 274300,
+   "sup_abs_psi": 0.636491617897567,
+   "min_log_abs_phi_mid": -15.186608853635867,
+   "max_delta": 0.0019999993372870227,
+   "split_reasons": {
+    "ray_branch_entered": 2180,
+    "delta": 274296,
+    "ray": 4
+   },
+   "secs": 268.90400290489197,
+   "max_log_abs_phi_upper": "12783728890295/1099511627776",
+   "max_log_abs_phi_upper_float": 11.626733694624818
+  }
+ ]
+}

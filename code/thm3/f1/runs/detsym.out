@@ -1,0 +1,23 @@
+S_0: deg_y 36, totdeg(a,b) of coefficients <= 28  (0s)
+S_1: deg_y 37, totdeg(a,b) of coefficients <= 28  (0s)
+S_2: deg_y 38, totdeg(a,b) of coefficients <= 28  (1s)
+S_3: deg_y 39, totdeg(a,b) of coefficients <= 28  (1s)
+S_4: deg_y 40, totdeg(a,b) of coefficients <= 28  (1s)
+S_5: deg_y 41, totdeg(a,b) of coefficients <= 28  (1s)
+S_6: deg_y 42, totdeg(a,b) of coefficients <= 28  (1s)
+S_7: deg_y 42, totdeg(a,b) of coefficients <= 28  (1s)
+S_8: deg_y 42, totdeg(a,b) of coefficients <= 28  (1s)
+S_9: deg_y 42, totdeg(a,b) of coefficients <= 28  (1s)
+column 0: o_k = 16, totdeg of entries [82, 84, 86, 86, 86, 86, 86, 86, 86, 84]  (2s)
+column 1: o_k = 16, totdeg of entries [84, 86, 88, 88, 88, 88, 88, 88, 88, 86]  (3s)
+column 2: o_k = 18, totdeg of entries [88, 90, 92, 92, 92, 92, 92, 92, 92, 90]  (4s)
+column 3: o_k = 18, totdeg of entries [90, 92, 94, 94, 94, 94, 94, 94, 94, 92]  (5s)
+column 4: o_k = 20, totdeg of entries [94, 96, 98, 98, 98, 98, 98, 98, 98, 96]  (6s)
+column 5: o_k = 20, totdeg of entries [96, 98, 100, 100, 100, 100, 100, 100, 100, 98]  (7s)
+column 6: o_k = 22, totdeg of entries [100, 102, 104, 104, 104, 104, 104, 104, 104, 102]  (8s)
+column 7: o_k = 22, totdeg of entries [102, 104, 106, 106, 106, 106, 106, 106, 106, 104]  (9s)
+column 8: o_k = 24, totdeg of entries [106, 108, 110, 110, 110, 110, 110, 110, 110, 108]  (11s)
+column 9: o_k = 24, totdeg of entries [108, 110, 112, 112, 112, 112, 112, 112, 112, 110]  (12s)
+E = sum o_k = 200
+A-PRIORI BOUND: totdeg(det M') <= B = 990 ; deg_t <= 685, deg_b (in t,b) <= 690
+total 13s

@@ -1,0 +1,21 @@
+{
+ "R1": {
+  "certificate": "G1 = (-1)^(n+l) (n+1)(l+n+1)(l+n+2) k^2 (2k-1)(k-l+n) (n+l)!(n+k)!(4n+2k)! / ((l+1)! (l-k+2)! (n-l+k)! (2k)! (2n-k)! k! n! (2n+k)!)",
+  "rational_form": "R1 = (n+1)(l+n+1)(l+n+2) k^2 (2k-1)(k-l+n) / ((l+1)(l+1-k)(l+2-k)),  G1 = R1*F",
+  "identity_ok": true,
+  "direct_boundary_ok": true,
+  "G_at_k0_zero": true,
+  "numeric_failures": 0,
+  "region": "n>=0, k>=0, l>=-n (factorial bases); l<=-3 trivial; (0,-1),(0,-2),(1,-2) direct"
+ },
+ "R2": {
+  "Y": "-(n + 1)*(8*n + 5)*(256*k**3*l*n**3 + 552*k**3*l*n**2 + 374*k**3*l*n + 76*k**3*l - 24*k**3*n**3 - 30*k**3*n**2 - 8*k**3*n + 64*k**2*l**2*n**3 + 80*k**2*l**2*n**2 + 19*k**2*l**2*n - k**2*l**2 - 576*k**2*l*n**4 - 2144*k**2*l*n**3 - 2741*k**2*l*n**2 - 1431*k**2*l*n - 253*k**2*l + 128*k**2*n**5 + 272*k**2*n**4 + 180*k**2*n**3 + 34*k**2*n**2 - k**2*n - 320*k*l**3*n**3 - 632*k*l**3*n**2 - 393*k*l**3*n - 75*k*l**3 - 128*k*l**2*n**4 - 680*k*l**2*n**3 - 924*k*l**2*n**2 - 464*k*l**2*n - 78*k*l**2 + 448*k*l*n**5 + 1720*k*l*n**4 + 3191*k*l*n**3 + 3045*k*l*n**2 + 1364*k*l*n + 221*k*l + 256*k*n**6 + 1000*k*n**5 + 1482*k*n**4 + 1070*k*n**3 + 382*k*n**2 + 53*k*n + 256*l**3*n**4 + 1088*l**3*n**3 + 1438*l**3*n**2 + 744*l**3*n + 129*l**3 + 384*l**2*n**5 + 2752*l**2*n**4 + 5296*l**2*n**3 + 4336*l**2*n**2 + 1613*l**2*n + 223*l**2 + 1280*l*n**6 + 6208*l*n**5 + 10970*l*n**4 + 9220*l*n**3 + 3863*l*n**2 + 740*l*n + 46*l + 128*n**7 + 704*n**6 + 1528*n**5 + 1716*n**4 + 1067*n**3 + 349*n**2 + 46*n)/(l + n)",
+  "certificate": "G2 = (-1)^(n+l) * k^2 (2k-1) * [(l+n) Y] * (n+l-1)!(n+k)!(4n+2k)! / (l! (l-k)! (n-l+k+2)! (2k)! (2n-k+2)! k! n! (2n+k)!)",
+  "rational_form": "R2 = k^2 (2k-1) Y / ((2n+1-k)(2n+2-k)(n-l+k+1)(n-l+k+2)),  G2 = R2*F",
+  "identity_ok": true,
+  "direct_cases_ok": true,
+  "G_at_k0_zero": true,
+  "numeric_failures": 0,
+  "region": "n,l,k>=0 with n+l>=3 (factorial bases); l<0 trivial; n+l<=2 direct"
+ }
+}

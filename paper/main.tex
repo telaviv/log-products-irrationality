@@ -1,0 +1,1169 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{lemma}[proposition]{Lemma}
+\newtheorem{htheorem}[proposition]{Theorem}
+\newtheorem{pcorollary}[proposition]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[proposition]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[proposition]{Remark}
+
+\numberwithin{equation}{section}
+\renewcommand{\theenumi}{\roman{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\DD}{\mathbb{D}}
+\newcommand{\TT}{\mathbb{T}}
+\newcommand{\fm}{\mathfrak{m}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\den}{\operatorname{den}}
+\newcommand{\Sol}{\operatorname{Sol}}
+\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\file}[1]{{\def\_{\textunderscore\allowbreak}\texttt{#1}}}
+% Visible marker for open items. Every \TODO must be resolved (or the passage deleted) before posting.
+\newcommand{\TODO}[1]{\textbf{[TODO: #1]}}
+
+\begin{document}
+
+\hypersetup{pdftitle={Products of two logarithms and arithmetic holonomy bounds},pdfauthor={Shawn Krisman}}
+\title[Products of two logarithms]{Products of two logarithms and arithmetic holonomy bounds}
+
+\author{Shawn Krisman}
+
+\subjclass[2020]{Primary 11J72; Secondary 11J82, 34M35, 41A21, 65G20}
+\keywords{irrationality, linear independence, products of logarithms, Hermite--Pad\'e approximation, arithmetic holonomy
+bounds, monodromy, computer-assisted proof, interval arithmetic}
+
+\begin{abstract}
+We prove, assuming the arithmetic holonomy bound of Calegari, Dimitrov and Tang (Theorem~7.0.1 of their preprint
+arXiv:2408.15403), that $1$, $\log(1+1/q)$, $\log(1-1/q)$ and $\log(1+1/q)\log(1-1/q)$ are linearly independent over
+$\QQ$ for every integer $26\le q\le53$. Together with Hata's theorem for $q\ge54$ this gives the four-term independence
+for every $q\ge26$. In particular the seven numbers $\log(1+1/N)\log(1+1/(N+1))$, $25\le N\le31$, are irrational;
+irrationality was previously known for $N\ge32$ (Lysov). The proof feeds Lysov's explicit type~II Hermite--Pad\'e forms
+into the holonomy bound, and replaces the arithmetic of the forms by an analytic input: the monodromy of a minimal
+differential operator of order~13, which we show to be irreducible by interval-arithmetic certificates. Conditionally
+on the published form of the Calegari--Dimitrov--Tang argument for products of two logarithms, we also widen their
+Theorem~C from $|m/n-1|<10^{-6}$ to $|m/n-1|<3\cdot10^{-6}$, which gives infinitely many new irrational products
+$\log(1+1/m)\log(1+1/n)$ with $|m-n|\ge2$, and we show by pooling several pairs that at most one exceptional pair
+class exists with $|m/n-1|<5\cdot10^{-5}$, and at most two with $|m/n-1|<10^{-4}$. All certificates are exact or
+rigorous ball arithmetic and can be reproduced from the accompanying code.
+\end{abstract}
+
+\maketitle
+
+% ===========================================================================
+\section{Introduction}\label{sec:intro}
+% ===========================================================================
+
+For an integer $q\ge2$ put
+\[
+\theta_q=\log\Bigl(1+\frac1q\Bigr)\log\Bigl(1-\frac1q\Bigr).
+\]
+Hata \cite{Hat98} showed that $1$, $\log(1+1/q)$, $\log(1-1/q)$, $\theta_q$ are linearly independent over $\QQ$ for every
+$q\ge54$; in particular $\theta_q\notin\QQ$ for $q\ge54$. Lysov \cite{Lys18} found an explicit formula for the common
+denominator of the type~II Hermite--Pad\'e approximants to $(\log(1+1/z),\log(1-1/z),\log(1+1/z)\log(1-1/z))$ and
+deduced that $\theta_q$ is irrational for every $q\ge33$ \cite{Lys18,Lys19} (\cite{Lys18} is a preprint; we found no
+journal version as of 19 November 2026). Calegari, Dimitrov and Tang
+\cite[Thm.~C, Thm.~14.0.1]{CDT} proved, by a new arithmetic holonomy bound, that $1$, $\log(1+1/m)$, $\log(1+1/n)$ and
+$\log(1+1/m)\log(1+1/n)$ are linearly independent over $\QQ$ whenever $m\ne n$ are integers in $\ZZ\setminus\{-1,0\}$
+with $|m/n-1|<10^{-6}$. In \cite[\S15.1.10]{CDT} they suggest forming ``the generating function of the special linear
+forms obtained from evaluating a regular sequence of functional Hermite--Pad\'e approximants'' and reading it through
+their holonomy bounds. This paper carries out that scheme for Lysov's forms, and pushes the constant $10^{-6}$ of
+\cite[Thm.~C]{CDT}.
+
+\subsection*{Dependence on one preprint}
+Every result in this paper depends on the preprint \cite{CDT} (arXiv:2408.15403v2, 16 September 2024; still the current
+version on 19 November 2026), which to our knowledge has not been refereed. Theorem~\ref{thm:4T} and
+Corollary~\ref{cor:F1} use only its general holonomy bound \cite[Thm.~7.0.1]{CDT}, which we apply as stated.
+Theorems~\ref{thm:Cprime} and \ref{thm:F2} also use the specific construction of \cite[\S14]{CDT} for products of two
+logarithms, together with \cite[Thm.~6.0.2, Cor.~9.0.19, Lemma~12.0.1]{CDT}. That construction contains a step that
+is asserted rather than proved in \cite{CDT}, the irreducibility of a certain differential operator
+$\mathcal L_{a,b}$, and we inherit it; see Section~\ref{sec:Cprime}. Each theorem below names exactly what it assumes.
+
+\subsection{Results}
+
+\begin{theorem}\label{thm:4T}
+Assume \cite[Thm.~7.0.1]{CDT}. For every integer $q$ with $26\le q\le53$, the numbers
+\[
+1,\qquad\log\Bigl(1+\frac1q\Bigr),\qquad\log\Bigl(1-\frac1q\Bigr),\qquad\log\Bigl(1+\frac1q\Bigr)\log\Bigl(1-\frac1q\Bigr)
+\]
+are linearly independent over $\QQ$.
+\end{theorem}
+
+With Hata's theorem \cite{Hat98} for $q\ge54$, the same holds for every integer $q\ge26$. (For Hata's theorem we rely on
+the statement in the AMS abstract of \cite{Hat98}, which is also how \cite{ZZ19} cite it; we have not checked
+\cite[\S6]{Hat98} ourselves. \TODO{read Hata 1998, \S6, and remove this caveat or keep it}.)
+
+Since $\log(1-1/q)=-\log(1+1/(q-1))$, Theorem~\ref{thm:4T} at $q=N+1$ contains the irrationality of the product of two
+consecutive logarithms $\log(1+1/N)\log(1+1/(N+1))=-\theta_{N+1}$:
+
+\begin{corollary}\label{cor:F1}
+Assume \cite[Thm.~7.0.1]{CDT}. For every integer $N$ with $25\le N\le31$,
+\[
+\log\Bigl(1+\frac1N\Bigr)\log\Bigl(1+\frac1{N+1}\Bigr)\notin\QQ .
+\]
+\end{corollary}
+
+These are seven new irrational numbers. By Theorem~\ref{thm:4T} for $32\le N\le52$ and Hata's theorem for $N\ge53$
+(and, independently, Lysov's theorem \cite{Lys18} for $N\ge32$), the product is irrational for every $N\ge25$.
+
+The second group of results concerns CDT's two-parameter family. For $m\in\ZZ\setminus\{-1,0\}$ write
+$\ell_m=\log(1+1/m)$.
+
+\begin{theorem}\label{thm:Cprime}
+Assume the following parts of \cite{CDT} as published: Theorem~6.0.2, Corollary~9.0.19, Lemma~12.0.1 and \S14,
+including the irreducibility of the operator $\mathcal L_{a,b}$ and the reduction in the proof of Lemma~14.3.1. Let $m\ne n$ be integers in $\ZZ\setminus\{-1,0\}$ with $|m/n-1|<3\cdot10^{-6}$. Then $1$,
+$\ell_m$, $\ell_n$ and $\ell_m\ell_n$ are linearly independent over $\QQ$; in particular $\ell_m\ell_n$ is irrational.
+\end{theorem}
+
+\begin{theorem}\label{thm:F2}
+Make the assumptions of Theorem~\ref{thm:Cprime}. Call a pair $(m,n)$ of distinct integers in $\ZZ\setminus\{-1,0\}$
+\emph{exceptional} if $1,\ell_m,\ell_n,\ell_m\ell_n$ are linearly dependent over $\QQ$, and take classes of pairs
+modulo $(m,n)\sim(n,m)\sim(-m-1,-n-1)$. Then:
+\begin{enumerate}
+\item at most one exceptional class has a representative with $|m/n-1|<5\cdot10^{-5}$;
+\item at most two exceptional classes have a representative with $|m/n-1|<10^{-4}$;
+\item every exceptional class has $|m/n-1|\ge3\cdot10^{-6}$ in all its representatives (Theorem~\ref{thm:Cprime});
+\item in the ranges of (i) and (ii), every exceptional class has $|m-n|\ge2$, by Hata's theorem \cite{Hat98} (as
+quoted above).
+\end{enumerate}
+\end{theorem}
+
+The relation $(m,n)\sim(-m-1,-n-1)$ comes from $\ell_{-k}=-\ell_{k-1}$: the two pairs give the same four numbers up to
+sign. For $1\le N<M$ with $d=M-N$, the most permissive of the four representatives of $\{N,M\}$ is $(-M-1,-N-1)$, so
+the pair is covered by Theorem~\ref{thm:Cprime} if and only if $d<3\cdot10^{-6}(M+1)$, and by \cite[Thm.~C]{CDT} if and
+only if $d<10^{-6}(M+1)$. Consecutive pairs ($d=1$) in either range have $q=N+1>3\cdot10^5$ and are covered by Hata's
+theorem. So the new irrational numbers of Theorem~\ref{thm:Cprime} are
+\begin{equation}\label{eq:newpairs}
+\ell_N\ell_M,\qquad d=M-N\ge2,\qquad 10^{-6}(M+1)\le d<3\cdot10^{-6}(M+1),
+\end{equation}
+that is, $d\cdot10^6/3<M+1\le d\cdot10^6$: about $\frac23d\cdot10^6$ numbers for each $d\ge2$, infinitely many in all.
+For example: for $d=2$, $666{,}664\le N\le1{,}999{,}997$; for $d=3$, $999{,}997\le N\le2{,}999{,}996$; for $d=10$,
+$3{,}333{,}323\le N\le9{,}999{,}989$ (exact integer computation over all four representatives,
+\file{code/thm3/f7\_newpairs.py}). None of them is a known number in disguise: $(N+1)/N$ is not a perfect power of a
+rational number, so $\ell_N$ and $\ell_M$ are multiplicatively independent and $\ell_N\ell_M$ is not of the form
+$c\log^2r$. Theorem~\ref{thm:F2} names no new number; it is a statement about the family. For example, all but at most
+one of the numbers $\log(1+1/N)\log(1+1/(N+2))$ with $39{,}998\le N\le666{,}663$ are irrational, and all but at most two
+with $19{,}998\le N\le666{,}663$.
+
+\subsection{Index conventions}
+Four parametrisations are in use in the literature and in our sources. We use the following dictionary throughout.
+\begin{center}
+\small\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lll}
+\toprule
+convention & consecutive pair & number\\
+\midrule
+positive form & $(N,N+1)$, $N\ge1$ & $\ell_N\ell_{N+1}$\\
+Hata, Lysov, Thm.~\ref{thm:4T} & $q=N+1$ & $\theta_q=-\ell_N\ell_{N+1}$\\
+CDT pair $(m,n)$ & $(N,N+1)\sim(-N-2,-N-1)$ & $\ell_m\ell_n$\\
+CDT, odd form $(a,b)$ & $(2N+1,2N+3)$ & $a=2m+1$, $b=2n+1$\\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $\ell_m=\log\frac{a+1}{a-1}$ when $a=2m+1$.
+In Sections~\ref{sec:lysov}--\ref{sec:proof4T} the letter $n$ is the index of Lysov's forms ($P_{j,n}$, $R_{j,n}$);
+in Sections~\ref{sec:Cprime}--\ref{sec:F2} $(m,n)$ is a CDT pair, as in the statements above. Lysov's paper writes
+$m$ for our $q$, and Zeilberger and Zudilin \cite{ZZ19} write $a=q-1$.
+
+\subsection{What is new}
+\begin{itemize}
+\item \emph{New irrational numbers.} The seven products $\ell_N\ell_{N+1}$, $25\le N\le31$ (Corollary~\ref{cor:F1});
+no method gave their irrationality before. The products \eqref{eq:newpairs} (Theorem~\ref{thm:Cprime}, conditional on
+\cite[\S14]{CDT}), together with the four-term independence for each of them.
+\item \emph{New linear independence at known irrational numbers.} The four-term independence of
+Theorem~\ref{thm:4T} for $26\le q\le32$ is new. For $33\le q\le53$ we know of no explicit statement; ours is the first,
+and its proof does not use Lysov's arithmetic. It may follow from Lysov's construction by the classical type~II
+criterion, provided his refined denominator estimate covers the numerators $P_{1,n}$, $P_{2,n}$ as well (we have not
+checked this). Zeilberger and Zudilin \cite[p.~8]{ZZ19} state that the linear independence of
+$1,\log(a/(a+1)),\log((a+1)/(a+2))$, known for $a\ge53$ by Hata, was ``recently improved, though somewhat implicitly,
+by Volodya Lysov to $a\ge32$''; that statement concerns the linear forms, not the product.
+\item \emph{Nothing new for consecutive pairs in CDT's range or ours}: those are covered by Hata's theorem.
+\item \emph{A family statement} (Theorem~\ref{thm:F2}), which names no number.
+\item \emph{By-products}: for every $q\ge2$ the characteristic polynomial of Lysov's recurrence is an explicit quartic
+(Proposition~\ref{prop:I1}); all local monodromies of the order-34 operator at its finite nonzero singular points are
+reflections (Proposition~\ref{prop:exponents}); an explicit form of the factor $\Phi_6$ of \cite[Lemma~14.3.1]{CDT}
+and its $2$-adic nonvanishing at odd pairs (Section~\ref{sec:phi6}); two misprints in \cite[(14.2.2), (14.2.3)]{CDT}.
+\end{itemize}
+A literature search on 19 November 2026 (arXiv, Hexagon, GitHub, Zenodo, general web search) found no other work on
+products of two real logarithms of this kind, on the constant $10^{-6}$ of \cite[Thm.~C]{CDT}, or on the
+Hata--Lysov family since \cite{Lys18}. The search is not exhaustive; in particular we could not find an abstract of a
+2025 talk by Lysov on this subject.
+
+\subsection{Status of the results}\label{sec:status}
+The proofs are computer-assisted. Every computation that a proof uses is either an exact identity over $\QQ$ (checked
+with SymPy or python-flint) or a rigorous ball-arithmetic enclosure (Arb, through python-flint). The chain has been
+checked by AI referees at each decision gate and once as a whole (Section~\ref{sec:provenance}); it has not yet been
+read by a human expert, and it is not formalised. In the notation of our working notes, the status labels are:
+\begin{itemize}
+\item Theorem~\ref{thm:4T} and Corollary~\ref{cor:F1}: \emph{proved, computer-assisted (exact symbolic identities and
+Arb certificates), given \cite[Thm.~7.0.1]{CDT} (preprint); gate-refereed once; chain-refereed; human read and Lean
+owed.}
+\item Theorem~\ref{thm:Cprime}: \emph{proof sketch plus certified computation; conditional on CDT as published
+(Thm.~6.0.2, Cor.~9.0.19, Lemma~12.0.1 and \S14, in particular the irreducibility of $\mathcal L_{a,b}$ and the
+reduction in the proof of Lemma~14.3.1); $\Phi_6$ factor of Lemma~14.3.1 via Section~\ref{sec:phi6} (proved, exact
+computer algebra; not gate-refereed); gate-refereed once; chain-refereed; not in Lean, no human read.}
+\item Theorem~\ref{thm:F2}: \emph{proof sketch plus certified computation; conditional on CDT as published (Thm.~6.0.2,
+Cor.~9.0.19, Lemma~12.0.1 and \S14, in particular the irreducibility of $\mathcal L_{a,b}$ and the reduction in the
+proof of Lemma~14.3.1, reused pair by pair); $\Phi_6$ factor of Lemma~14.3.1 via Section~\ref{sec:phi6} (proved, exact
+computer algebra; not gate-refereed); part (iv) adds Hata's theorem (abstract-level); Lemma~\ref{lem:D} proved,
+given \cite[Lemma~14.2.4]{CDT}; Lemma~\ref{lem:S} ($\varepsilon\le10^{-4}$) and the ray lemma proved;
+Lemma~\ref{lem:H} proof sketch (classical); certificates exact (Arb and exact rationals); gate-refereed once;
+chain-refereed; not in Lean; no human read.}
+\end{itemize}
+
+\subsection{Method}
+For Theorem~\ref{thm:4T} we start from Lysov's forms $R_{j,n}(q)=Q_n(q)f_j(q)-P_{j,n}(q)$, $j=1,2,3$, with
+$(f_1,f_2,f_3)=(\log(1+1/q),\log(1-1/q),\theta_q)$, and their generating functions $H_j(y)=\sum_nR_{j,n}(q)y^n$. A
+rational relation $r_0+a_1f_1+a_2f_2+a_3f_3=0$ makes $-\sum_ja_jH_j$ a power series with rational coefficients of
+controlled denominators, which continues analytically to $\CC\setminus[y_2,\infty)$ for an explicit $y_2$. The
+holonomy bound \cite[Thm.~7.0.1]{CDT}, applied with the Koebe map onto $\CC\setminus[y_2,\infty)$ and the $14$ functions
+$1,H,\vartheta H,\dots,\vartheta^{12}H$ ($\vartheta=y\,d/dy$), gives a contradiction once these $14$ functions are
+linearly independent over $\CC(y)$ and $q\ge26$. Their independence follows from the irreducibility of the monodromy of
+the minimal operator $L_{13}$ of the $H_j$ (order $13$), which we certify per $q$ from rigorous numerical analytic
+continuation, using that the local monodromies at the singular points $y_2,y_3$ are reflections. No arithmetic of the
+forms beyond the elementary denominator bound $\lcm(1,\dots,4n)\lcm(1,\dots,2n)$ is needed.
+
+For Theorem~\ref{thm:Cprime} we keep CDT's construction and change only the map: we construct, by optimisation, a
+polynomial-exponential map $\psi$ of the disc for which $h\circ\psi$ ($h$ the hauptmodul of $\Gamma_0(2)$) is admissible
+for every pair with $|m/n-1|<3\cdot10^{-6}$ at once, and certify the holonomy inequality in its partition form
+\cite[Thm.~6.0.2]{CDT} by interval arithmetic. For Theorem~\ref{thm:F2} we put the functions of $K=2$ or $3$
+hypothetical exceptional pairs into one holonomy bound, after proving that they are jointly independent.
+
+\subsection*{Outline}
+Section~\ref{sec:holonomy} recalls the holonomy bounds. Section~\ref{sec:lysov} treats Lysov's forms: contact orders,
+denominators, recurrences and the differential equations. Section~\ref{sec:proof4T} proves Theorem~\ref{thm:4T} and
+Corollary~\ref{cor:F1}. Sections~\ref{sec:Cprime} and \ref{sec:F2} prove Theorems~\ref{thm:Cprime} and \ref{thm:F2}.
+Section~\ref{sec:computer} lists the computer-assisted steps and how to reproduce them, Section~\ref{sec:limits}
+the limits of the method, and Section~\ref{sec:provenance} provenance and the use of AI tools.
+
+% ===========================================================================
+\section{The holonomy bounds}\label{sec:holonomy}
+% ===========================================================================
+
+We use the notation of \cite[\S6, \S7]{CDT}. For $N\ge1$ write $[1,\dots,N]=\lcm(1,2,\dots,N)$. Let $\fm\ge1$, let
+$b=(b_{i,j})_{1\le i\le\fm,\,1\le j\le r}$ be an array of nonnegative reals whose columns have the form
+$0=b_{1,j}=\dots=b_{u_j,j}<b_{u_j+1,j}=\dots=b_{\fm,j}$, and let $e\in\NN^\fm$. A formal power series $f_i\in\QQ[[y]]$
+has \emph{denominator type} $(b_{i,\cdot},e_i)$ if
+\[
+f_i(y)=a_{i,0}+\sum_{n\ge1}\frac{a_{i,n}\,y^n}{n^{e_i}\,[1,\dots,b_{i,1}n]\cdots[1,\dots,b_{i,r}n]},\qquad a_{i,n}\in\ZZ
+\]
+Let $\sigma_i=\sum_jb_{i,j}$ be the row sums. When $e=0$,
+\[
+\tau(b)=\frac1{\fm^2}\sum_{i=1}^{\fm}(2i-1)\sigma_i ,
+\]
+and in general $\tau(b;e)=\tau(b)+\tau^\sharp(e)$ with $\tau^\sharp$ as in \cite[Thm.~6.0.2, Def.~6.0.1]{CDT}.
+
+For a holomorphic map $\varphi$ from a neighbourhood of the closed unit disc $\overline\DD$ to $\CC$ with $\varphi(0)=0$
+put
+\[
+T(\varphi)=\iint_{\TT^2}\log|\varphi(z)-\varphi(w)|\,d\mu_{\mathrm{Haar}}(z)\,d\mu_{\mathrm{Haar}}(w).
+\]
+
+\begin{htheorem}[{\cite[Thm.~7.0.1]{CDT}}]\label{thm:CDT701}
+Let $f_1,\dots,f_\fm\in\QQ[[y]]$ be linearly independent over $\QQ(y)$, of denominator types given by $(b,e)$, and let
+$\varphi:(\DD,0)\to(\CC,0)$ be holomorphic with $\log|\varphi'(0)|>\max\{\sigma_\fm,\tau(b;e)\}$, such that every
+$f_i(\varphi(z))$ is the germ of a meromorphic function on $|z|<1$. Then
+\[
+\fm\le\frac{T(\varphi)}{\log|\varphi'(0)|-\tau(b;e)} .
+\]
+If all $f_i$ are known to be holonomic, the hypothesis $\log|\varphi'(0)|>\max\{\sigma_\fm,\tau\}$ may be relaxed to
+$\log|\varphi'(0)|>\tau$.
+\end{htheorem}
+
+(In \cite{CDT} the map is defined on $\DD$ and $T$ is defined by a limit; we only use maps holomorphic on a
+neighbourhood of $\overline\DD$.)
+
+\begin{htheorem}[{\cite[Thm.~6.0.2]{CDT}, partition form}]\label{thm:CDT602}
+Let $f_1,\dots,f_\fm$ and $(b,e)$ be as in Theorem~\ref{thm:CDT701}, all $f_i$ holonomic. Let $\varphi_0,\dots,\varphi_l$
+be holomorphic maps $(\DD,0)\to(\CC,0)$ with $|\varphi_0'(0)|<\dots<|\varphi_l'(0)|$ and $\log|\varphi_l'(0)|>\tau(b;e)$,
+such that every $f_i(\varphi_k(z))$ is meromorphic on $|z|<1$. Let $0=\vartheta_0<\vartheta_1<\dots<\vartheta_l<
+\vartheta_{l+1}=\fm$, and let $g:[0,1)\to\RR\cup\{-\infty\}$ be $g(t)=\log|\varphi_k(e^{2\pi i(\fm t-\vartheta_k)/
+(\vartheta_{k+1}-\vartheta_k)})|$ for $t\in[\vartheta_k/\fm,\vartheta_{k+1}/\fm)$. Then
+\[
+\fm\le\frac{\displaystyle\int_0^1\!\!\int_0^1\max(g(s),g(t))\,ds\,dt+\frac1\fm\sum_{k=1}^l\vartheta_k^2\log
+\frac{|\varphi_k'(0)|}{|\varphi_{k-1}'(0)|}}{\log|\varphi_l'(0)|-\tau(b;e)} .
+\]
+\end{htheorem}
+
+With $l=0$ (the \emph{trivial partition}) the numerator is the rearrangement integral
+$R(\varphi)=\iint\max(g(s),g(t))\,ds\,dt$ with $g(s)=\log|\varphi(e^{2\pi is})|$. The double integral depends only on
+the distribution of $g$, which for a partition is the mixture $\sum_k\frac{\vartheta_{k+1}-\vartheta_k}{\fm}\cdot
+(\text{law of }\log|\varphi_k|\text{ on }\TT)$. We use Theorem~\ref{thm:CDT701} in Section~\ref{sec:proof4T} and
+Theorem~\ref{thm:CDT602} in Sections~\ref{sec:Cprime} and \ref{sec:F2}.
+
+\begin{lemma}\label{lem:Tunivalent}
+If $\varphi$ is univalent on a neighbourhood of $\overline\DD$ and $\varphi(0)=0$, then $T(\varphi)=\log|\varphi'(0)|$.
+\end{lemma}
+
+\begin{proof}
+The function $(z,w)\mapsto\log|(\varphi(z)-\varphi(w))/(z-w)|$ is pluriharmonic on a neighbourhood of
+$\overline\DD^2$ (the quotient is holomorphic and zero-free there, by univalence), so its mean over $\TT^2$ is its value
+$\log|\varphi'(0)|$ at $(0,0)$; and $\iint_{\TT^2}\log|z-w|=0$.
+\end{proof}
+
+% ===========================================================================
+\section{Lysov's forms}\label{sec:lysov}
+% ===========================================================================
+
+\subsection{Definitions}
+For integers $n\ge0$ and $l$ put
+\[
+c_{n,l}=\sum_k(-1)^{n+l}\binom{n+l}{l}\binom{n}{l-k}\binom{2n+k}{2k}\binom{n+k}{k}\binom{4n+2k}{2n+k},
+\]
+the sum over $0\le k\le2n$ with $0\le l-k\le n$ (so $c_{n,l}=0$ unless $0\le l\le3n$), and
+\[
+Q_n(z)=\sum_{l=0}^{3n}c_{n,l}\,z^{2l}\in\ZZ[z],
+\]
+an even polynomial of degree $6n$ (Lysov's $Q_{6n}$, \cite[formula~(21) and Lemma~8]{Lys18}; we use the formula as a
+definition). Let $f_1(z)=\log(1+1/z)$, $f_2(z)=\log(1-1/z)$ and $f_3=f_1f_2$, as Laurent series at $z=\infty$. Let
+$P_{j,n}$ be the polynomial part of $Q_nf_j$, and $R_{j,n}=Q_nf_j-P_{j,n}=O(z^{-1})$. Since $Q_n$ is even and
+$f_2(z)=f_1(-z)$, we have $P_{2,n}(z)=P_{1,n}(-z)$. Explicitly, with $A_N=\sum_{i=1}^N(-1)^{i+1}/i$,
+\begin{equation}\label{eq:P}
+\begin{aligned}
+P_{1,n}(z)&=\sum_lc_{n,l}\sum_{m=1}^{2l}\frac{(-1)^{m+1}}{m}z^{2l-m},\\
+P_{3,n}(z)&=\sum_lc_{n,l}\sum_{m=1}^{l}\Bigl(-\frac{A_{2m-1}}m\Bigr)z^{2(l-m)},
+\end{aligned}
+\end{equation}
+because $[z^{-2m}]f_3=-A_{2m-1}/m$ and the odd negative powers of $z$ do not occur in $f_3$.
+
+The functions are Cauchy transforms: for $|z|>1$,
+\[
+f_1(z)=\int_{-1}^0\frac{dx}{z-x},\qquad f_2(z)=-\int_0^1\frac{dx}{z-x},\qquad
+f_3(z)=\int_{-1}^1\frac{\omega(x)\,dx}{z-x},
+\]
+with $\omega$ odd and $\omega(x)=-\log(1+1/x)$ on $(0,1)$. Write $\mu_j$ for the three (signed) measures; their total
+variations are $1,1,4\log2$. Then $R_{j,n}(z)=\int Q_n(x)\,d\mu_j(x)/(z-x)$.
+
+\subsection{Contact orders}
+
+\begin{lemma}[Lysov]\label{lem:contact}
+For all $n\ge0$ and $j=1,2,3$: $\int x^kQ_n(x)\,d\mu_j(x)=0$ for $0\le k<2n$. Equivalently $R_{j,n}(z)=O(z^{-2n-1})$ as
+$z\to\infty$.
+\end{lemma}
+
+This is \cite[Lemmas~7 and 8]{Lys18}. Since \cite{Lys18} is an unrefereed preprint we give the argument, which follows
+Lysov's.
+
+\begin{proof}[Proof sketch]
+Put $\mathfrak d=\frac1x\frac d{dx}$ and $\mathfrak D=\frac d{dx}\circ\frac1x$. One checks the Rodrigues formula
+\[
+Q_n=\kappa_n\,\mathfrak d^n\bigl[(x^2-1)^nx^{2n}\,\mathfrak d^n[x^{2n}\,\mathfrak D^{2n}[(x^2-1)^{2n}x^{4n}]]\bigr],
+\qquad\kappa_n=\frac1{(2n)!\,(n!)^2},
+\]
+which in the variable $w=x^2$ is the pair of termwise identities
+$Q_n(w)=\frac1{n!}D^n[w^n(w-1)^nV_n(w)]$ with $V_n(w)=\sum_k(-1)^k\binom{2n+k}{2k}\binom{n+k}{k}\binom{4n+2k}{2n+k}w^k$,
+and $V_n(w)=\frac{16^n}{(2n)!\,n!}D^n[w^{n+1/2}D^{2n}[w^{2n-1/2}(w-1)^{2n}]]$ ($D=d/dw$); the second follows from the
+Legendre duplication formula. Since $Q_n$ is even, the claim is equivalent to $\int_0^1x^sQ_n\,dx=0$ for $0\le s<2n$ and
+$\int_0^1x^sQ_n\log(1+1/x)\,dx=0$ for odd $s<2n$. For $h=x^s$ or $h=x^s\log(1+1/x)$ one integrates by parts $n$ times
+against $\mathfrak d$, then $n$ times against $\mathfrak d$ and $2n$ times against $\mathfrak D$, using
+$\int f\,\mathfrak dg=[fg/x]-\int(\mathfrak Df)g$ and $\int f\,\mathfrak Dg=[fg/x]-\int(\mathfrak df)g$. All boundary
+terms vanish by the orders of vanishing of the Rodrigues factors at $0$ and $\pm1$. After the first $n$ steps the
+integrand becomes $\tilde U\cdot B$ with $B=x^{2n}(x^2-1)^n\mathfrak D^nh$ a polynomial of degree $\le4n-2$ whose odd part
+has degree $\le2n-1$ (for $h=x^s\log(1+1/x)$ this uses that $\mathfrak D^n$ kills the odd part of $x^s\log(1-x^{-2})/2$
+down to $O(x^{-2n-1})$), and at the end one integrates $\mathfrak d^{2n}$ of an even polynomial of degree $\le4n-2$, which
+is zero. The identities in $w$ are checked symbolically and, as a sanity check, exactly for small $n$
+(\file{i1\_contact.py}); the contact orders are also checked exactly for $n\le24$.
+\end{proof}
+
+\begin{pcorollary}\label{cor:size}
+$|Q_n(x)|\le(2n+1)2^{20n}$ on $[-1,1]$, and for every integer $q\ge2$ and $j=1,2,3$,
+\[
+|R_{j,n}(q)|\le(2n+1)\Bigl(\frac{2^{20}}{q^2}\Bigr)^n\frac{|\mu_j|}{q-1}.
+\]
+\end{pcorollary}
+
+\begin{proof}
+We have
+\[
+\begin{aligned}
+\sum_l|c_{n,l}|&\le\sum_k\max_l\binom{n+l}l\,2^n\binom{2n+k}{2k}\binom{n+k}k\binom{4n+2k}{2n+k}\\
+&\le(2n+1)2^{4n+n+4n+3n+8n}.
+\end{aligned}
+\]
+By Lemma~\ref{lem:contact}, $R_{j,n}(q)=q^{-2n}\int Q_n(x)x^{2n}\,d\mu_j(x)/(q-x)$.
+\end{proof}
+
+\subsection{Denominators}
+The following lemma is \cite[Lemma~9]{Lys18} at prime-power level; we give the proof in full, so that \cite{Lys18} is
+used only for the definition of $c_{n,l}$.
+
+\begin{lemma}\label{lem:den}
+For every $n\ge1$ and $j=1,2,3$, the coefficients of $P_{j,n}$ have denominators dividing $[1,\dots,4n]\,[1,\dots,2n]$.
+\end{lemma}
+
+\begin{proof}
+Write $D_k=[1,\dots,k]$ and fix a prime $p$. We use Kummer's theorem in the form
+$v_p\binom{A}{B}=\sum_{i\ge1}(\lfloor A/p^i\rfloor-\lfloor B/p^i\rfloor-\lfloor(A-B)/p^i\rfloor)$, each term being $0$
+or $1$. In every nonzero summand of $c_{n,l}$ we have $l-n\le k\le2n$.
+
+\emph{$P_1$ and $P_2$.} By \eqref{eq:P} the denominators of $P_{1,n}$ divide the numbers $m\le2l\le6n$, with
+coefficient $c_{n,l}$. If $p\le2n$, then $v_p(m)\le\lfloor\log_p6n\rfloor\le\lfloor\log_p4n\rfloor+1\le
+v_p(D_{4n}D_{2n})$. If $2n<p\le4n$, then $p^2>6n$, so $v_p(m)\le1=v_p(D_{4n})$. If $p>4n$ and $p\mid m$, then
+$4n<p<2l$ ($p$ is odd). Then for every summand of $c_{n,l}$: $2n+k\le4n<p$ and $p<2l\le2n+2k\le4n+2k\le8n<2p$, so
+$\lfloor(4n+2k)/p\rfloor-2\lfloor(2n+k)/p\rfloor=1$ and $p\mid\binom{4n+2k}{2n+k}$. Hence $p\mid c_{n,l}$, and
+$c_{n,l}/m$ is $p$-integral. (The signs $(-1)^{m+1}$ play no role.) $P_{2,n}(z)=P_{1,n}(-z)$.
+
+\emph{$P_3$.} By \eqref{eq:P} the term $c_{n,l}A_{2m-1}/m$ ($m\le l\le3n$) has $v_p\ge v_p(c_{n,l})-e_1-e_2$ with
+$e_1=v_p(m)$ and $e_2=\lfloor\log_p(2m-1)\rfloor$. Now $e_1\le\lfloor\log_p2n\rfloor+\delta_1$, where $\delta_1=1$ if
+some $p^{a}\mid m$ with $p^a\in(2n,3n]$ and $\delta_1=0$ otherwise (a higher excess is impossible since
+$2p^a>3n$); and $e_2\le\lfloor\log_p4n\rfloor+\delta_2$, where $\delta_2=1$ if some $p^b\in(4n,2m-1]$ and $\delta_2=0$
+otherwise (again $2p^b>6n$). If $\delta_1+\delta_2>0$ then $m>2n$, so $l>2n$ and $k\ge l-n>n$ in every summand. If
+$\delta_1=1$: $n<p^a$, $k\le2n<p^a$ and $n+k\ge l\ge m\ge p^a$, so $p\mid\binom{n+k}{k}$. If $\delta_2=1$:
+$2n+k\le4n<p^b<2m\le2l\le2n+2k\le4n+2k$, so $p\mid\binom{4n+2k}{2n+k}$. These are different binomial factors, so
+$v_p(c_{n,l})\ge\delta_1+\delta_2$, and the term has $v_p\ge-v_p(D_{2n}D_{4n})$.
+\end{proof}
+
+(An exact check of the divisibility for $n\le120$, and independently for selected $n\le81$, agrees.)
+
+\subsection{The recurrence}
+
+\begin{proposition}\label{prop:I1}
+There are polynomials $p_0,\dots,p_4\in\ZZ[n,w]$, of degree $34$ in $n$ and of degrees $3,4,5,6,3$ in $w$, such that
+for every integer $n\ge0$ and every $z\in\CC$, with $w=z^2$,
+\[
+\sum_{i=0}^4p_i(n,z^2)\,X_{n+i}(z)=0\qquad\text{for }X\in\{Q,P_1,P_2,P_3\},
+\]
+hence also for $X=R_j$. Moreover
+\[
+\sum_{j=0}^4\mathrm{lc}_n(p_j)(w)\,\lambda^j=2^{59}(8w+1)(9w-1)(25w-16)\cdot\chi_w(-\lambda),
+\]
+where
+$\chi_w(\lambda)=\lambda^4+(16384w^3-20480w^2+5248w-64)\lambda^3+(135168w^2+159744w+1536)\lambda^2+(294912w-16384)\lambda+
+65536$.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted, exact)]
+\emph{Two relations for $c_{n,l}$.} There are explicit polynomials $a_0,a_1,a_2$ and $\alpha,\beta_{a,i}$ with
+\[
+\sum_{m=0}^2a_m(n,l)c_{n,l+m}=0,\qquad
+\alpha(n)c_{n+1,l}=\sum_{a=0}^3\sum_{i=0}^3\beta_{a,i}(n)(l-i)^ac_{n,l-i},
+\]
+$a_0=-(l-3n)(l+n+1)(l+n+2)(2l+2n+1)$, $a_2=-(l+2)^3(2l+3)$, $\alpha=-(n+1)^3(2n+1)^2(4n+1)(4n+3)$ (the others are in
+\file{runs/i1\_relations.json}). They are proved by creative telescoping in $k$: with explicit certificates $G_1,G_2$
+(hypergeometric terms given by factorial formulas), the summand identities
+$\sum_ma_mF(n,l+m,k)=G_1(n,l,k+1)-G_1(n,l,k)$ and its analogue hold at every integer point of the relevant regions.
+Over a common factorial base each reduces to one polynomial identity in $\QQ[n,l,k]$, which is identically zero; at
+$k=-1$ the certificates vanish (factor $k^2$), they vanish for $k>2n+2$, so the sums over $k$ telescope; the finitely
+many boundary cases are checked directly (\file{i1\_certs.py}).
+
+\emph{Order-4 operator.} In generating-function form the relations say $D_nQ_n=0$, with $D_n$ an operator of order $4$
+in $w\,d/dw$ whose leading coefficient $-2(w-1)^2$ does not depend on $n$, and $\alpha(n)Q_{n+1}=E_nQ_n$ with $E_n$ of
+order $3$. Reducing $E_{n+i}\cdots E_n$ modulo $D_n$ on the right expresses $Q_{n+i}$, $i=0,\dots,4$, through
+$Q_n,\dots,(w\,d/dw)^3Q_n$; the cofactor vector of the resulting $4\times5$ matrix, made primitive, is
+$(p_0,\dots,p_4)$, and $\sum_ip_iQ_{n+i}=0$ is re-verified exactly (\file{i1\_opalg.py}).
+
+\emph{The numerators.} $\sum_ip_i(n,z^2)P_{j,n+i}=-\sum_ip_i(n,z^2)R_{j,n+i}$. The left side is a polynomial, and by
+Lemma~\ref{lem:contact} the right side is $O(z^{5-2n})$; so both vanish for $n\ge3$, and $n=0,1,2$ are checked directly.
+
+The characteristic polynomial identity is exact (\file{i1\_extras.py}).
+\end{proof}
+
+For $q\ge2$ the prefactor $2^{59}(8w+1)(9w-1)(25w-16)$ does not vanish at $w=q^2$, so the characteristic roots of the
+recurrence are the roots $\lambda$ of $\chi_{q^2}(-\lambda)$. They are real, positive and distinct; we order them
+$\lambda_1>\lambda_2>\lambda_3>\lambda_4>0$ and put $y_k=1/\lambda_k$, so that $0<y_1<y_2<y_3<y_4$. For example, for
+$q=26$: $y_1\approx1.98\cdot10^{-13}$, $y_2\approx156.37$, $y_3\approx182.38$, $y_4\approx2703$. For $2\le q\le60$ one
+checks $y_1<2^{-20}q^2$, and that the discriminant of $c_{34}$ below is nonzero.
+
+\subsection{The differential equations}
+Fix an integer $q\ge2$ and put
+\[
+H_j(y)=\sum_{n\ge0}R_{j,n}(q)\,y^n\quad(j=1,2,3),\qquad H_a=\sum_{j=1}^3a_jH_j\quad(a\in\CC^3).
+\]
+By Corollary~\ref{cor:size}, each $H_j$ is holomorphic on $|y|<2^{-20}q^2$, a disc containing $0$ and $y_1$. Let
+$\vartheta=y\,d/dy$ and
+\[
+L=\sum_{j=0}^4y^{4-j}p_j(\vartheta-j,q^2),
+\]
+a differential operator of order $34$. The coefficient of $y^{N+4}$ in $L\sum_nX_ny^n$ is $\sum_jp_j(N)X_{N+j}$, so by
+Proposition~\ref{prop:I1}, $LH_j=E_j$ with $E_j$ a polynomial of degree $\le3$. The $\vartheta^{34}$-coefficient of $L$
+is $c_{34}(y)=\sum_jy^{4-j}\mathrm{lc}_n(p_j)$, which is a constant times $(8w+1)(9w-1)(25w-16)\,y^4\chi_w(-1/y)$; its
+roots are $y_1,\dots,y_4$, and $c_{34}(0)\ne0$. Hence the singular points of $L$ are $0,y_1,\dots,y_4,\infty$, and $L$ has
+no apparent singularities.
+
+\begin{proposition}\label{prop:continuation}
+For every $a\in\CC^3$, $H_a$ continues analytically to a single-valued holomorphic function on $\CC\setminus[y_2,\infty)$.
+\end{proposition}
+
+\begin{proof}
+$H_a$ is holomorphic on a disc around $0$ containing $y_1$ and satisfies $LH_a=E_a$; solutions of a linear differential
+equation continue along every path avoiding its singular points, and $\CC\setminus[y_2,\infty)$ is simply connected.
+\end{proof}
+
+\subsection{The minimal operator}
+For each $q$ with $26\le q\le53$ we computed an operator of recurrence order $25$ and $n$-degree $13$, common to the four
+sequences $Q,P_1,P_2,P_3$ at $z=q$ (modular nullspaces, Chinese remaindering and rational reconstruction; checked
+exactly for $n\le60$). Its associated differential operator $L_{13}=\sum_{j=0}^{25}y^{25-j}\tilde p_j(\vartheta-j)$ has
+order $13$. Its leading coefficient has degree $25$: its roots are $y_1,\dots,y_4$ and $21$ apparent singular points.
+
+\begin{proposition}\label{prop:I1prime}
+For each $q$ with $26\le q\le53$ the order-$25$ recurrence holds for all $n\ge0$ on $Q,P_1,P_2,P_3$ at $z=q$. Hence
+$L_{13}H_a=E'_a$ with $E'_a$ a polynomial, for every $a\in\CC^3$.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted, exact)]
+Fraction-free right division in $\ZZ[n][S]$ ($S$ the shift) gives $\mu(n)\cdot\mathrm{Rec}_{25}=\tilde K\cdot L_4$ with
+zero remainder, where $L_4=\sum_ip_i(n,q^2)S^i$ and $\mu(n)$ is a nonzero integer times
+$\prod_{t=0}^{21}p_4(n+t,q^2)$. The polynomial $p_4(\cdot,q^2)$ has no root at a nonnegative integer, so $\mu(n)\ne0$
+for $n\ge0$, and Proposition~\ref{prop:I1} gives the claim (\file{i1\_rec25.py}).
+\end{proof}
+
+% ===========================================================================
+\section{Proof of Theorem~\ref{thm:4T}}\label{sec:proof4T}
+% ===========================================================================
+
+Fix $q$ with $26\le q\le53$. Write $f=(f_1(q),f_2(q),f_3(q))$, $P_n=(P_{1,n}(q),P_{2,n}(q),P_{3,n}(q))$ and
+$v_n=(Q_n(q),P_n)\in\QQ^4$.
+
+\subsection{Reduction}
+Suppose $r_0+a_1f_1+a_2f_2+a_3f_3=0$ with $(r_0,a)\in\ZZ^4\setminus\{0\}$. Then $a\ne0$, and
+\[
+G(y):=\sum_{n\ge0}\bigl(r_0Q_n(q)+a\cdot P_n\bigr)y^n
+=\sum_n\bigl(Q_n(q)(r_0+a\cdot f)-a\cdot R_n\bigr)y^n=-H_a(y),
+\]
+where $R_n=(R_{1,n}(q),R_{2,n}(q),R_{3,n}(q))$.
+By Lemma~\ref{lem:den} (and $Q_n(q)\in\ZZ$), $G\in\QQ[[y]]$ has constant term $r_0\in\ZZ$ and denominator type
+$[1,\dots,4n][1,\dots,2n]$; so do $\vartheta^jG$ for all $j$ (the coefficients are multiplied by $n^j$). By
+Proposition~\ref{prop:continuation}, $G$ continues to $\CC\setminus[y_2,\infty)$.
+
+Let $\varphi(w)=4y_2w/(1+w)^2$, the Koebe map of $\DD$ onto $\CC\setminus[y_2,\infty)$, and $\varphi_r(w)=\varphi(rw)$
+for $0<r<1$. Consider the $\fm=14$ functions $1,G,\vartheta G,\dots,\vartheta^{12}G$, with type rows $(0,0)$ for the
+constant $1$ and $(4,2)$ for the others, $e=0$. Then $\sigma_i=6$ for $i\ge2$ and
+$\tau=\frac1{196}\sum_{i=2}^{14}(2i-1)\cdot6=6\cdot\frac{195}{196}$. All pullbacks by $\varphi_r$ are holomorphic on
+a neighbourhood of $\overline\DD$, and $\varphi_r$ is univalent, so $T(\varphi_r)=\log|\varphi_r'(0)|=L_q+\log r$ by
+Lemma~\ref{lem:Tunivalent}, where
+\[
+L_q=\log(4y_2).
+\]
+If the $14$ functions are linearly independent over $\QQ(y)$, Theorem~\ref{thm:CDT701} gives
+$14\le(L_q+\log r)/(L_q+\log r-\tau)$ for every $r<1$ close to $1$, hence $14\le L_q/(L_q-\tau)$, that is
+\[
+M_{14}(q):=\tfrac{13}{14}L_q-6\cdot\tfrac{195}{196}\le0.
+\]
+(The condition $L_q>\max\{6,\tau\}=6$ of Theorem~\ref{thm:CDT701} holds.) But $M_{14}(q)>0$ for every
+$q$ with $26\le q\le53$; the Arb values are in Table~\ref{tab:4T}, for example $M_{14}(26)=0.0092251638\pm4\cdot10^{-12}$ and
+$M_{14}(53)=1.3688032\pm3\cdot10^{-8}$ (\file{budget\_4t.py}; $y_2$ is a root of the exact characteristic polynomial of
+Proposition~\ref{prop:I1}). This contradiction proves Theorem~\ref{thm:4T}, given:
+
+\begin{proposition}\label{prop:indep}
+Let $a\in\CC^3\setminus\{0\}$. The $14$ functions $1,H_a,\vartheta H_a,\dots,\vartheta^{12}H_a$ are linearly
+independent over $\CC(y)$, hence over $\QQ(y)$.
+\end{proposition}
+
+The rest of this section proves Proposition~\ref{prop:indep}. For $a=(0,0,1)$ it is the case used for
+Corollary~\ref{cor:F1}, which we also certified separately (Remark~\ref{rem:F1cert}).
+
+\subsection{An independence lemma}
+Fix a base point $y_*\in(y_1,y_2)$ which is a regular point of $L_{13}$, and consider germs at $y_*$; $\gamma$ runs
+over closed paths at $y_*$ avoiding all singular points of $L_{13}$. Let
+\[
+U_a=\operatorname{span}_\CC\{(\gamma-1)H_a\},\qquad S=\Sol(L_{13})\ (\dim S=13).
+\]
+By Proposition~\ref{prop:I1prime}, $U_a\subseteq S$. $U_a$ is invariant under monodromy, since
+$\delta(\gamma-1)H_a=(\delta\gamma-1)H_a-(\delta-1)H_a$.
+
+\begin{lemma}\label{lem:indep}
+If $\dim U_a=u$, then $1,H_a,\vartheta H_a,\dots,\vartheta^{u-1}H_a$ are linearly independent over $\CC(y)$.
+\end{lemma}
+
+\begin{proof}
+Suppose $c_0+KH_a=0$ with $K=\sum_{j<u}c_{j+1}\vartheta^j$, $c_i\in\CC(y)$. Continuation along $\gamma$ (perturbed off
+the poles of the $c_i$) gives $c_0+K(\gamma H_a)=0$, so $K$ kills $(\gamma-1)H_a$ for every $\gamma$, hence the
+$u$-dimensional space $U_a$. A nonzero operator of order $\le u-1$ cannot do that, so $K=0$, and then $c_0=0$.
+\end{proof}
+
+So Proposition~\ref{prop:indep} follows from $U_a=S$, which in turn follows from $U_a\ne0$
+(Lemma~\ref{lem:nonzero}) and the irreducibility of $S$ under the monodromy (Proposition~\ref{prop:irred}).
+
+\subsection{Local exponents}
+
+\begin{proposition}\label{prop:exponents}
+For every integer $q\ge2$ and $k=1,2,3,4$, the point $y_k$ is a regular singular point of $L$ with exponents
+$0,1,\dots,32$ and $\tfrac12$. Every local solution of $Lf=E$ ($E$ holomorphic at $y_k$) has the form
+$h_0(t)+c\,t^{1/2}h(t)$, $t=y-y_k$, with $h_0,h$ holomorphic and $h(0)\ne0$. In particular the local monodromy of the
+affine solution space of $Lf=E$ at $y_k$ is a reflection, and a solution is single-valued around $y_k$ if and only if it
+is holomorphic there.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted, exact)]
+Let $c_{34},c_{33}$ be the $\vartheta^{34}$- and $\vartheta^{33}$-coefficients of $L$. In $d/dy$ form,
+$a_{34}=y^{34}c_{34}$ has a simple zero at $y_k$ (the discriminant of $c_{34}$ is a constant times
+$w^3(w-1)^2(8w+1)^8(9w-1)^8(25w-16)^8\ne0$) and $a_{33}(y_k)=y_k^{33}c_{33}(y_k)$. So $y_k$ is regular singular with
+exponents $0,\dots,32$ and $\beta_k=33-c_{33}(y_k)/(y_kc_{34}'(y_k))$. The pseudo-remainder of $2c_{33}-65\,y\,c_{34}'$
+by $c_{34}$ in $\ZZ[w][y]$ is identically zero, so $\beta_k=\frac12$ for all $k$ and all $q$ (cross-check:
+$\Res_y(c_{34},(33-b)yc_{34}'-c_{33})$ is a constant times $w^3(w-1)^2(8w+1)^{10}(9w-1)^{10}(25w-16)^{10}(2b-1)^4$). In
+the power-series recursion at $y_k$ the pivot vanishes only at exponent $\frac12$, never at an integer, which gives $33$
+holomorphic homogeneous solutions, a holomorphic particular solution and one solution $t^{1/2}h(t)$
+(\file{fourterm/exponents.py}).
+\end{proof}
+
+These statements concern $L$, not $L_{13}$ (which has its own exponents and apparent points); they are transferred to
+$S$ only after $S\subseteq\Sol(L)$ has been certified (step (a) below).
+
+\subsection{No combination is single-valued}
+
+\begin{lemma}\label{lem:nonzero}
+For every $a\in\CC^3\setminus\{0\}$, $U_a\ne0$.
+\end{lemma}
+
+\begin{proof}
+Suppose $U_a=0$, so that $H_a$ extends to a single-valued holomorphic function on $\CC\setminus\{0,y_1,\dots,y_4\}$.
+\begin{enumerate}
+\item It is holomorphic at $0$ and $y_1$ (where it equals its power series) and at $y_2,y_3,y_4$ by
+Proposition~\ref{prop:exponents}. So $H_a$ is entire.
+\item $E_a$ is a polynomial of degree $\le3$, so $H_a$ is killed by $L'=\vartheta(\vartheta-1)(\vartheta-2)
+(\vartheta-3)L$. With $u=1/y$, the $\vartheta_u$-leading coefficient of $L'$ at $u=0$ is $\pm\mathrm{lc}(p_0)\ne0$, so
+$\infty$ is a regular singular point. A single-valued solution of a Fuchsian equation near $\infty$ has moderate growth,
+hence is meromorphic at $\infty$: $H_a$ is a polynomial.
+\item $Ly^D=\sum_jp_j(D-j)y^{D+4-j}$, so if $H_a\not\equiv0$ has degree $D\ge0$, the coefficient of $y^{D+4}$ in $LH_a$
+is $p_0(D,q^2)$ times the leading coefficient of $H_a$; $p_0(\cdot,q^2)$ has no nonnegative integer root for
+$2\le q\le60$. Since $\deg E_a\le3<D+4$, $H_a\equiv0$, that is, $(a\cdot f)Q_n-a\cdot P_n=0$ for all $n$.
+\item The Casoratian $\det[v_0,v_1,v_2,v_3]$ equals, as a function of $z=q$,
+\[
+\begin{aligned}
+-\frac{z}{291060}\bigl(&7427354003333880z^6-4691165040913890z^4\\&-141637476029121z^2+63093459176677\bigr),
+\end{aligned}
+\]
+which has no integer root other than $0$. So $v_0,\dots,v_3$ are independent and $(a\cdot f,-a)=0$, i.e.\ $a=0$.
+\qedhere
+\end{enumerate}
+\end{proof}
+
+\subsection{Irreducibility of the monodromy}\label{sec:irred}
+
+\emph{The data.} For each $q$, the script \file{mono13.py} computes rigorous enclosures of the monodromy of $g=y^5H_3$
+(multiplication by $y^5$ is equivariant, and shifts the exponents of $L_{13}$ at $0$ to make the Taylor recursion
+well-conditioned) on the $14$-dimensional affine module spanned by $g$ and $y^5S$. Coordinates: the $13$ scaled Taylor
+coefficients at the base point $y_*=\operatorname{round}(0.42y_2)$ and an affine coordinate. The generators are: $A$,
+the circle $|y|=y_*$ (which encloses $0$, $y_1$ and some apparent points); $2$ and $3$, loops around $y_2$ and $y_3$
+conjugated by paths that avoid all $21$ apparent points. The computation:
+\begin{itemize}
+\item initial data at $b=2^{-21}$ from the power series of $g$, with exact $Q_n(q)$, $P_{3,n}(q)$ and the tail bound of
+Corollary~\ref{cor:size};
+\item Taylor steps $c\mapsto c+h$ along the paths, $|h|\le0.2\delta$ ($\delta$ the distance to the nearest singular point
+of $L_{13}$): coefficients of an approximate solution by the recurrence at a midpoint, the residual
+$L_{13}\hat y-E$ computed in balls, and the error $y-\hat y$ bounded by a Cauchy majorant whose constants
+$\max|A_i/A_{13}|$ on a circle are enclosed by arc subdivision using factored forms of the coefficients and certified root
+balls of the leading coefficient; the step matrix is enclosed and applied as a ball product;
+\item working precision $2200$ bits, truncation target $1700$ bits per step; all radii of the generator matrices stay
+below $10^{-308}$ (typically $10^{-400}$).
+\end{itemize}
+The output is three $14\times14$ ball matrices $g_A,g_2,g_3$ whose last row is exactly $(0,\dots,0,1)$, and the
+coordinate vector $v$ of $g$. As a check, $g_Av=v$ holds within the balls ($H_3$ is holomorphic inside $|y|<y_2$). The
+$13\times13$ blocks are the actions on $S$.
+
+\emph{The reflection criterion.} Let $u=(g_2-1)v\in S$.
+\begin{enumerate}
+\item[(a)] If the $13$ vectors $g_wu$ ($w$ words in $g_A,g_2,g_3$) are linearly independent, then $S=\operatorname{span}
+\{g_wu\}$. Each $g_wu$ is a continuation of $(\gamma_2-1)H_3$, a solution of the homogeneous equation $Lf=0$, so
+$S\subseteq\Sol(L)$, and loops act on $S$ through their classes in $\pi_1(\CC\setminus\{0,y_1,\dots,y_4\})$. In
+particular $g_2$ acts on the affine module $\CC H_3\oplus S$ as a conjugate of the local loop at $y_2$, which is a
+reflection by Proposition~\ref{prop:exponents}. Its image is $\CC u$, so $g_2|_S=1+u\otimes\phi$ for some $\phi\in S^*$.
+\item[(b)] The row $\psi=$ row $i_0$ of $(g_2-1)|_S$ equals $u_{i_0}\phi$; one entry ball excludes $0$, so $\phi\ne0$
+and $u_{i_0}\ne0$.
+\item[(c)] If moreover the $13$ covectors $\psi g_w$ are linearly independent, $S$ is irreducible under
+$\langle g_A,g_2,g_3\rangle$: for an invariant subspace $W\ne0$, either $\phi(W)\ne0$, and then
+$u=(g_2x-x)/\phi(x)\in W$ for some $x\in W$, so $W\supseteq\operatorname{span}\{g_wu\}=S$; or $\phi(W)=0$, and then
+$W\subseteq\bigcap_w\ker(\phi g_w)=0$.
+\end{enumerate}
+
+\begin{proposition}\label{prop:irred}
+For every $q$ with $26\le q\le53$, the $13\times13$ determinants of (a) and (c) exclude $0$. Hence $S$ is irreducible
+under the monodromy group of $L_{13}$.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted, Arb)]
+The words were chosen greedily on midpoints (a heuristic that does not affect rigour); at every $q$ both lists are
+$\varnothing,A,A^2,A^3,A^4,3A^3,A^5,A3A^3,A^6,A^23A^3,A^7,A^33A^3,A^8$ (in the notation of the certificate files). The
+determinants are evaluated in Arb at $2200$ bits from the ball entries (\file{fourterm/irred.py}); their imaginary parts
+are listed in Table~\ref{tab:4T}, with relative radii at most $10^{-15}$; the real parts are balls around $0$ of radius
+at most $10^{-219}$. Irreducibility under the subgroup $\langle g_A,g_2,g_3\rangle$ implies irreducibility under the
+whole monodromy group.
+\end{proof}
+
+\begin{table}
+\caption{Certificates for Theorem~\ref{thm:4T}: the least $\fm$ with $M_\fm(q)>0$, the margin $M_{14}(q)$ (midpoint of
+an Arb ball of radius $\le5\cdot10^{-8}$), $y_2$, the base point $y_*$, and the midpoints of the two $13\times13$
+determinants of Proposition~\ref{prop:irred} (\file{code/thm1\_cor2/fourterm/summary\_4t.json}). The jump between
+$q=37$ and $q=38$ is a change of scaled coordinates (base point and scaling), not a failure.}\label{tab:4T}
+\small
+\begin{tabular}{rrrrrll}
+\toprule
+$q$ & $\fm_{\min}$ & $M_{14}(q)$ & $y_2$ & $y_*$ & det (a) & det (c)\\
+\midrule
+26 & 14 & 0.009225 & 156.368 & 66 & $1.634\cdot10^{14}\,i$ & $2.307\cdot10^{89}\,i$ \\
+27 & 12 & 0.082012 & 169.118 & 71 & $1.605\cdot10^{13}\,i$ & $1.657\cdot10^{91}\,i$ \\
+28 & 11 & 0.152055 & 182.368 & 77 & $1.985\cdot10^{12}\,i$ & $1.121\cdot10^{93}\,i$ \\
+29 & 10 & 0.219554 & 196.119 & 82 & $2.151\cdot10^{11}\,i$ & $5.668\cdot10^{94}\,i$ \\
+30 & 9 & 0.284686 & 210.369 & 88 & $2.871\cdot10^{10}\,i$ & $2.739\cdot10^{96}\,i$ \\
+31 & 8 & 0.347612 & 225.119 & 95 & $4.584\cdot10^{9}\,i$ & $1.253\cdot10^{98}\,i$ \\
+32 & 7 & 0.408477 & 240.369 & 101 & $6.520\cdot10^{8}\,i$ & $6.072\cdot10^{99}\,i$ \\
+33 & 7 & 0.467411 & 256.119 & 108 & $1.094\cdot10^{8}\,i$ & $5.079\cdot10^{101}\,i$ \\
+34 & 7 & 0.524534 & 272.370 & 114 & $1.669\cdot10^{7}\,i$ & $2.784\cdot10^{103}\,i$ \\
+35 & 6 & 0.579952 & 289.120 & 121 & $2.964\cdot10^{6}\,i$ & $1.637\cdot10^{105}\,i$ \\
+36 & 6 & 0.633764 & 306.370 & 129 & $6.013\cdot10^{5}\,i$ & $1.007\cdot10^{107}\,i$ \\
+37 & 6 & 0.686062 & 324.120 & 136 & $1.120\cdot10^{5}\,i$ & $4.311\cdot10^{108}\,i$ \\
+38 & 5 & 0.736928 & 342.370 & 144 & $7.143\cdot10^{27}\,i$ & $3.168\cdot10^{92}\,i$ \\
+39 & 5 & 0.786438 & 361.120 & 152 & $1.535\cdot10^{27}\,i$ & $6.101\cdot10^{93}\,i$ \\
+40 & 5 & 0.834663 & 380.370 & 160 & $3.367\cdot10^{26}\,i$ & $1.076\cdot10^{95}\,i$ \\
+41 & 5 & 0.881668 & 400.120 & 168 & $7.537\cdot10^{25}\,i$ & $1.747\cdot10^{96}\,i$ \\
+42 & 5 & 0.927512 & 420.371 & 177 & $1.865\cdot10^{25}\,i$ & $2.758\cdot10^{97}\,i$ \\
+43 & 5 & 0.972252 & 441.121 & 185 & $4.342\cdot10^{24}\,i$ & $3.843\cdot10^{98}\,i$ \\
+44 & 4 & 1.015940 & 462.371 & 194 & $1.110\cdot10^{24}\,i$ & $5.232\cdot10^{99}\,i$ \\
+45 & 4 & 1.058624 & 484.121 & 203 & $2.884\cdot10^{23}\,i$ & $9.447\cdot10^{100}\,i$ \\
+46 & 4 & 1.100350 & 506.371 & 213 & $8.133\cdot10^{22}\,i$ & $2.221\cdot10^{102}\,i$ \\
+47 & 4 & 1.141158 & 529.121 & 222 & $2.178\cdot10^{22}\,i$ & $4.203\cdot10^{103}\,i$ \\
+48 & 4 & 1.181090 & 552.371 & 232 & $6.302\cdot10^{21}\,i$ & $8.202\cdot10^{104}\,i$ \\
+49 & 4 & 1.220180 & 576.121 & 242 & $1.847\cdot10^{21}\,i$ & $1.468\cdot10^{106}\,i$ \\
+50 & 4 & 1.258466 & 600.371 & 252 & $5.482\cdot10^{20}\,i$ & $2.422\cdot10^{107}\,i$ \\
+51 & 4 & 1.295978 & 625.121 & 263 & $1.740\cdot10^{20}\,i$ & $4.090\cdot10^{108}\,i$ \\
+52 & 4 & 1.332747 & 650.371 & 273 & $5.295\cdot10^{19}\,i$ & $5.802\cdot10^{109}\,i$ \\
+53 & 4 & 1.368803 & 676.122 & 284 & $1.717\cdot10^{19}\,i$ & $8.436\cdot10^{110}\,i$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proof}[Proof of Proposition~\ref{prop:indep}, Theorem~\ref{thm:4T} and Corollary~\ref{cor:F1}]
+By Lemma~\ref{lem:nonzero}, $U_a$ is a nonzero monodromy-invariant subspace of $S$, so $U_a=S$ by
+Proposition~\ref{prop:irred}; then Lemma~\ref{lem:indep} with $u=13$ gives Proposition~\ref{prop:indep}, and the
+reduction above gives Theorem~\ref{thm:4T}. Corollary~\ref{cor:F1} is the case $26\le q\le32$ of Theorem~\ref{thm:4T}
+(with $r_0=-\theta_q$, $a=(0,0,1)$ in a hypothetical relation $\theta_q\in\QQ$).
+\end{proof}
+
+\begin{remark}[Independent certificate for Corollary~\ref{cor:F1}]\label{rem:F1cert}
+Corollary~\ref{cor:F1} was first proved by a different final step: for $26\le q\le32$ the $14$ continuations of $H_3$
+along the words $\varnothing,2,3,A2,A3,A^22,A^23,A^32,A^33,A^42,A^43,A^52,A^62,A^72$ have a nonzero $14\times14$ Arb
+determinant (\file{cert\_det.py}), for example
+\[
+\begin{gathered}
+[257906186217.156323475542228360\pm3.7\cdot10^{-19}]\,i\quad(q=26),\\
+[992625.090850805422458198252898\pm3.8\cdot10^{-25}]\,i\quad(q=32).
+\end{gathered}
+\]
+So
+$\dim\operatorname{span}\{\gamma H_3\}=14$, and the elementary analogue of Lemma~\ref{lem:indep} gives the independence
+of $1,H_3,\dots,\vartheta^{12}H_3$. (The passage from coordinate vectors to germs uses $E\ne0$.) Independent reruns at
+$q=26$ and $q=32$ with initial data that do not use Lemma~\ref{lem:contact} (base $b=2^{-22}$, the crude bound
+$(2n+1)2^{20n}|\mu_3|/(q-1)$) and a different discretisation reproduce these determinants to all $30$ printed digits,
+and give the same irreducibility certificates.
+\end{remark}
+
+\begin{remark}
+Smaller holonomy budgets suffice for larger $q$ ($\fm_{\min}$ in Table~\ref{tab:4T}), but the proof uses $\fm=14$ at
+every $q$. No case analysis on the relation vector and no input from linear forms in logarithms is needed: only $a\ne0$
+is used.
+\end{remark}
+
+% ===========================================================================
+\section{Widening CDT's range: proof of Theorem~\ref{thm:Cprime}}\label{sec:Cprime}
+% ===========================================================================
+
+\subsection{CDT's construction}\label{sec:CDTconstruction}
+We recall \cite[\S14]{CDT}. For an odd integer $a$ with $|a|\ge3$ let $A(a,x)=(1-2ax+x^2)^{-1/2}=\sum_ku_k(a)x^k$ and
+$H(a,x)=A(a,x)\int_0^xA(a,t)\,dt=\sum_kv_k(a)x^k$, so that $v_k(a)/u_k(a)\to\frac12\log\frac{a+1}{a-1}$. For distinct
+odd $a=2m+1$, $b=2n+1$ put $\lambda_a=\frac12\ell_m$, $\lambda_b=\frac12\ell_n$, and suppose
+$r_0+r_a\lambda_a+r_b\lambda_b+r_{ab}\lambda_a\lambda_b=0$ with $r\in\ZZ^4$, $(r_a,r_b,r_{ab})\ne0$. CDT form
+\[
+P(x)=\sum_k\bigl(r_0u_k(a)u_k(b)+r_av_k(a)u_k(b)+r_bu_k(a)v_k(b)+r_{ab}v_k(a)v_k(b)\bigr)x^k
+\]
+(a combination of Hadamard products) and symmetrise:
+$G(y)=P(x)+P(x/(x-1))$ with $y=x^2/(x-1)$ \cite[Def.~14.1.9]{CDT}. By \cite[Prop.~14.1.11]{CDT}, $G$ has denominator
+type $[1,\dots,2k]^2$, satisfies a differential equation $\mathcal L_{a,b}$ whose singular points are $0,4,\infty$ and
+the four points $Z_4(a,b)$, the $y$-images of the four products $x=(a\pm\sqrt{a^2-1})(b\pm\sqrt{b^2-1})$ (plus apparent
+singularities at the roots of a polynomial $R_{10}$), and $G$ is overconvergent at the image $\alpha$ of the smallest
+product. With the seven ``pure'' functions $B_1,\dots,B_7$ of \cite[\S10]{CDT} and ten functions built from $G$
+($G,G',G'',G'''$ and six primitives), \cite[Lemma~14.3.1]{CDT} gives $\fm=17$ functions, linearly independent over
+$\QQ(y)$, with
+\[
+\begin{gathered}
+\sigma=(0,2,2,4,\dots,4),\qquad e=(0,0,1;0,0,0,0,0,0;1,1,1,1,1,1,1,1),\\
+\tau=\frac{1136}{289}+\frac{78419}{242760}=\frac{1032659}{242760}=4.2538\ldots
+\end{gathered}
+\]
+\cite[(14.5.2)--(14.5.4)]{CDT}. The map is $\varphi=h\circ\psi$, with
+\[
+h(\mathsf q)=-256\,\mathsf q\prod_{k\ge1}(1+\mathsf q^k)^{24}=-256\Bigl(\frac{\eta(2\tau)}{\eta(\tau)}\Bigr)^{24},
+\]
+the hauptmodul of $\Gamma_0(2)$ in the cusp coordinate $\mathsf q=e^{2\pi i\tau}$, and $\psi:\DD\to\DD$ holomorphic
+with $\psi^{-1}(0)=\{0\}$; admissibility of $\varphi$ is checked through \cite[Cor.~9.0.19]{CDT}. The constant
+$10^{-6}$ of \cite[Thm.~C]{CDT} enters only through \cite[Lemma~14.2.4]{CDT} (which needs $|a/b\mp1|<\frac12$),
+\cite[Lemma~14.2.6]{CDT} (which needs $0<|a/b-1|<10^{-3}$), and the location of the singularities, \cite[\S14.4]{CDT},
+which determines the admissible maps. We change only the map.
+
+\subsection{Location of the singular values}
+
+\begin{lemma}\label{lem:S}
+Let $0<\varepsilon\le10^{-4}$ and let $m\ne n$ be integers in $\ZZ\setminus\{-1,0\}$ with $|m/n-1|<\varepsilon$; put
+$a=2m+1$, $b=2n+1$. Then the three genuine singular values (the points of $Z_4(a,b)$ other than $\alpha$) are real with
+$|y|\ge Y_1:=1/\varepsilon-6$, and $\alpha$ is real with $|\alpha|\le Y_0:=\varepsilon^4/16$.
+\end{lemma}
+
+\begin{proof}
+Let $A=|a|$, $B=|b|$, $u=a+\operatorname{sgn}(a)\sqrt{a^2-1}$, $v$ likewise; the products are $x\in\{uv,u/v,v/u,1/(uv)\}$,
+all real since $A,B\ge3$, and $y=x^2/(x-1)=(x-1)+2+1/(x-1)$. By the mean value theorem for $\operatorname{arccosh}$,
+$\delta:=|\log|u|-\log|v||\le|A-B|/\sqrt{\min(A,B)^2-1}$. For positive pairs $|A-B|/\min(A,B)<\varepsilon/(1-\varepsilon)$,
+for negative pairs $\le2\varepsilon|n|/(2|n|(1-\varepsilon)-1)\le\varepsilon/(1-1.5\varepsilon)$, using $|n|\ge1/\varepsilon$;
+and $\min(A,B)\ge2/\varepsilon-3$, so the square-root factor is at most $1+\varepsilon^2/7$. Hence
+$\delta\le\varepsilon(1+1.6\varepsilon)$, and $x\in\{u/v,v/u\}$ has $|x-1|\le e^\delta-1\le\varepsilon(1+3\varepsilon)$, so
+$|y|\ge(1-3\varepsilon)/\varepsilon-2-2\varepsilon>1/\varepsilon-6$. For $x=uv$, $|x|\ge(2\min(A,B)-1)^2$ gives $y>1/\varepsilon$;
+for $x=1/(uv)$, $|\alpha|\le2/|uv|^2<\varepsilon^4/16$.
+\end{proof}
+
+The constant $6$ cannot be dropped entirely: CDT's ``$|y|>1/\varepsilon$'' fails by $O(1)$. At
+$(m,n)=(-10^6,-10^6-1)$ the smallest genuine singular value has $|y|=10^6-1.50$; at $\varepsilon=3\cdot10^{-6}$ the worst
+case is $1/\varepsilon-1.83$, at $(m,n)=(-333333,-333334)$. This does not affect \cite[Thm.~C]{CDT}, whose map has room.
+
+\subsection{Admissibility of one map for the whole range}
+Let $\varphi=h\circ\psi$ with $\psi$ entire, $\psi^{-1}(0)=\{0\}$, and suppose
+\begin{enumerate}
+\item[(a)] $|\psi|<1$ on $\TT$;
+\item[(b)] $|\varphi|>2Y_0$ on $\TT$;
+\item[(c$'$)] $|\varphi|<Y_1$ on $\TT$.
+\end{enumerate}
+By (a) and the maximum principle $\psi(\overline\DD)\subset\DD$, so $\varphi$ is holomorphic on a neighbourhood of
+$\overline\DD$. By (c$'$), $\varphi(\DD)\subset D(0,Y_1)$, which by Lemma~\ref{lem:S} misses every genuine singular value
+of every pair in the range. Since $\varphi$ vanishes only at $0$, simply, and $|\varphi|>2Y_0$ on $\TT$, the argument
+principle shows that every point of $U=D(0,2Y_0)$ has exactly one preimage in $\DD$; this is the univalent leaf over
+$U\ni\alpha$ required by \cite[Cor.~9.0.19]{CDT}, with $Y^0=\{\alpha\}$ and $Y^1$ the three genuine singular values.
+(Cor.~9.0.19 leaves $U$ free, subject to being a contractible neighbourhood of $0$ in $\CC\setminus\{4\}$ containing
+$\alpha$ on which $G$ is holomorphic; $G$ is holomorphic on its principal disc, which contains $D(0,2Y_0)$.) So the
+$17$ pullbacks $f_i\circ\varphi$ are meromorphic on $\DD$, for every pair with $|m/n-1|<\varepsilon$ at once.
+
+\subsection{The certificate}\label{sec:certC}
+We take $\psi(z)=z\exp(\sum_{k=0}^{96}c_kz^k)$ with dyadic coefficients $c_k\in2^{-40}\ZZ$ (the certified object; stored
+in \file{code/thm3/runs/cert3\_p4\_C\_eps3.0e-06\_eps3.0e-06\_l3.json}), found by an admissibility-aware L-BFGS
+optimisation of $L-T/17$ (started from lune-shaped maps and from CDT's map). Then $L=\log|\varphi'(0)|=\log256+c_0$ exactly. We apply
+Theorem~\ref{thm:CDT602} with the four maps $\varphi_k(z)=\varphi(r_kz)$, where
+\[
+(r_0,r_1,r_2,r_3)=\Bigl(\frac1{2048},\frac{99}{256},\frac{215}{256},1\Bigr),\quad
+(\vartheta_1,\vartheta_2,\vartheta_3)=\Bigl(\frac{61}{200},\frac{231}{200},\frac{1109}{500}\Bigr);
+\]
+the $\varphi_k$ are restrictions of $\varphi$, so they are admissible.
+
+\emph{Certification} (\file{cert3.py}, \file{cert3d.py}). The circle is cut into dyadic intervals, adaptively. On each
+interval, an Arb value of $\log\varphi$ at the midpoint (via $\eta$-quotients) and a rigorous bound for
+$|d\log\varphi/d\vartheta|$, namely $(1+24\sum_kk\rho^k/(1-\rho^k))\cdot\sup|1+zg'(z)|$ with $\rho\ge\sup|\psi|$ on the
+interval and $g=\sum c_kz^k$, give an upper step function for $\log|\varphi|$, hence an exact rational upper bound for
+the rearrangement integral of the mixture, and decide (a), (b), (c$'$). The results at $\varepsilon=3\cdot10^{-6}$:
+\begin{itemize}
+\item (a), (b), (c$'$) hold; $\max_\TT\log|\varphi|\le13801311154345/2^{40}=12.55222<\log Y_1=12.71688$;
+\item $L=4.7983738127618231\ldots$, mixture integral $\le9.08327$, penalty $\frac1{17}\sum\vartheta_k^2\log(r_k/r_{k-1})=
+2.51411/17$; numerator $[9.23115527305872\pm1.5\cdot10^{-15}]$;
+\item hence $17\le\text{numerator}/(L-\tau)\le16.95199$ would be needed: contradiction, with margin
+$L-\text{numerator}/17-\tau\ge0.0015378$.
+\end{itemize}
+The margin is thin ($0.048$ in the function count) but certified, and all slack of the step functions is in the safe
+direction. Certificates for $\varepsilon=2\cdot10^{-6}$ and $2.5\cdot10^{-6}$ (trivial partition; margins $\ge0.01138$
+and $\ge0.00131$) and a certificate for CDT's own map at $10^{-6}$ (margin $\ge0.031$) serve as cross-checks; only the
+$3\cdot10^{-6}$ certificate is needed, since Lemma~\ref{lem:S} at $\varepsilon=3\cdot10^{-6}$ covers every pair below it.
+An independent non-rigorous sampling with a $\mathsf q$-product instead of $\eta$ gives numerator $\approx9.2297$.
+
+\subsection{The \texorpdfstring{$\varepsilon$}{epsilon}-dependent steps of CDT's chain}\label{sec:phi6}
+Lemma~14.2.4 of \cite{CDT} needs $|a/b\mp1|<\frac12$, and Lemma~14.2.6 needs $0<|a/b-1|<10^{-3}$; here
+$|a/b-1|<\varepsilon(1+2\varepsilon)\le10^{-5}$. The proof of Lemma~14.2.6 uses only $b-a=2(n-m)\in\ZZ\setminus\{0\}$, so
+$|m-n|\ge2$ changes nothing. \cite[Lemma~14.3.1]{CDT} needs a $10\times10$ determinant $\det(a,b)$ to be nonzero. We
+recomputed it exactly from the operator of \cite[Prop.~14.1.11]{CDT} and the reduction \cite[(14.3.2)--(14.3.6)]{CDT},
+and proved (Proposition~\ref{prop:detid} below)
+\[
+\det(a,b)(a-b)^{86}=\kappa\,a^6b^6(a+b)^{24}Q_1^4Q_2^4Q_3^4Q_4^2Q_5^2\,\Phi_4\Phi_6\Phi_{14}^3\Phi_{26}\Phi_{79}^3,
+\]
+with $\kappa=645700815/37778931862957161709568$, $Q_1=4a^2-4ab+1$, $Q_2=4b^2-4ab+1$, $Q_3=4a^2-4ab+4b^2-3$,
+$Q_4=16a^2-40ab+16b^2+9$, $Q_5=80a^2-128ab+80b^2-45$, and $\Phi_d$ irreducible of $a$-degree $d$. The factors are handled as follows.
+\begin{itemize}
+\item $a$, $b$, $a\pm b$ are nonzero, and the $Q_i$ are odd for odd $a,b$.
+\item $\Phi_4=80a^4-88a^3b+24a^2b^2-399a^2-88ab^3+786ab+80b^4-399b^2+9$ is odd for odd $a,b$, hence nonzero. (CDT's
+Lemma~14.2.6 asserts $\Res(R_{10},y(4-y))\ne0$, but its proof treats only $\Phi_{14}$ and $\Phi_{79}$.)
+\item For $\Phi_{14}$ and $\Phi_{79}$ we use the argument in the proof of CDT's Lemma~14.2.6, which uses only
+$|b-a|\ge1$ and $|a/b-1|\le10^{-3}$; a larger $|b-a|$ only shrinks the error terms.
+\item $\Phi_{26}$: Lemma~14.2.4 gives $\Res(R_4,R_{10})\ne0$ by irreducibility and division, for $|a/b-1|<\frac12$.
+\item $\Phi_6$ divides none of $\Delta_y(R_{10})$, $\Res_y(R_{10},R_4)$, $\Res_y(R_{10},y(y-4))$, contrary to the text of
+\cite{CDT}, so neither lemma covers it. Explicitly,
+\[
+\begin{aligned}
+\Phi_6(a,b)={}&59290a^6b^2-185493a^5b^3+249865a^4b^4-185493a^3b^5+59290a^2b^6\\
+&+8491a^5b-65541a^4b^2+119686a^3b^3-65541a^2b^4+8491ab^5\\
+&-6090a^4+15225a^3b-21000a^2b^2+15225ab^3-6090b^4\\
+&+975a^2-4260ab+975b^2+1755,
+\end{aligned}
+\]
+and $\Phi_6(a,b)\equiv16\pmod{32}$ for all odd $a,b$ (check over the $16\times16$ odd residue classes mod $32$). So
+$\Phi_6(a,b)\ne0$ at every odd pair. (Also $|\Phi_6(a,b)|/|a|^8\ge1864$ whenever $a\ne b$ are integers with
+$|a/b-1|<1/20$, so $\Phi_6$ has no integer zeros near the diagonal.)
+\end{itemize}
+Hence, given CDT's set-up, \cite[Lemma~14.3.1]{CDT} holds for all odd $a\ne b$ with $|a/b-1|<10^{-3}$, with no extra
+hypothesis. The set of irreducible factors agrees with CDT's printed list; the multiplicities differ, which does not
+matter. Two misprints in \cite{CDT}: the factor ``$1+4b^2-2ab$'' in (14.2.2) and (14.2.3) should read $1+4b^2-4ab$.
+
+\begin{proposition}\label{prop:detid}
+Given the shape \cite[(14.2.1)]{CDT} of the operator of \cite[Prop.~14.1.11]{CDT} and the reduction
+\cite[(14.3.2)--(14.3.5)]{CDT}, the displayed identity for $\det(a,b)(a-b)^{86}$ holds in $\QQ(a,b)$, hence at every
+pair of integers $a\ne b$.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted, exact)]
+\emph{The operator.} CDT print only $R_4$, $R_{10}$ and $c_3/c_4$ of their operator $\mathcal L=\sum_{i\le4}c_iD^i$. We
+interpolate a candidate $\tilde{\mathcal L}\in\QQ[a,b,y][D]$ with $c_4=(y-4)^2y^3R_4R_{10}$ and verify it: the
+coefficients of $y^k$, $k<63$, of $\tilde{\mathcal L}(G_A)$ vanish identically in $\QQ[a,b]$, where
+$G_A=\sum_nP_n(a)P_n(b)p_n(y)$ ($P_n$ Legendre polynomials, $p_n(x+w)=x^n+w^n$ for $w=x/(x-1)$), and these $63$
+conditions on the $63$ unknowns of CDT's ansatz have rank $63$ (already at $(a,b)=(7,5)$). So the ansatz has a unique
+solution over $\QQ(a,b)$, and CDT's operator is $\tilde{\mathcal L}$; also $c_3/c_4$ agrees symbolically with CDT's
+printed formula (\file{f1\_Lsym.py}).
+
+\emph{An a priori degree bound.} With $\tilde{\mathcal L}$, the $10$ polynomials $S_k$ of \cite[(14.3.6)]{CDT} are
+explicit in $\QQ[a,b,y]$. In the variables $t=a-b$ and $b$, the leading coefficient of $R_{10}$ is $-32t^4$, and the
+remainders of $S_k$ modulo $R_{10}$ give $\det(a,b)=\det M'(t,b)/t^{200}$ with $M'$ a polynomial matrix. Summing the
+largest entry degrees column by column gives $\deg_b\det M'\le690$ (and $\deg_t\det M'\le685$), using the entries only
+(\file{f1\_detsym.py}).
+
+\emph{The identity.} It is equivalent to $\det M'(t,b)-\kappa\,t^{114}\Pi(t+b,b)=0$, where $\kappa\Pi$ is the right
+side; this polynomial has $b$-degree at most $\max(690,\deg\Pi)=690$. For each of the $692$ integers
+$b_0=-346,\dots,345$ we computed $\det M'(t,b_0)\in\QQ[t]$ exactly (fraction-free elimination, every division checked
+exact) and found it equal to $\kappa t^{114}\Pi(t+b_0,b_0)$ (\file{f1\_identity.py}, about $35$ minutes). A polynomial of
+$b$-degree $\le690$ that vanishes on $692$ lines $b=b_0$ is zero.
+\end{proof}
+
+An earlier version of this computation interpolated $\det(a,b_0)(a-b_0)^{86}$ on ten lines from $420$ values each, which
+gives the right answer (it is a consequence of Proposition~\ref{prop:detid}) but, by the bound above, did not by itself
+prove it (\file{code/thm3/f1/}).
+
+\begin{proof}[Proof of Theorem~\ref{thm:Cprime}]
+A relation for a pair with $|m/n-1|<3\cdot10^{-6}$ gives, by \cite[Prop.~14.1.11, Lemma~14.3.1]{CDT} and
+Section~\ref{sec:phi6}, $17$ functions as in Section~\ref{sec:CDTconstruction}, linearly independent over $\QQ(y)$ and
+holonomic. The map of Section~\ref{sec:certC} is admissible for them, and Theorem~\ref{thm:CDT602} gives
+$17\le16.952$, a contradiction.
+\end{proof}
+
+% ===========================================================================
+\section{Pooling pairs: proof of Theorem~\ref{thm:F2}}\label{sec:F2}
+% ===========================================================================
+
+Suppose there are $K$ pairwise inequivalent exceptional classes with representatives $(m_k,n_k)$ in the range. Each gives
+a $G$-function $G_k$ and its ten associated functions (the \emph{$G$-family} of the pair); the pure functions
+$B_1,\dots,B_7$ do not depend on the pair. The idea is to put all $7+10K$ functions into one holonomy bound.
+
+\subsection{Joint independence}
+
+\begin{lemma}\label{lem:D}
+Assume \cite[Lemma~14.2.4]{CDT}. Let $(a,b)$, $(c,d)$ be integer pairs with $|a|,|b|,|c|,|d|\ge2$, $a\ne b$, $c\ne d$,
+$|a/b-1|<\frac12$, $|c/d-1|<\frac12$. If $Z_4(a,b)\cap Z_4(c,d)\ne\varnothing$, then $\{c,d\}=\{a,b\}$ or
+$\{c,d\}=\{-a,-b\}$. Moreover $0,4\notin Z_4(a,b)$.
+\end{lemma}
+
+\begin{proof}
+$Z_4(a,b)$ is the root set of the quartic $R_4(a,b;y)$ of \cite[(14.2.1)]{CDT}, which is irreducible over $\QQ$ by
+\cite[Lemma~14.2.4]{CDT}, with constant term $1$ and leading coefficient $4(a-b)^2$. Two irreducible quartics with a
+common root and constant term $1$ are equal. With $\sigma=a^2+b^2$ and $\pi=ab$ the coefficients of $y^4$ and $y^3$ are
+$c_4=4\sigma-8\pi$ and $c_3=32\pi^2-16\pi\sigma+16\pi-8\sigma$, and $c_3=-2c_4-4\pi c_4$ identically. So $R_4$ determines
+$\pi$ and $\sigma$, hence $(a+b)^2$ and $(a-b)^2$, hence $\{a,b\}$ up to a common sign. Finally $R_4(0)=1$ and
+$R_4(4)=(16a^2-40ab+16b^2+9)^2$, which is odd (\file{code/thm4/lemmaD.py}).
+\end{proof}
+
+\begin{lemma}\label{lem:H}
+Every branch of every function in the $G$-family of $(a,b)$ is holomorphic on $\CC\setminus(\{0,4\}\cup Z_4(a,b))$, and
+every branch of $B_1,\dots,B_7$ is holomorphic on $\CC\setminus\{0,4\}$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+$P(x)$ is a combination of Hadamard products $f\star g$ with $f\in\{A(a,\cdot),H(a,\cdot)\}$ and
+$g\in\{A(b,\cdot),H(b,\cdot)\}$, each factor continuable along every path avoiding its two singular points. By
+Hadamard's multiplication theorem in its global form (deform the contour in $f\star g(x)=\frac1{2\pi i}\oint
+f(t)g(x/t)\,dt/t$; cf.\ \cite{Had99} for the star-domain form \TODO{give a modern reference for the path-wise
+form}), $f\star g$ continues along every path avoiding $0$ and the four products. In $y$,
+the two roots of $x^2-yx+y=0$ are distinct off $y\in\{0,4\}$ and avoid $\{0\}\cup\{\text{products}\}\cup\{p/(p-1)\}$
+exactly off $\{0\}\cup Z_4$, so $G=P(x)+P(x/(x-1))$ continues along every path in $\CC\setminus(\{0,4\}\cup Z_4)$;
+derivatives and primitives inherit this. The $B_i$ are functions on $\mathbb P^1\setminus\{0,4,\infty\}$
+\cite[\S10]{CDT}.
+\end{proof}
+
+\begin{lemma}[cross-pair independence]\label{lem:X}
+Make the assumptions of Theorem~\ref{thm:Cprime}. Let $(a_k,b_k)$, $k=1,\dots,K$, be odd pairs with
+$0<|a_k/b_k-1|<10^{-3}$, pairwise inequivalent ($\{a_j,b_j\}\ne\pm\{a_k,b_k\}$ for $j\ne k$), each with a relation
+vector as above. Then $B_1,\dots,B_7$ and the $K$ $G$-families are linearly independent over $\CC(y)$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+Suppose $\sum_iS_iB_i+\sum_k\sum_lR_{kl}F_{kl}=0$ with $S_i,R_{kl}\in\CC(y)$, $F_{kl}$ the $G$-family of pair $k$. Fix $k$.
+CDT's proof of Lemma~14.3.1 (following Lemma~12.1.1) uses a loop $\gamma_k$, a conjugate of a small loop around a point
+$s\in Z_4(a_k,b_k)$, with $G_k\ne\gamma_kG_k$. By Lemma~\ref{lem:D}, $s\notin\{0,4\}\cup Z_4(a_j,b_j)$ for $j\ne k$, so by
+Lemma~\ref{lem:H} every branch of every $F_{jl}$ ($j\ne k$) and of every $B_i$ is holomorphic at $s$ and fixed by
+$\gamma_k$. Applying $1-\gamma_k$ leaves $\sum_lR_{kl}(1-\gamma_k)F_{kl}=0$, which is exactly the relation reached in
+CDT's single-pair proof (the varied primitives $(1-\gamma_k)\int y^e(G_k-T)$ are primitives of $y^e(1-\gamma_k)G_k$,
+and CDT's argument does not depend on the choice of primitive). CDT's argument, with the determinant of
+Section~\ref{sec:phi6}, gives $R_{kl}=0$. Doing this for every $k$ leaves $\sum S_iB_i=0$, so $S_i=0$
+\cite[Lemma~12.0.1]{CDT}.
+\end{proof}
+
+Pairs sharing an entry, $(a,b)$ and $(a,c)$, are inequivalent, so Lemma~\ref{lem:X} covers them. As a falsification
+test (not used in the proof), the exact rank modulo two primes $p>2008$ of the union of the series, truncated at
+$y^{1000}$, with polynomial coefficients of degree $\le D$, is full for $30$ instances ($K=1,2,3$, including shared
+entries, pairs in the range and degenerate relation vectors), while duplicated pairs give exactly the expected nullity
+$10(D+1)$ (\file{code/thm4/xrank.py}, \file{runs/xrank.out}).
+
+\subsection{The pooled holonomy inequality}
+By Lemma~\ref{lem:X} we have $\fm=7+10K$ functions, holonomic and linearly independent over $\QQ(y)$, with
+$\sigma=(0,2,2,4,4,4,4\mid4^{10K})$ and $e=(0,0,1,0,0,1,1\mid(0^4,1^6)^K)$. Evaluating $\tau^\sharp$ of
+\cite[(6.0.6)]{CDT} at the explicit point $\xi=169/100$ (an upper bound for the minimum, hence a valid $\tau$) gives
+\[
+\tau_2=\frac{1106977681}{262702440}=4.2138081\ldots,\qquad\tau_3=\frac{29601442477}{7082066992}=4.1797744\ldots
+\]
+for $K=2$ and $K=3$
+(\file{tau\_pool.py}; CDT's $\tau$ for $K=1$ is reproduced by the same code).
+
+For the maps of this section the disc condition (c$'$) fails, and we use instead:
+
+\begin{lemma}[ray lemma]\label{lem:ray}
+Let $\varphi$ be holomorphic on a neighbourhood of $\overline\DD$ and $\Gamma=(-\infty,-Y_1]\cup[Y_1,\infty)$. If
+$\varphi(\TT)\cap\Gamma=\varnothing$, then $\varphi(\overline\DD)\cap\Gamma=\varnothing$.
+\end{lemma}
+
+\begin{proof}
+For $y_0\in\Gamma$ the number of zeros of $\varphi-y_0$ in $\DD$ is the winding number of $\varphi(\TT)$ about $y_0$. It
+is constant on each half-line of $\Gamma$ (connected subsets of $\CC\setminus\varphi(\TT)$), and $0$ for
+$|y_0|>\max_\TT|\varphi|$.
+\end{proof}
+
+With Lemma~\ref{lem:S} (real singular values), (a), (b) and ``$\varphi(\TT)\cap\Gamma=\varnothing$'' make $\varphi$
+admissible for all pairs in the range simultaneously. The certificate decides $\varphi(s)\notin\Gamma$ on each interval
+either by $|\varphi|<Y_1$ or by a lower bound for $|\sin\arg\varphi|$. The results (\file{cert\_pool.py}, trivial
+partition, $\delta_{\max}=0.002$):
+\begin{center}
+\small
+\begin{tabular}{llllll}
+\toprule
+range $\varepsilon$ & $K$ & $\fm$ & $L$ & numerator $\le$ & certified margin $L-R^+/\fm-\tau$\\
+\midrule
+$10^{-5}$ & 2 & 27 & $4.7056374$ & $8.795131$ & $\ge0.16608$\\
+$3\cdot10^{-5}$ & 2 & 27 & $4.5683356$ & $8.064226$ & $\ge0.05585$\\
+$5\cdot10^{-5}$ & 2 & 27 & $4.5159123$ & $7.819914$ & $\ge0.01248$\\
+$10^{-4}$ & 3 & 37 & $4.4006730$ & $7.326965$ & $\ge0.02287$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The $5\cdot10^{-5}$ map was re-optimised for $L-T/27$ (\file{reopt.py}); the $10^{-5}$ map is an earlier optimised map
+dilated by $r=1-2^{-14}$ (the undilated map crosses the ray $[Y_1,\infty)$ near $1/\varepsilon$, which the certificate
+detects); the other two are stored optimised maps. Only the rows $5\cdot10^{-5}$ and $10^{-4}$ are needed. Lemma~\ref{lem:S}
+is proved for $\varepsilon\le10^{-4}$; at $\varepsilon=5\cdot10^{-5}$ the map has little room ($\varphi(\TT)$ crosses the
+negative axis at $\approx-19988$, inside $Y_1=19994$), and an exhaustive high-precision check of Lemma~\ref{lem:S} on a
+boundary window found the closest genuine value at $Y_1+4.25$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:F2}]
+Suppose there were $K=2$ (resp.\ $3$) inequivalent exceptional classes with representatives in $|m/n-1|<5\cdot10^{-5}$
+(resp.\ $10^{-4}$). CDT's construction gives a $G$-function for each, and Lemma~\ref{lem:X} (applicable since
+$|a/b-1|<10^{-3}$) gives $7+10K$ independent functions. The certified map is admissible for all of them, and
+Theorem~\ref{thm:CDT602} gives $27\le25.885$ (resp.\ $37\le33.169$), a contradiction. This proves (i) and (ii); (iii) is
+Theorem~\ref{thm:Cprime}. For (iv): a consecutive pair in these ranges has $q=N+1>10^4\ge54$.
+\end{proof}
+
+% ===========================================================================
+\section{What is computer-assisted, and how to reproduce it}\label{sec:computer}
+% ===========================================================================
+
+The accompanying folder \file{code/} contains every script and certificate output used above, in one directory per
+result; \file{code/README.md} maps each number of this paper to a script and an output file. Software: Python 3.12,
+python-flint 0.9.0 (FLINT/Arb ball arithmetic), SymPy 1.14, mpmath 1.3, NumPy and SciPy (optimisation only). The
+computer-assisted steps are:
+\begin{center}
+\small
+\begin{tabular}{p{4.3cm}p{1.4cm}p{3.6cm}p{1.6cm}}
+\toprule
+step & kind & script (folder) & time\\
+\midrule
+Relations for $c_{n,l}$; order-4 recurrence; char.\ polynomial (Prop.~\ref{prop:I1}) & exact & \file{i1\_*.py}
+(\file{thm1\_cor2}) & minutes\\
+Contact orders, sanity checks (Lemma~\ref{lem:contact}) & exact & \file{i1\_contact.py} & 10 s\\
+$L_{13}$ and I1$'$ per $q$ (Prop.~\ref{prop:I1prime}) & exact & \file{findop.py}, \file{i1\_rec25.py},
+\file{fourterm/mkrec.py} & seconds per $q$\\
+Budget $M_{14}(q)$ & Arb & \file{fourterm/budget\_4t.py} & seconds\\
+Local exponents, Casoratian, $p_0$ roots (Prop.~\ref{prop:exponents}, Lemma~\ref{lem:nonzero}) & exact &
+\file{exponents.py} (\file{fourterm}) & 15 s\\
+Certified continuation, $g_A,g_2,g_3$ & Arb & \file{mono13.py} & $\approx40$ min per $q$\\
+Irreducibility (Prop.~\ref{prop:irred}) & Arb & \file{fourterm/irred.py} & 2 s per $q$\\
+Rank-14 cross-check (Remark~\ref{rem:F1cert}) & Arb & \file{cert\_det.py} & seconds\\
+Map certificate, Theorem~\ref{thm:Cprime} & Arb + exact & \file{cert3.py}, \file{cert3d.py} (\file{thm3}) &
+$\approx8$ min\\
+$\det(a,b)$ identity and $\Phi_6$ (Prop.~\ref{prop:detid}) & exact & \file{f1\_Lsym.py}, \file{f1\_detsym.py},
+\file{f1\_identity.py}, \file{f1\_phi6\_nonvanish.py} (\file{thm3/f1}) & 35 min\\
+New pairs \eqref{eq:newpairs} & exact & \file{f7\_newpairs.py} & seconds\\
+Lemma~\ref{lem:D}; pooled $\tau$; falsifier & exact & \file{lemmaD.py}, \file{tau\_pool.py}, \file{xrank.py}
+(\file{thm4}) & minutes\\
+Pooled map certificates (Theorem~\ref{thm:F2}) & Arb + exact & \file{cert\_pool.py} & $\approx4$ min each\\
+\bottomrule
+\end{tabular}
+\end{center}
+The map optimisations (\file{lib\_opt.py}, \file{lib\_range.py}, \file{reopt.py}) and the falsifier are not part of any
+proof: they produce candidates that the certificates then check. The referees (Section~\ref{sec:provenance}) re-ran the
+main certificates bit for bit on separate copies (among them the budget and irreducibility certificates of
+Theorem~\ref{thm:4T}, the rank certificate at $q=29$, the $3\cdot10^{-6}$ map certificate and the $5\cdot10^{-5}$ pooled
+certificate), and re-ran the continuation step independently, with different initial data and discretisation, at
+$q=26,32,40,53$ (Remark~\ref{rem:F1cert}).
+
+What the computer establishes is, in each case, a finite statement: an identity of explicit polynomials, a determinant
+ball that excludes $0$, or an exact rational upper bound for an integral. What it does not establish: the hand arguments
+(Lemmas~\ref{lem:den}, \ref{lem:indep}, \ref{lem:nonzero}, the reflection criterion, Lemmas~\ref{lem:S}, \ref{lem:D},
+\ref{lem:ray}, the reductions), the theorems of \cite{CDT} we use, and the correctness of python-flint's Arb routines
+(in particular \texttt{acb.modular\_eta} and matrix determinants), which we take on trust \TODO{add the standard citation
+for Arb/FLINT}.
+
+% ===========================================================================
+\section{Limits}\label{sec:limits}
+% ===========================================================================
+
+\begin{itemize}
+\item \emph{$q\le25$ is out of reach of this route.} At $q=25$, $M_{14}(25)\approx-0.0665<0$, and $14$ is the largest
+budget available for this module (order $13$ plus the constant). Neither the rank nor the irreducibility can help; a new
+family of forms, a better denominator type or a better map would be needed.
+\item \emph{$10^{-5}$ is not reached.} For Theorem~\ref{thm:Cprime} the best range margin we found at $4\cdot10^{-6}$
+is $-0.013$ (partition form), and even for a single pair the best margin at $10^{-5}$ is $-0.0086$ [numerical, local
+optima]. We have no certified ceiling: the only rigorous ceiling we know is far from tight.
+This agrees with \cite[Remark~14.0.4]{CDT}, which says that the constant could be improved but probably not beyond
+about $10^{-4}$.
+\item \emph{Pooling stops near $6\cdot10^{-5}$ for $K=2$} on the maps we explored (margins $-0.009$ at $6\cdot10^{-5}$,
+$-0.031$ at $7\cdot10^{-5}$, $-0.069$ at $10^{-4}$, numerical).
+\item \emph{The main inherited assumption}, the irreducibility of $\mathcal L_{a,b}$ (asserted in CDT's template
+Lemma~12.1.1 and implicit in Lemma~14.3.1), is open. Its local system is the push-forward of a rank-$2$ system along the
+double cover $x\mapsto y$; by Mackey's criterion it would follow from the irreducibility of the rank-2 system and its
+non-isomorphism with its conjugate under $x\mapsto x/(x-1)$ [heuristic].
+\end{itemize}
+
+% ===========================================================================
+\section{Provenance and use of AI tools}\label{sec:provenance}
+% ===========================================================================
+
+\subsection*{Provenance}
+The mathematical inputs are: Lysov's explicit formula for $Q_n$ \cite{Lys18}, used as a definition (his Lemmas~7--9 are
+re-proved above); the holonomy bounds and the construction for products of two logarithms of Calegari, Dimitrov and Tang
+\cite{CDT}, used as stated; Hata's theorem \cite{Hat98}, used only for the extension to $q\ge54$ and for
+Theorem~\ref{thm:F2}(iv). The scheme of Section~\ref{sec:proof4T} is the one suggested in \cite[\S15.1.10]{CDT}. The
+recurrence of Proposition~\ref{prop:I1} was found by modular linear algebra and then proved by creative telescoping; the
+minimal operators were found the same way. Nothing in this paper depends on unpublished work by others.
+
+\subsection*{Use of AI tools}
+This work was carried out with substantial assistance from AI systems (Anthropic's Claude models), which were used to
+search the literature, to develop the proofs, to write the scripts and produce the certificates, to referee the
+arguments, and to draft this text. The referee reports were also produced by Claude models, working adversarially on
+separate copies of the files; they are not a substitute for a human expert's reading. The author directed the project
+and is responsible for its content. None of the results is verified in Lean or another proof assistant.
+
+% ===========================================================================
+\bibliographystyle{amsplain}
+\bibliography{refs}
+
+\end{document}

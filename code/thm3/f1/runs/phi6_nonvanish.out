@@ -1,0 +1,24 @@
+1. Phi6(a, b0) vs the degree-6 factor of det(a, b0):
+   b0 =  -5: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =  11: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =  13: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =  15: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =   2: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =   3: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =   4: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =   5: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =   7: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+   b0 =   9: degree-6 factors 1, equal to primitive part of Phi6(a, b0): True
+2. P_8(s) = 59290*x^6 + 170247*x^5 + 211750*x^4 + 144837*x^3 + 36421*x^2 + (-10164)*x + (-2541)
+2. P_6(s) = 8491*x^5 + (-23086)*x^4 + (-57568)*x^3 + (-14819)*x^2 + 16758*x + 5586
+2. P_4(s) = (-6090)*x^4 + (-9135)*x^3 + (-11865)*x^2 + (-5460)*x + (-2730)
+2. P_2(s) = 975*x^2 + (-2310)*x + (-2310)
+2. P_0(s) = 1755
+   Phi6(a, a) = (-2541) a^8 + (5586) a^6 + (-2730) a^4 + (-2310) a^2 + (1755) a^0
+3. delta = 3/1000000: |Phi6(a,b)| / |a|^8 >= 2540908524902593837128056517648587980931221269521874/999976000251998488005669986392020411982504006561 (= 2540.9695) for |a| >= 333332.3 -> NONZERO
+3. delta = 1/1000: |Phi6(a,b)| / |a|^8 >= 278956447132065730295575426/110225327118882669776889 (= 2530.7836) for |a| >= 999.0 -> NONZERO
+3. delta = 1/100: |Phi6(a,b)| / |a|^8 >= 2495387078125392626/1025271882697689 (= 2433.8784) for |a| >= 99.0 -> NONZERO
+3. delta = 1/20: |Phi6(a,b)| / |a|^8 >= 31662022040194/16983563041 (= 1864.2744) for |a| >= 19.0 -> NONZERO
+4. moduli m with Phi6(a,b) != 0 mod m for all odd a, b: [32, 64, 96, 128, 160]
+5. integer zeros with |a|, |b| <= 300: []
+4b. {Phi6(a,b) mod 32 : a, b odd} = [16] -> Phi6(a, b) != 0 for all odd a, b: True

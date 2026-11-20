@@ -1,0 +1,18 @@
+Notes on the run logs in this folder (gate referee findings F-4, F-10; 2026-11-19)
+
+* mono13_q<q>_cert.log (q = 26..31) and mono13_q32_cert_old_base100.log were written by mono13_v1.py (or, for the
+  old_base100 files, by an earlier unarchived version). In them, "rad max 0.00e+00", "max |diff| upper 0.00e+00" and
+  "maxerr=0.000e+00" are float underflows of radii below 1e-308 (typically 1e-400 .. 1e-660), NOT zero radii.
+  The pickles store the balls as Arb decimal strings with their true radii. The current mono13.py prints these as
+  Arb strings (RF1-F4).
+* The last lines "CERTIFICATE: det of the 14 continuation vectors = [+/- ...] contains 0: True" in those logs, and
+  "det_excludes_0": false in mono13_q<q>_cert.json, are a DIAGNOSTIC with the default word list, which contains the
+  dependent word A^5 3; it is expected to contain 0. The certificate is cert_det.py's greedy-word determinant:
+  mono13_q<q>_cert_det.json and cert_det_q<q>.txt. (The current mono13.py labels this line "DIAGNOSTIC".)
+* cert_det_q<q>.txt prints the determinant with 15 digits, so its displayed radius is the decimal display radius
+  (e.g. +/- 3.24e-4 at q = 26); the true radii are in mono13_q<q>_cert_det.json (30 digits; e.g. +/- 3.68e-19).
+* q = 32: the certificate files mono13_q32_cert.* / mono13_q32_cert_det.json / cert_det_q32.txt are the 2026-11-19 rerun
+  of mono13_v1.py (base 101). The earlier base-100 files are kept as *_old_base100* (RF1-F10).
+* mono13_q26_rf3.* / cert_det_q26_rf3.txt: rerun of q = 26 with the current mono13.py (arb comparisons in circle_max,
+  RF1-F3), to confirm the change is determinant-neutral.
+* referee_rerun/: the gate referee's independent reruns at q = 26, 32 (orthogonality-free initial data); see its README.

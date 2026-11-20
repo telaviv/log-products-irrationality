@@ -1,0 +1,14 @@
+interpolated c0..c3 (13s); total degrees in (a,b,y): [23, 25, 26, 27, 28] degrees (a,b,y): [(12, 12, 12), (12, 12, 16), (12, 12, 17), (12, 12, 18), (12, 12, 19)]
+c3/c4 = CDT printed log-derivative (symbolic): True
+agrees with solve_L at 6 fresh points: True
+g_0..g_67 symbolic (1s); max total degree 268
+  row 0 zero (0s)
+  row 10 zero (0s)
+  row 20 zero (0s)
+  row 30 zero (1s)
+  row 40 zero (3s)
+  row 50 zero (6s)
+  row 60 zero (12s)
+[y^k] L~(G_A) = 0 identically in Q[a,b] for k < 63: True
+rank of the first 63 rows at (a, b) = (7, 5): 63 (unknowns: 63)
+total 27s

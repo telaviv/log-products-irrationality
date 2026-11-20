@@ -1,0 +1,1 @@
+{"pickle": "runs/mono13_q32_cert.pkl", "words": ["", "2", "3", "A2", "A3", "AA2", "AA3", "AAA2", "AAA3", "AAAA2", "AAAA3", "AAAAA2", "AAAAAA2", "AAAAAAA2"], "det": "[+/- 5.15e-290] + [992625.090850805422458198252898 +/- 3.83e-25]j", "excludes_0": true}

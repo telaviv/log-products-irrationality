@@ -1,0 +1,19 @@
+{
+ "a_termwise_ratio": "1",
+ "a_exact_n_le_12": true,
+ "b_rodrigues_n_le_8": true,
+ "c_f3_moments_m_le_30": true,
+ "c_contact_exact_n_le": 24,
+ "d_small_n_polynomial_identities": {
+  "0": true,
+  "1": true,
+  "2": true,
+  "3": true,
+  "4": true,
+  "5": true,
+  "6": true,
+  "7": true,
+  "8": true
+ },
+ "seconds": 8.2
+}

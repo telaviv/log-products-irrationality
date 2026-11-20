@@ -1,0 +1,39 @@
+p=2147483647 Nser=1000 D=55 pairs=[(5, 7)] r=['rand'] m=17 cols=952 rows=992 nullity=0
+p=2147483647 Nser=1000 D=55 pairs=[(200001, 200005)] r=['rand'] m=17 cols=952 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (7, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (9, 11)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (5, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(200001, 200003), (200001, 200005)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(200001, 200005), (300001, 300007)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(200001, 200003), (200003, 200005)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (7, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (5, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (7, 9)] r=[[0, 0, 0, 1], [0, 1, 0, 0]] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (7, 5)] r=[[3, 5, 7, 11], [3, 7, 5, 11]] m=27 cols=972 rows=992 nullity=360
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (-5, -7)] r=[[3, 5, 7, 11], 'rand'] m=27 cols=972 rows=992 nullity=360
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (5, 7)] r=[[3, 5, 7, 11], [3, 5, 7, 11]] m=27 cols=972 rows=992 nullity=360
+p=2147483647 Nser=1000 D=35 pairs=[(5, 7), (5, 7)] r=[[3, 5, 7, 11], [2, 1, 4, 9]] m=27 cols=972 rows=992 nullity=0
+p=2147483647 Nser=1000 D=25 pairs=[(5, 7), (7, 9), (5, 9)] r=['rand', 'rand', 'rand'] m=37 cols=962 rows=992 nullity=0
+p=2147483647 Nser=1000 D=25 pairs=[(200001, 200003), (200003, 200005), (200001, 200005)] r=['rand', 'rand', 'rand'] m=37 cols=962 rows=992 nullity=0
+p=2147483647 Nser=1000 D=25 pairs=[(5, 7), (9, 11), (13, 15)] r=['rand', 'rand', 'rand'] m=37 cols=962 rows=992 nullity=0
+p=2147483647 Nser=1000 D=25 pairs=[(5, 7), (7, 9), (7, 5)] r=[[3, 5, 7, 11], 'rand', [3, 7, 5, 11]] m=37 cols=962 rows=992 nullity=260
+p=2147483629 Nser=1000 D=55 pairs=[(5, 7)] r=['rand'] m=17 cols=952 rows=992 nullity=0
+p=2147483629 Nser=1000 D=55 pairs=[(200001, 200005)] r=['rand'] m=17 cols=952 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (7, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (9, 11)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (5, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(200001, 200003), (200001, 200005)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(200001, 200005), (300001, 300007)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(200001, 200003), (200003, 200005)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (7, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (5, 9)] r=['rand', 'rand'] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (7, 9)] r=[[0, 0, 0, 1], [0, 1, 0, 0]] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (7, 5)] r=[[3, 5, 7, 11], [3, 7, 5, 11]] m=27 cols=972 rows=992 nullity=360
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (-5, -7)] r=[[3, 5, 7, 11], 'rand'] m=27 cols=972 rows=992 nullity=360
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (5, 7)] r=[[3, 5, 7, 11], [3, 5, 7, 11]] m=27 cols=972 rows=992 nullity=360
+p=2147483629 Nser=1000 D=35 pairs=[(5, 7), (5, 7)] r=[[3, 5, 7, 11], [2, 1, 4, 9]] m=27 cols=972 rows=992 nullity=0
+p=2147483629 Nser=1000 D=25 pairs=[(5, 7), (7, 9), (5, 9)] r=['rand', 'rand', 'rand'] m=37 cols=962 rows=992 nullity=0
+p=2147483629 Nser=1000 D=25 pairs=[(200001, 200003), (200003, 200005), (200001, 200005)] r=['rand', 'rand', 'rand'] m=37 cols=962 rows=992 nullity=0
+p=2147483629 Nser=1000 D=25 pairs=[(5, 7), (9, 11), (13, 15)] r=['rand', 'rand', 'rand'] m=37 cols=962 rows=992 nullity=0
+p=2147483629 Nser=1000 D=25 pairs=[(5, 7), (7, 9), (7, 5)] r=[[3, 5, 7, 11], 'rand', [3, 7, 5, 11]] m=37 cols=962 rows=992 nullity=260
+DONE
