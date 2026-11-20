@@ -64,7 +64,8 @@ on the published form of the Calegari--Dimitrov--Tang argument for products of t
 Theorem~C from $|m/n-1|<10^{-6}$ to $|m/n-1|<3\cdot10^{-6}$, which gives infinitely many new irrational products
 $\log(1+1/m)\log(1+1/n)$ with $|m-n|\ge2$, and we show by pooling several pairs that at most one exceptional pair
 class exists with $|m/n-1|<5\cdot10^{-5}$, and at most two with $|m/n-1|<10^{-4}$. All certificates are exact or
-rigorous ball arithmetic and can be reproduced from the accompanying code.
+rigorous ball arithmetic and can be reproduced from the accompanying code at
+\url{https://github.com/telaviv/log-products-irrationality}.
 \end{abstract}
 
 \maketitle
@@ -1160,7 +1161,8 @@ $q=N+1\ge10^4>54$, and Hata's theorem gives the four-term independence.
 \section{What is computer-assisted, and how to reproduce it}\label{sec:computer}
 % ===========================================================================
 
-The accompanying folder \file{code/} contains every script and certificate output used above, in one directory per
+The folder \file{code/} of the accompanying repository \url{https://github.com/telaviv/log-products-irrationality}
+contains every script and certificate output used above, in one directory per
 result; \file{code/README.md} maps each number of this paper to a script and an output file. Software: Python 3.12,
 python-flint 0.9.0 (FLINT/Arb ball arithmetic), SymPy 1.14, mpmath 1.3, NumPy and SciPy (optimisation only). The
 computer-assisted steps are:
