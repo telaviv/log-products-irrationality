@@ -77,8 +77,9 @@ For an integer $q\ge2$ put
 \[
 \theta_q=\log\Bigl(1+\frac1q\Bigr)\log\Bigl(1-\frac1q\Bigr).
 \]
-Hata \cite{Hat98} showed that $1$, $\log(1+1/q)$, $\log(1-1/q)$, $\theta_q$ are linearly independent over $\QQ$ for every
-$q\ge54$; in particular $\theta_q\notin\QQ$ for $q\ge54$. Lysov \cite{Lys18} found an explicit formula for the common
+Hata \cite[Cor.~6.3]{Hat98} showed that $1$, $\log(1+1/q)$, $\log(1-1/q)$, $\theta_q$ are linearly independent over
+$\QQ$ for every integer $q\ge54$, with an effective linear independence measure; in particular $\theta_q\notin\QQ$ for
+every integer $q\ge54$ \cite[Thm.~0.1]{Hat98}. Lysov \cite{Lys18} found an explicit formula for the common
 denominator of the type~II Hermite--Pad\'e approximants to $(\log(1+1/z),\log(1-1/z),\log(1+1/z)\log(1-1/z))$ and
 deduced that $\theta_q$ is irrational for every $q\ge33$ \cite{Lys18,Lys19} (\cite{Lys18} is a preprint; we found no
 journal version as of 19 November 2026). Calegari, Dimitrov and Tang
@@ -108,9 +109,20 @@ Assume \cite[Thm.~7.0.1]{CDT}. For every integer $q$ with $26\le q\le53$, the nu
 are linearly independent over $\QQ$.
 \end{theorem}
 
-With Hata's theorem \cite{Hat98} for $q\ge54$, the same holds for every integer $q\ge26$. (For Hata's theorem we rely on
-the statement in the AMS abstract of \cite{Hat98}, which is also how \cite{ZZ19} cite it; we have not checked
-\cite[\S6]{Hat98} ourselves. \TODO{read Hata 1998, \S6, and remove this caveat or keep it}.)
+With Hata's theorem \cite{Hat98} for $q\ge54$, the same holds for every integer $q\ge26$. Precisely,
+\cite[Cor.~6.3]{Hat98} states: let $q\ge54$ be an integer; for every $\varepsilon>0$ there is an effectively computable
+$H_1=H_1(\varepsilon,q)$ such that
+\[
+\Bigl|n_0+n_1\log\Bigl(1+\frac1q\Bigr)+n_2\log\Bigl(1-\frac1q\Bigr)+n_3\theta_q+n_4\Lambda\Bigl(\frac1q\Bigr)\Bigr|
+\ge H^{-\sigma(q^2)/\tau(q^2)-\varepsilon}
+\]
+for all $(n_0,\dots,n_4)\in\ZZ^5$ with $H=\max_{1\le m\le4}|n_m|\ge H_1$. Here
+$\Lambda(x)=\mathrm{Li}_2((1+x)/2)-\mathrm{Li}_2((1-x)/2)-\log2\cdot\log((1+x)/(1-x))$ \cite[(3.5)]{Hat98}, and
+$\sigma,\tau$ are explicit \cite[(6.3), (6.4)]{Hat98}; the bound $q\ge54$ comes from Hata's $\tau(k)>0$ for every integer
+$k\ge2909$ (and $53^2<2909\le54^2$), and $\sigma(k)/\tau(k)\to4$ as $k\to\infty$. Taking $n_4=0$ gives the four-term independence; in
+fact $1$, $\log(1+1/q)$, $\log(1-1/q)$, $\theta_q$, $\Lambda(1/q)$ are linearly independent over $\QQ$. Hata states
+this for integers $q$ only: Corollary~6.3 is the case $k=q^2$ of his Theorem~6.2, the analogous statement at
+$1/\sqrt k$ for every integer $k\ge2909$.
 
 Since $\log(1-1/q)=-\log(1+1/(q-1))$, Theorem~\ref{thm:4T} at $q=N+1$ contains the irrationality of the product of two
 consecutive logarithms $\log(1+1/N)\log(1+1/(N+1))=-\theta_{N+1}$:
@@ -142,8 +154,8 @@ modulo $(m,n)\sim(n,m)\sim(-m-1,-n-1)$. Then:
 \item at most one exceptional class has a representative with $|m/n-1|<5\cdot10^{-5}$;
 \item at most two exceptional classes have a representative with $|m/n-1|<10^{-4}$;
 \item every exceptional class has $|m/n-1|\ge3\cdot10^{-6}$ in all its representatives (Theorem~\ref{thm:Cprime});
-\item in the ranges of (i) and (ii), every exceptional class has $|m-n|\ge2$, by Hata's theorem \cite{Hat98} (as
-quoted above).
+\item in the ranges of (i) and (ii), every exceptional class has $|m-n|\ge2$, by Hata's theorem
+\cite[Cor.~6.3]{Hat98}.
 \end{enumerate}
 \end{theorem}
 
@@ -224,7 +236,7 @@ computer algebra; not gate-refereed); gate-refereed once; chain-refereed; not in
 \item Theorem~\ref{thm:F2}: \emph{proof sketch plus certified computation; conditional on CDT as published (Thm.~6.0.2,
 Cor.~9.0.19, Lemma~12.0.1 and \S14, in particular the irreducibility of $\mathcal L_{a,b}$ and the reduction in the
 proof of Lemma~14.3.1, reused pair by pair); $\Phi_6$ factor of Lemma~14.3.1 via Section~\ref{sec:phi6} (proved, exact
-computer algebra; not gate-refereed); part (iv) adds Hata's theorem (abstract-level); Lemma~\ref{lem:D} proved,
+computer algebra; not gate-refereed); part (iv) adds Hata's theorem \cite[Cor.~6.3]{Hat98} (checked against the paper); Lemma~\ref{lem:D} proved,
 given \cite[Lemma~14.2.4]{CDT}; Lemma~\ref{lem:S} ($\varepsilon\le10^{-4}$) and the ray lemma proved;
 Lemma~\ref{lem:H} proof sketch (classical); certificates exact (Arb and exact rationals); gate-refereed once;
 chain-refereed; not in Lean; no human read.}
@@ -985,8 +997,10 @@ every branch of $B_1,\dots,B_7$ is holomorphic on $\CC\setminus\{0,4\}$.
 $P(x)$ is a combination of Hadamard products $f\star g$ with $f\in\{A(a,\cdot),H(a,\cdot)\}$ and
 $g\in\{A(b,\cdot),H(b,\cdot)\}$, each factor continuable along every path avoiding its two singular points. By
 Hadamard's multiplication theorem in its global form (deform the contour in $f\star g(x)=\frac1{2\pi i}\oint
-f(t)g(x/t)\,dt/t$; cf.\ \cite{Had99} for the star-domain form \TODO{give a modern reference for the path-wise
-form}), $f\star g$ continues along every path avoiding $0$ and the four products. In $y$,
+f(t)g(x/t)\,dt/t$; \cite{Had99} for the star-domain form, and \cite[Thm.~A]{LSS20} (preprint) for the path-wise form:
+if $f$ continues along every path avoiding a closed discrete set $S$ and $g$ along every path avoiding $T$, then
+$f\star g$ continues along every path avoiding $\{0\}\cup S\cdot T$), $f\star g$ continues along every path avoiding $0$ and the
+four products. In $y$,
 the two roots of $x^2-yx+y=0$ are distinct off $y\in\{0,4\}$ and avoid $\{0\}\cup\{\text{products}\}\cup\{p/(p-1)\}$
 exactly off $\{0\}\cup Z_4$, so $G=P(x)+P(x/(x-1))$ continues along every path in $\CC\setminus(\{0,4\}\cup Z_4)$;
 derivatives and primitives inherit this. The $B_i$ are functions on $\mathbb P^1\setminus\{0,4,\infty\}$
@@ -1119,8 +1133,8 @@ What the computer establishes is, in each case, a finite statement: an identity 
 ball that excludes $0$, or an exact rational upper bound for an integral. What it does not establish: the hand arguments
 (Lemmas~\ref{lem:den}, \ref{lem:indep}, \ref{lem:nonzero}, the reflection criterion, Lemmas~\ref{lem:S}, \ref{lem:D},
 \ref{lem:ray}, the reductions), the theorems of \cite{CDT} we use, and the correctness of python-flint's Arb routines
-(in particular \texttt{acb.modular\_eta} and matrix determinants), which we take on trust \TODO{add the standard citation
-for Arb/FLINT}.
+(in particular \texttt{acb.modular\_eta} and matrix determinants), which we take on trust. Arb \cite{Arb} is now part of FLINT \cite{FLINT}; python-flint
+\cite{pyflint} 0.9.0, as used, is linked against FLINT 3.6.0.
 
 % ===========================================================================
 \section{Limits}\label{sec:limits}

@@ -6,10 +6,18 @@
 %    logarithms", Keldysh Institute preprints, 2018, 158, 20 pp.) and the title page downloads/lysov/p1.txt
 %    (doi:10.20948/prepr-2018-158, ISSN 2071-2898).
 %  * Lys19: downloads/lysov/opsfa.txt (OPSFA 2019 abstract, talk 25 July 2019).
-%  * Hat98: reference [1] of downloads/lysov/opsfa.txt (Trans. Amer. Math. Soc. 350:6 (1998), 2311--2327), and the AMS
-%    abstract URL recorded in handoff/log2log3/loop/cycle1/pilot_F1/fourterm/RESULT_4T.md.
-%  * ZZ19: title page of the referee's local copy of arXiv:1912.10381v1 (22 Dec 2019). Journal version: TODO.
-%  * Had99: as cited in handoff/log2log3/loop/cycle1/pilot_F2/RESULT.md (not re-read). TODO: check.
+%  * Hat98: the full paper, read 19 Nov 2026 (AMS PDF, via the Internet Archive copy of
+%    ams.org/journals/tran/1998-350-06/S0002-9947-98-01764-4/S0002-9947-98-01764-4.pdf, 17 pp.); title page and
+%    Thm. 0.1, (3.5), (6.3), (6.4), Thm. 6.2, Cor. 6.3 checked against the paper.
+%  * ZZ19: arXiv:1912.10381v1 (22 Dec 2019), re-read 19 Nov 2026 (the quoted sentence is on p. 8); journal version from
+%    Crossref, doi:10.1142/S1793042120400230 (Int. J. Number Theory 17 (2021), no. 3, 815--825).
+%  * Had99: bibliography entry [Ha99] of LSS20 (Acta Math. 22 (1899), 55--63).
+%  * LSS20: arXiv:2012.14175v1 [math.CV] (28 Dec 2020), read 19 Nov 2026 (Theorem A, p. 2); no journal version found
+%    (arXiv metadata and Crossref, 19 Nov 2026).
+%  * Arb, FLINT: the "Citing FLINT" page https://flintlib.org/citation.html (19 Nov 2026); Arb data also from Crossref
+%    (doi:10.1109/TC.2017.2690633).
+%  * pyflint: PyPI metadata for python-flint 0.9.0 (homepage https://github.com/flintlib/python-flint); the FLINT
+%    version 3.6.0 is what flint.__FLINT_VERSION__ reports in the environment used.
 
 @misc{CDT,
   author       = {Calegari, Frank and Dimitrov, Vesselin and Tang, Yunqing},
@@ -49,8 +57,9 @@
   author       = {Zeilberger, Doron and Zudilin, Wadim},
   title        = {Automatic discovery of irrationality proofs and irrationality measures},
   year         = {2019},
-  howpublished = {Preprint, arXiv:1912.10381},
-  note         = {TODO: journal version},
+  howpublished = {Preprint, arXiv:1912.10381v1},
+  note         = {published in Int. J. Number Theory \textbf{17} (2021), no.~3, 815--825,
+                  doi:10.1142/S1793042120400230; page references are to the arXiv version},
 }
 
 @article{Had99,
@@ -60,4 +69,38 @@
   volume  = {22},
   year    = {1899},
   pages   = {55--63},
+}
+
+@misc{LSS20,
+  author       = {Li, Y. and Sauzin, D. and Sun, S.},
+  title        = {Hadamard product and resurgence theory},
+  year         = {2020},
+  howpublished = {Preprint, arXiv:2012.14175v1 [math.CV]},
+}
+
+@article{Arb,
+  author  = {Johansson, Fredrik},
+  title   = {Arb: efficient arbitrary-precision midpoint-radius interval arithmetic},
+  journal = {IEEE Trans. Comput.},
+  volume  = {66},
+  number  = {8},
+  year    = {2017},
+  pages   = {1281--1292},
+  note    = {doi:10.1109/TC.2017.2690633},
+}
+
+@manual{FLINT,
+  key          = {FLINT},
+  author       = {{The FLINT team}},
+  title        = {{FLINT}: {F}ast {L}ibrary for {N}umber {T}heory},
+  year         = {2026},
+  note         = {Version 3.6.0, \url{https://flintlib.org}},
+}
+
+@manual{pyflint,
+  key          = {python-flint},
+  author       = {{The python-flint developers}},
+  title        = {python-flint: {P}ython bindings for {FLINT}},
+  year         = {2026},
+  note         = {Version 0.9.0, \url{https://github.com/flintlib/python-flint}},
 }
