@@ -25,12 +25,16 @@ need a POSIX shell (Git Bash works on Windows).
 All files are byte copies of the working files of 19 November 2026, with three exceptions, where an absolute path to the
 author's working folder was replaced by a relative one: `thm4/reopt.py` (path to `../thm3`), `thm4/tau_pool.py` (imports
 `f1_tau.py`, copied into `thm4/` from the project's `cdt/` folder), and `thm1_cor2/fourterm/referee_4t/indep_exp.py`.
+One file is new: `thm1_cor2/fourterm/check_y1.py`, added by the final referee for the root check of Section 3.4 (the
+gate referee of Theorem 1 had done the same check in scratch).
 Certificate outputs (`.json`, `.out`, `.log`) are unchanged and may contain absolute paths of the original runs (for
 example `"src"` fields); they record the run, not a path to use. `thm3/lib_obs.py` imports `cdt4_budget.py` from another
 project folder; it is used only by the map optimisers and by `xcheck_points.py` (not part of any proof) and is not
 included.
 
-Every certificate was re-run bit for bit by a referee on a separate copy (see Section 7 of the paper). No file here
+Every certificate was re-run bit for bit by a referee on a separate copy (see Section 7 of the paper). The certificate
+scripts write their outputs into `runs/` under the filed names, so a re-run in place overwrites the filed output; to compare,
+run on a copy of the folder (the referees did this). No file here
 exceeds 20 MB, so nothing is excluded from the repository.
 
 ## Map from the paper's numbers to scripts and outputs
@@ -47,7 +51,7 @@ exceeds 20 MB, so nothing is excluded from the repository.
 | Recurrence at fixed q (found modularly; now the specialisation of the proved one) | `python rec.py q` | `runs/rec_q<q>.json` |
 | Minimal operator L_13 (order 25, n-degree 13), exact check n <= 60 | `python findop.py q 25 13 240 60` | `runs/op_q<q>_25_13.json` |
 | I1' (Prop. 3.6): zero right remainder, no nonnegative integer root of p_4 | `python i1_rec25.py q` | `runs/i1_rec25_q<q>.json` |
-| Certified continuation, generator matrices g_A, g_2, g_3 (Section 4.5), q = 26..32 | `sh runcert.sh 26 27 ...` = `python -u mono13_v1.py q 2200 5 _cert 1700 diag` (filed runs; `mono13.py` is the determinant-neutral revision) | `runs/mono13_q<q>_cert.{pkl,json,log}` |
+| Certified continuation, generator matrices g_A, g_2, g_3 (Section 4.5), q = 26..32 | the filed runs were made with `python -u mono13_v1.py q 2200 5 _cert 1700 diag`; `sh runcert.sh 26 27 ...` now calls the revision `mono13.py` with the same arguments (determinant-neutral, see the q = 26 `_rf3` row below) | `runs/mono13_q<q>_cert.{pkl,json,log}` |
 | Rank-14 determinants (Remark 4.6), e.g. [257906186217.156323475542228360 +/- 3.7e-19] i at q = 26, [992625.090850805422458198252898 +/- 3.8e-25] i at q = 32 | `python cert_det.py runs/mono13_q<q>_cert.pkl` | `runs/mono13_q<q>_cert_det.json`, `runs/cert_det_q<q>.txt` (15-digit display) |
 | Independent reruns at q = 26, 32 (orthogonality-free initial data, b = 2^-22, other discretisation) | see `runs/referee_rerun/README.txt` | `runs/referee_rerun/mono13_q{26,32}_ref*.{pkl,json}`, `ref_det_q{26,32}.txt` |
 | Determinant-neutrality of the `mono13.py` revision (q = 26) | `python -u mono13.py 26 2200 5 _rf3 1700 diag` | `runs/mono13_q26_rf3*` |
@@ -62,7 +66,8 @@ q = 32 base-100 files `runs/*old_base100*` are an earlier run kept for the recor
 | paper | script (command) | output |
 |---|---|---|
 | Exponent identity beta_k = 1/2, resultant cross-check (Prop. 4.3); Casoratian and p_0 roots for q = 2..60 (Lemma 4.4) | `python exponents.py` | `exponents.json`, `exponents.log` |
-| Independent checks of the above (referee) | `python referee_4t/indep_exp.py`, `referee_4t/indep_cas.py` | printed |
+| Independent checks of the above (referee), including disc_y(c_34) = const w^3 (w-1)^2 (8w+1)^8 (9w-1)^8 (25w-16)^8 (Prop. 4.3) | `python referee_4t/indep_exp.py`, `python referee_4t/indep_cas.py` | printed (with SymPy 1.14 the last block of `indep_exp.py`, a second Casoratian computation, stops with a `PolynomialError` after everything else is printed; the Casoratian is checked by `exponents.py` and `indep_cas.py`) |
+| Section 3.4: for q = 2..60 the roots of chi_{q^2}(-lambda) are real, positive and distinct, and y_1 < 2^-20 q^2 (used in Cor. 3.2 and Prop. 3.5) | `python check_y1.py` (added by the final referee) | printed: max y_1/(2^-20 q^2) = 0.353 at q = 2 |
 | Table 1: M_14(q), m_min, y_2 (Arb) for q = 26..53 | `python budget_4t.py` | `budget_4t.json` |
 | Pipeline q = 33..53: recurrence (specialised symbolic L4), L_13, I1', certified continuation, irreducibility | `sh run4t.sh 33 34 ... 53` (calls `mkrec.py`, `findop.py`, `i1_rec25.py`, `mono13.py`, `irred.py`) | `runs/rec_q<q>.json`, `runs/op_q<q>_25_13.json`, `runs/i1_rec25_q<q>.json`, `runs/mono13_q<q>_cert.{pkl,json,log}` |
 | Table 1: det (a), det (c) (Prop. 4.5), q = 26..32 from `../runs/mono13_q<q>_cert.pkl` | `python irred.py ../runs/mono13_q<q>_cert.pkl runs/irred_q<q>.json` | `runs/irred_q<q>.json` (true radii), `.log` (display radii only) |
@@ -78,9 +83,9 @@ Times: `mono13.py` takes about 40 minutes per q (single core); everything else i
 | paper | script (command) | output |
 |---|---|---|
 | Lemma 5.1 (Lemma S), numerical spot check at boundary pairs | `python lemmaS_check.py` | printed |
-| Section 5.4: certificate at 3e-6 (partition form; L = 4.79837381276..., numerator [9.23115527305872 +/- 1.5e-15], m <= 16.95199, margin >= 0.0015378) | `python cert3.py runs/p4_C_eps3.0e-06.json 3/1000000 1/2048,99/256,215/256,1 61/200,231/200,1109/500 0.002 16384` | `runs/cert3_p4_C_eps3.0e-06_eps3.0e-06_l3.json` (dyadic map coefficients in `c_dyadic`), `runs/cert3_C30.out` |
+| Section 5.4: certificate at 3e-6 (partition form; L = 4.79837381276..., numerator [9.23115527305872 +/- 1.52e-15], m <= 16.95200, margin >= 0.0015378) | `python cert3.py runs/p4_C_eps3.0e-06.json 3/1000000 1/2048,99/256,215/256,1 61/200,231/200,1109/500 0.002 16384` | `runs/cert3_p4_C_eps3.0e-06_eps3.0e-06_l3.json` (dyadic map coefficients in `c_dyadic`), `runs/cert3_C30.out` |
 | Section 5.3/5.4: disc condition (c'), max log abs phi <= 13801311154345/2^40 = 12.55222 < log Y_1 | `python cert3d.py` (same arguments) | `runs/cert3d_p4_C_eps3.0e-06_eps3.0e-06_l3.json`, `runs/cert3d_C30.out` |
-| Cross-checks at 2e-6, 2.5e-6 (margins >= 0.01138, >= 0.00131) and CDT's map at 1e-6 (>= 0.031) | `python cert2.py runs/p4_C_eps2.0e-06.json 1/500000 ...` etc. | `runs/cert2_p4_C_eps2.0e-06_eps2.0e-06.json`, `runs/cert2_p4_C_eps2.5e-06_eps2.5e-06.json`, `runs/cert2_cdtfit_K64_eps1.0e-06.json`, `runs/cert2_C20.out`, `runs/cert2_C25.out` |
+| Cross-checks at 2e-6, 2.5e-6 (margins >= 0.01138, >= 0.00131) and CDT's map at 1e-6 (>= 0.0308) | `python cert2.py runs/p4_C_eps2.0e-06.json 1/500000 ...` etc. | `runs/cert2_p4_C_eps2.0e-06_eps2.0e-06.json`, `runs/cert2_p4_C_eps2.5e-06_eps2.5e-06.json`, `runs/cert2_cdtfit_K64_eps1.0e-06.json`, `runs/cert2_C20.out`, `runs/cert2_C25.out` |
 | New pairs (1.1): d = 2: 666,664 <= N <= 1,999,997; d = 3: 999,997 <= N <= 2,999,996; d = 10: 3,333,323 <= N <= 9,999,989 | `python f7_newpairs.py` | `runs/f7_newpairs.out` |
 | Map optimisation (not part of the proof) | `p2*.py`-style drivers are not included; libraries `lib_map.py`, `lib_opt.py`, `lib_range.py`, `lib_band.py`, `lib_partition.py`, `lib_refine.py` | `runs/p4_*.json` (maps), `runs/p4_*.log` |
 | Reproduction of CDT's own budget (sanity) | `python p0_reproduce.py` | `runs/p0_reproduce.json` |
@@ -116,7 +121,7 @@ earlier interpolation route and the factor analysis, kept as cross-checks and fo
 | Pooled tau: K = 2: 1106977681/262702440, K = 3: 29601442477/7082066992 (xi = 169/100) | `python tau_pool.py` (uses `f1_tau.py`) | `runs/tau_pool.json` |
 | Lemma S spot check at 1e-5, 3e-5, 1e-4 | `python lemmaS2.py` | printed |
 | Certificate 5e-5, K = 2 (m = 27): L = 4.5159123241..., numerator [7.81991390318720 +/- 2.9e-16], m <= 25.885, margin >= 0.0124777 | `python cert_pool.py runs/reopt_e5e-5_m27.json 1/20000 1 - 27 1106977681/262702440 0.002 16384` | `runs/certpool_reopt_e5e-5_m27_eps5.0e-05_l0_m27.json`, `runs/certpool_5e-5_K2_l0.out` |
-| Certificate 1e-4, K = 3 (m = 37): L = 4.4006730265..., numerator [7.32696512349209 +/- 1.4e-15], m <= 33.169, margin >= 0.0228725 | `python cert_pool.py ../thm3/runs/p4_D_eps1.0e-04.json 1/10000 1 - 37 29601442477/7082066992 0.002 16384` | `runs/certpool_p4_D_eps1.0e-04_eps1.0e-04_l0_m37.json`, `runs/certpool_1e-4_K3_l0.out` |
+| Certificate 1e-4, K = 3 (m = 37): L = 4.4006730265..., numerator [7.32696512349209 +/- 1.44e-15], m <= 33.169, margin >= 0.0228725 | `python cert_pool.py ../thm3/runs/p4_D_eps1.0e-04.json 1/10000 1 - 37 29601442477/7082066992 0.002 16384` | `runs/certpool_p4_D_eps1.0e-04_eps1.0e-04_l0_m37.json`, `runs/certpool_1e-4_K3_l0.out` |
 | Certificate 1e-5, K = 2 (margin >= 0.166084), map dilated by 1 - 2^-14 | `python dilate_map.py ../thm3/runs/p4_B_eps1.0e-05.json 0.99993896484375 runs/map_B_eps1e-05_r16383.json`, then `python cert_pool.py runs/map_B_eps1e-05_r16383.json 1/100000 1 - 27 1106977681/262702440 0.002 16384` | `runs/certpool_map_B_eps1e-05_r16383_eps1.0e-05_l0_m27.json`, `runs/certpool_1e-5_K2_l0.out` |
 | Certificate 3e-5, K = 2 (margin >= 0.05585) | `python cert_pool.py ../thm3/runs/p4_D_eps3.0e-05.json 3/100000 1 - 27 1106977681/262702440 0.002 16384` | `runs/certpool_p4_D_eps3.0e-05_eps3.0e-05_l0_m27.json`, `runs/certpool_3e-5_K2_l0.out` |
 | Smoke test: cert_pool with m = 17 and CDT's tau reproduces the Theorem 3 certificate bit for bit | `python cert_pool.py ../thm3/runs/p4_C_eps3.0e-06.json 3/1000000 1/2048,99/256,215/256,1 61/200,231/200,1109/500 17 1032659/242760 0.002 16384` | `runs/certpool_p4_C_eps3.0e-06_eps3.0e-06_l3_m17.json`, `runs/repro_cert3d_3e-6.out` |
