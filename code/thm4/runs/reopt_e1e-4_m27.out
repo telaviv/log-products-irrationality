@@ -1,10 +1,10 @@
 start rho=1.0000 L=4.40067
 eps=1.0e-04 m=27 mu=1e-03 it=0 L=4.40167 T=7.29053 M=-0.08216 obj=-0.08293 st=1.0e+00 0s
-C:\Users\Shawn Krisman\math\handoff\log2log3\cdt\range_pilot\lib_map.py:35: RuntimeWarning: overflow encountered in exp
+<working folder>\range_pilot\lib_map.py:35: RuntimeWarning: overflow encountered in exp
   return z * np.exp(self.g(z))
-C:\Users\Shawn Krisman\math\handoff\log2log3\cdt\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in exp
+<working folder>\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in exp
   return z * np.exp(self.g(z))
-C:\Users\Shawn Krisman\math\handoff\log2log3\cdt\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in multiply
+<working folder>\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in multiply
   return z * np.exp(self.g(z))
 eps=1.0e-04 m=27 mu=3e-04 it=0 L=4.41738 T=7.35207 M=-0.06872 obj=-0.06898 st=1.8e-12 4s
-{"eps": 0.0001, "m": 27, "tau": 4.213808143540654, "logY1_used": 9.209139651399664, "L": 4.417384861492316, "T": {"1024": 7.352065302143312, "4096": 7.352063290022318}, "M": {"1024": -0.06872199694253478, "4096": -0.06872192241953545}, "admissible": [true, "ok"], "secs": 65.81068754196167, "src": "C:/Users/Shawn Krisman/math/handoff/log2log3/cdt/range_pilot/runs/p4_D_eps1.0e-04.json"}
+{"eps": 0.0001, "m": 27, "tau": 4.213808143540654, "logY1_used": 9.209139651399664, "L": 4.417384861492316, "T": {"1024": 7.352065302143312, "4096": 7.352063290022318}, "M": {"1024": -0.06872199694253478, "4096": -0.06872192241953545}, "admissible": [true, "ok"], "secs": 65.81068754196167, "src": "<working folder>/range_pilot/runs/p4_D_eps1.0e-04.json"}

@@ -7,11 +7,11 @@ eps=1.0e-04 mu=1e-03 it=0 L=4.38749 T=7.23818 M=-0.29211 obj=-0.29281 st=6.2e-02
 {"eps": 0.0001, "K": 96, "L": 4.4006730264538625, "T": {"1024": 7.286705382386414, "4096": 7.286700155404164}, "M": {"1024": -0.28178352676939467, "4096": -0.2817832192998506}, "M_refined716": -0.2775925119007172, "max_slope": 1.568553750144862, "admissible": [true, "ok"], "secs": 39.90959310531616}
 eps=1.00e-03 start rho=0.542 L=3.7876
 eps=1.0e-03 mu=1e-03 it=0 L=3.78860 T=5.30491 M=-0.77728 obj=-0.77771 st=1.0e+00 0s
-C:\Users\Shawn Krisman\math\handoff\log2log3\cdt\range_pilot\lib_map.py:35: RuntimeWarning: overflow encountered in exp
+<working folder>\range_pilot\lib_map.py:35: RuntimeWarning: overflow encountered in exp
   return z * np.exp(self.g(z))
-C:\Users\Shawn Krisman\math\handoff\log2log3\cdt\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in exp
+<working folder>\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in exp
   return z * np.exp(self.g(z))
-C:\Users\Shawn Krisman\math\handoff\log2log3\cdt\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in multiply
+<working folder>\range_pilot\lib_map.py:35: RuntimeWarning: invalid value encountered in multiply
   return z * np.exp(self.g(z))
 {"eps": 0.001, "K": 96, "L": 3.813742208876705, "T": {"1024": 5.3729692028783775, "4096": 5.3729667409559845}, "M": {"1024": -0.7561416279049031, "4096": -0.7561414830859392}, "M_refined716": -0.7541515040529339, "max_slope": 1.229492435823042, "admissible": [true, "ok"], "secs": 26.816490173339844}
 eps=1.00e-02 start rho=0.421 L=2.9494

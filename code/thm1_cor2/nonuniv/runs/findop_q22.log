@@ -1,0 +1,13 @@
+primes 1 (0s)
+primes 2 (0s)
+primes 3 (1s)
+primes 4 (1s)
+primes 5 (1s)
+primes 6 (1s)
+primes 7 (2s)
+primes 8 (2s)
+primes 9 (2s)
+primes 10 (2s)
+primes 11 (3s)
+primes 12 (3s)
+primes used 13 max digits 115 exact check n<=60, 4 seqs: failures 0

@@ -15,7 +15,7 @@ This restarts the final referee. The previous one was stopped midway and left un
   Li–Sauzin–Sun arXiv:2012.14175v1 (Thm A); Lysov 2018 (the irrationality statement for m ≥ 33).
 
 **Scratch** (all reruns, on a copy of `code/`):
-`C:\Users\SHAWNK~1\AppData\Local\Temp\claude\44ab6fdf689a4b9b\aa4517ec-4b3f-4a6a-8ac2-0f2ec7014649\scratchpad\logpaperref2\`.
+a scratch folder.
 
 ## Verdict
 

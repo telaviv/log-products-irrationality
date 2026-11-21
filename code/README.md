@@ -5,7 +5,8 @@ per result:
 
 | directory | paper | content |
 |---|---|---|
-| `thm1_cor2/` | Section 3, Corollary 2 cross-check (Remark 4.6) | Lysov's forms: recurrences, contact orders, minimal operators for q = 26..32, certified continuation, rank-14 certificates |
+| `thm1_cor2/` | Section 3, Theorem 2 (25 <= N <= 31) cross-check (Remark 4.6) | Lysov's forms: recurrences, contact orders, minimal operators for q = 26..32, certified continuation, rank-14 certificates |
+| `thm1_cor2/nonuniv/` | Section 4.6, Theorem 2 for 21 <= N <= 24 (new in v2) | q = 22..25: recurrences, minimal operators, continuation and rank-14 certificates; the degree-8 map, its preimage table and the certified bound for T(phi) |
 | `thm1_cor2/fourterm/` | Section 4, Theorem 1 | local exponents, Casoratian, budget, the pipeline for q = 33..53, irreducibility certificates for q = 26..53 |
 | `thm3/` | Section 5, Theorem 3 | Lemma S check, map certificates (cert2/cert3/cert3d), map optimisers, new-pair ranges |
 | `thm3/f1/` | Section 5.5 | the 10 x 10 determinant of CDT Lemma 14.3.1, its factorisation and the factor Phi_6 |
@@ -27,8 +28,9 @@ author's working folder was replaced by a relative one: `thm4/reopt.py` (path to
 `f1_tau.py`, copied into `thm4/` from the project's `cdt/` folder), and `thm1_cor2/fourterm/referee_4t/indep_exp.py`.
 One file is new: `thm1_cor2/fourterm/check_y1.py`, added by the final referee for the root check of Section 3.4 (the
 gate referee of Theorem 1 had done the same check in scratch).
-Certificate outputs (`.json`, `.out`, `.log`) are unchanged and may contain absolute paths of the original runs (for
-example `"src"` fields); they record the run, not a path to use. `thm3/lib_obs.py` imports `cdt4_budget.py` from another
+Certificate outputs (`.json`, `.out`, `.log`) are unchanged, except that in version 2 the absolute paths of the
+original working folders recorded in some of them (for example `"src"` fields and warning lines) were replaced by the
+placeholder `<working folder>`; they record the run, not a path to use, and no script reads them. `thm3/lib_obs.py` imports `cdt4_budget.py` from another
 project folder; it is used only by the map optimisers and by `xcheck_points.py` (not part of any proof) and is not
 included.
 
@@ -77,6 +79,26 @@ q = 32 base-100 files `runs/*old_base100*` are an earlier run kept for the recor
 | Denominator measurements quoted in the novelty discussion (not used in proofs) | `referee_4t/dens.py`, `referee_4t/dens2.py` | printed |
 
 Times: `mono13.py` takes about 40 minutes per q (single core); everything else in this folder takes seconds to minutes.
+
+### Section 4.6 (Theorem 2 for 21 <= N <= 24, i.e. q = 22..25; new in v2), folder `thm1_cor2/nonuniv/`
+
+`mono13.py`, `cert_det.py`, `findop.py`, `i1_rec25.py` and `rec.py` are byte copies of the files in `thm1_cor2/`.
+`make_rec.py` and `unit1_exponents.py` read `../runs/i1_L4_symbolic.json` (the proved symbolic order-4 operator).
+
+| paper | script (command) | output |
+|---|---|---|
+| Recurrence at q = 22..25 as the specialisation of the proved symbolic L4 (q = 26 reproduces `../runs/rec_q26.json` exactly) | `python make_rec.py 22 23 24 25` | `runs/rec_q<q>.json` |
+| L_13 and I1' at q = 22..25 (Prop. 4.8 proof) | `sh run_findop.sh 22 23 24 25` (calls `findop.py q 25 13 230 60`, then `i1_rec25.py`) | `runs/findop_q<q>.log`, `runs/op_q<q>_25_13.json`, `runs/i1_rec25_q<q>.json`, `runs/i1_rec25.log` |
+| Certified continuation and the rank-14 determinant (Prop. 4.8, Table 2) | `sh runcert.sh 22 23 24 25` (calls `mono13.py q 2200 5 _cert 1700 diag`, then `cert_det.py`) | `runs/mono13_q<q>_cert.{pkl,json,log}`, `runs/mono13_q<q>_cert_det.json`, `runs/cert_det_q<q>.txt` |
+| Preimage table (Lemma 4.9), L_phi, certified upper bound for T(phi) - L_phi, margin M_phi(q) (Table 2), also q = 21 (negative) and q = 26 (calibration) | `python cert_map.py q 512 1e-7` | `runs/cert_map_q<q>.json`, `runs/cert_map_q<q>.log` |
+| Float cross-checks of T(phi) - L_phi (Jensen quadrature, direct double sampling); not part of the proof | `python proto_map.py q` | printed |
+| Exponents 1/2 at y_1..y_4 for every q (a second check of Prop. 4.3) | `python unit1_exponents.py` | `runs/unit1_exponents.json` |
+
+The `diag` determinant printed at the end of each `mono13` log uses a default word list and is a diagnostic only (it may
+contain 0); the certificate is the `cert_det.py` output. Times: `mono13.py` about 50 minutes per q on one core (longer on
+a loaded machine), `cert_map.py` a few seconds per q, everything else seconds to minutes. Keep at most two `mono13.py`
+runs at a time on a machine with little free memory: a first attempt with four parallel runs ran out of memory at
+q = 22, 23 (FLINT allocation error) and was repeated.
 
 ### Section 5 (Theorem 3), folder `thm3/`
 

@@ -56,10 +56,12 @@ bounds, monodromy, computer-assisted proof, interval arithmetic}
 We prove, assuming the arithmetic holonomy bound of Calegari, Dimitrov and Tang (Theorem~7.0.1 of their preprint
 arXiv:2408.15403), that $1$, $\log(1+1/q)$, $\log(1-1/q)$ and $\log(1+1/q)\log(1-1/q)$ are linearly independent over
 $\QQ$ for every integer $26\le q\le53$. Together with Hata's theorem for $q\ge54$ this gives the four-term independence
-for every $q\ge26$. In particular the seven numbers $\log(1+1/N)\log(1+1/(N+1))$, $25\le N\le31$, are irrational;
-irrationality was previously known for $N\ge32$ (Lysov). The proof feeds Lysov's explicit type~II Hermite--Pad\'e forms
-into the holonomy bound, and replaces the arithmetic of the forms by an analytic input: the monodromy of a minimal
-differential operator of order~13, which we show to be irreducible by interval-arithmetic certificates. Conditionally
+for every $q\ge26$. Under the same assumption the eleven numbers $\log(1+1/N)\log(1+1/(N+1))$, $21\le N\le31$, are
+irrational; irrationality was previously known for $N\ge32$ (Lysov). The proof feeds Lysov's explicit type~II
+Hermite--Pad\'e forms into the holonomy bound, and replaces the arithmetic of the forms by an analytic input: the
+monodromy of a minimal differential operator of order~13, which we show to be irreducible by interval-arithmetic
+certificates. For $21\le N\le24$ the Koebe map is replaced by a non-univalent rational map of degree~$8$ whose image
+passes over two singular points, where the local monodromy is a reflection. Conditionally
 on the published form of the Calegari--Dimitrov--Tang argument for products of two logarithms, we also widen their
 Theorem~C from $|m/n-1|<10^{-6}$ to $|m/n-1|<3\cdot10^{-6}$, which gives infinitely many new irrational products
 $\log(1+1/m)\log(1+1/n)$ with $|m-n|\ge2$, and we show by pooling several pairs that at most one exceptional pair
@@ -93,8 +95,8 @@ their holonomy bounds. This paper carries out that scheme for Lysov's forms, and
 
 \subsection*{Dependence on one preprint}
 Every result in this paper depends on the preprint \cite{CDT} (arXiv:2408.15403v2, 16 September 2024; still the current
-version on 19 November 2026), which to our knowledge has not been refereed. Theorem~\ref{thm:4T} and
-Corollary~\ref{cor:F1} use only its general holonomy bound \cite[Thm.~7.0.1]{CDT}, which we apply as stated.
+version on 21 November 2026), which to our knowledge has not been refereed. Theorems~\ref{thm:4T} and
+\ref{cor:F1} use only its general holonomy bound \cite[Thm.~7.0.1]{CDT}, which we apply as stated.
 Theorems~\ref{thm:Cprime} and \ref{thm:F2} also use the specific construction of \cite[\S14]{CDT} for products of two
 logarithms, together with \cite[Thm.~6.0.2, Cor.~9.0.19, Lemma~12.0.1]{CDT}. That construction contains a step that
 is asserted rather than proved in \cite{CDT}, the irreducibility of a certain differential operator
@@ -126,17 +128,22 @@ this for integers $q$ only: Corollary~6.3 is the case $k=q^2$ of his Theorem~6.2
 $1/\sqrt k$ for every integer $k\ge2909$.
 
 Since $\log(1-1/q)=-\log(1+1/(q-1))$, Theorem~\ref{thm:4T} at $q=N+1$ contains the irrationality of the product of two
-consecutive logarithms $\log(1+1/N)\log(1+1/(N+1))=-\theta_{N+1}$:
+consecutive logarithms $\log(1+1/N)\log(1+1/(N+1))=-\theta_{N+1}$ for $25\le N\le52$. A second argument, with a
+different map, gives four more:
 
-\begin{corollary}\label{cor:F1}
-Assume \cite[Thm.~7.0.1]{CDT}. For every integer $N$ with $25\le N\le31$,
+\begin{theorem}\label{cor:F1}
+Assume \cite[Thm.~7.0.1]{CDT}. For every integer $N$ with $21\le N\le31$,
 \[
 \log\Bigl(1+\frac1N\Bigr)\log\Bigl(1+\frac1{N+1}\Bigr)\notin\QQ .
 \]
-\end{corollary}
+\end{theorem}
 
-These are seven new irrational numbers. By Theorem~\ref{thm:4T} for $32\le N\le52$ and Hata's theorem for $N\ge53$
-(and, independently, Lysov's theorem \cite{Lys18} for $N\ge32$), the product is irrational for every $N\ge25$.
+These are eleven new irrational numbers. For $25\le N\le31$ Theorem~\ref{cor:F1} is the case $q=N+1$ of
+Theorem~\ref{thm:4T}. For $21\le N\le24$ the Koebe map used for Theorem~\ref{thm:4T} is too weak, and we use instead a
+rational map of degree~$8$ which is not univalent and whose image contains the singular points $y_2,y_3$ of the
+generating function; this is allowed because the local monodromy there is a reflection
+(Section~\ref{sec:nonuniv}). By Theorem~\ref{thm:4T} for $32\le N\le52$ and Hata's theorem for $N\ge53$ (and,
+independently, Lysov's theorem \cite{Lys18} for $N\ge32$), the product is irrational for every $N\ge21$.
 
 The second group of results concerns CDT's two-parameter family. For $m\in\ZZ\setminus\{-1,0\}$ write
 $\ell_m=\log(1+1/m)$.
@@ -200,8 +207,8 @@ $m$ for our $q$, and Zeilberger and Zudilin \cite{ZZ19} write $a=q-1$.
 
 \subsection{What is new}
 \begin{itemize}
-\item \emph{New irrational numbers.} The seven products $\ell_N\ell_{N+1}$, $25\le N\le31$ (Corollary~\ref{cor:F1});
-no method gave their irrationality before. The products \eqref{eq:newpairs} (Theorem~\ref{thm:Cprime}, conditional on
+\item \emph{New irrational numbers.} The eleven products $\ell_N\ell_{N+1}$, $21\le N\le31$ (Theorem~\ref{cor:F1});
+no method gave their irrationality before. (Version~1 of this paper had $25\le N\le31$.) The products \eqref{eq:newpairs} (Theorem~\ref{thm:Cprime}, conditional on
 \cite[\S14]{CDT}), together with the four-term independence for each of them.
 \item \emph{New linear independence at known irrational numbers.} The four-term independence of
 Theorem~\ref{thm:4T} for $26\le q\le32$ is new. For $33\le q\le53$ we know of no explicit statement; ours is the first,
@@ -217,9 +224,9 @@ by Volodya Lysov to $a\ge32$''; that statement concerns the linear forms, not th
 reflections (Proposition~\ref{prop:exponents}); an explicit form of the factor $\Phi_6$ of \cite[Lemma~14.3.1]{CDT}
 and its $2$-adic nonvanishing at odd pairs (Section~\ref{sec:phi6}); a misprinted factor in \cite[(14.2.2), (14.2.3)]{CDT}.
 \end{itemize}
-A literature search on 19 November 2026 (arXiv, Hexagon, GitHub, Zenodo, general web search) found no other work on
-products of two real logarithms of this kind, on the constant $10^{-6}$ of \cite[Thm.~C]{CDT}, or on the
-Hata--Lysov family since \cite{Lys18}. The search is not exhaustive; in particular we could not find an abstract of a
+A literature search on 19 November 2026 (arXiv, Hexagon, GitHub, Zenodo, general web search), repeated on 21 November
+2026 for $q\le25$, found no other work on products of two real logarithms of this kind, on the constant $10^{-6}$ of
+\cite[Thm.~C]{CDT}, or on the Hata--Lysov family since \cite{Lys18}. The search is not exhaustive; in particular we could not find an abstract of a
 2025 talk by Lysov on this subject.
 
 \subsection{Status of the results}\label{sec:status}
@@ -230,9 +237,12 @@ read by a human expert, and it is not formalised. In the notation of our working
 adversarial AI referee when the result was accepted; ``chain-refereed'': covered by the final whole-chain AI referee;
 ``owed'': not yet done), the status labels are:
 \begin{itemize}
-\item Theorem~\ref{thm:4T} and Corollary~\ref{cor:F1}: \emph{proved, computer-assisted (exact symbolic identities and
-Arb certificates), given \cite[Thm.~7.0.1]{CDT} (preprint); gate-refereed once; chain-refereed; human read and Lean
-owed.}
+\item Theorem~\ref{thm:4T} and Theorem~\ref{cor:F1} for $25\le N\le31$: \emph{proved, computer-assisted (exact symbolic
+identities and Arb certificates), given \cite[Thm.~7.0.1]{CDT} (preprint); gate-refereed once; chain-refereed; human
+read and Lean owed.}
+\item Theorem~\ref{cor:F1} for $21\le N\le24$ (new in version~2): \emph{proved, computer-assisted (exact identities and
+Arb certificates), given \cite[Thm.~7.0.1]{CDT} (preprint); checked by one adversarial whole-chain AI referee; human
+read and Lean owed.}
 \item Theorem~\ref{thm:Cprime}: \emph{proof sketch plus certified computation; conditional on CDT as published
 (Thm.~6.0.2, Cor.~9.0.19, Lemma~12.0.1 and \S14, in particular the irreducibility of $\mathcal L_{a,b}$ and the
 reduction in the proof of Lemma~14.3.1); $\Phi_6$ factor of Lemma~14.3.1 via Section~\ref{sec:phi6} (proved, exact
@@ -256,7 +266,10 @@ $1,H,\vartheta H,\dots,\vartheta^{12}H$ ($\vartheta=y\,d/dy$), gives a contradic
 linearly independent over $\CC(y)$ and $q\ge26$. Their independence follows from the irreducibility of the monodromy of
 the minimal operator $L_{13}$ of the $H_j$ (order $13$), which we certify per $q$ from rigorous numerical analytic
 continuation, using that the local monodromies at the singular points $y_2,y_3$ are reflections. No arithmetic of the
-forms beyond the elementary denominator bound $\lcm(1,\dots,4n)\lcm(1,\dots,2n)$ is needed.
+forms beyond the elementary denominator bound $\lcm(1,\dots,4n)\lcm(1,\dots,2n)$ is needed. The reflections are used a
+second time for Theorem~\ref{cor:F1} at $21\le N\le24$: a map whose image passes over $y_2$ and $y_3$ with even
+ramification still gives meromorphic pullbacks, and an explicit degree-$8$ rational map of this kind (from the ascending
+Landen transformation) has a holonomy budget larger than the Koebe map's, with $T(\varphi)$ a two-variable Mahler measure.
 
 For Theorem~\ref{thm:Cprime} we keep CDT's construction and change only the map: we construct, by optimisation, a
 polynomial-exponential map $\psi$ of the disc for which $h\circ\psi$ ($h$ the hauptmodul of $\Gamma_0(2)$) is admissible
@@ -266,8 +279,8 @@ hypothetical exceptional pairs into one holonomy bound, after proving that they 
 
 \subsection*{Outline}
 Section~\ref{sec:holonomy} recalls the holonomy bounds. Section~\ref{sec:lysov} treats Lysov's forms: contact orders,
-denominators, recurrences and the differential equations. Section~\ref{sec:proof4T} proves Theorem~\ref{thm:4T} and
-Corollary~\ref{cor:F1}. Sections~\ref{sec:Cprime} and \ref{sec:F2} prove Theorems~\ref{thm:Cprime} and \ref{thm:F2}.
+denominators, recurrences and the differential equations. Section~\ref{sec:proof4T} proves Theorems~\ref{thm:4T} and
+\ref{cor:F1} (the cases $21\le N\le24$ in Section~\ref{sec:nonuniv}). Sections~\ref{sec:Cprime} and \ref{sec:F2} prove Theorems~\ref{thm:Cprime} and \ref{thm:F2}.
 Section~\ref{sec:computer} lists the computer-assisted steps and how to reproduce them, Section~\ref{sec:limits}
 the limits of the method, and Section~\ref{sec:provenance} provenance and the use of AI tools.
 
@@ -553,7 +566,7 @@ $1/\lambda_1<2^{-20}q^2$ (Arb root isolation, \file{fourterm/check\_y1.py}); we 
 $\lambda_1>\lambda_2>\lambda_3>\lambda_4>0$ and put $y_k=1/\lambda_k$, so that $0<y_1<y_2<y_3<y_4$. For example, for
 $q=26$: $y_1\approx1.98\cdot10^{-13}$, $y_2\approx156.37$, $y_3\approx182.38$, $y_4\approx2703$. (For every $q\ge2$ the
 roots are distinct, since the discriminant of $c_{34}$ below does not vanish at $w=q^2$; we use their reality and order
-only for $26\le q\le53$.)
+only for $22\le q\le53$.)
 
 \subsection{The differential equations}
 Fix an integer $q$ with $2\le q\le60$ and put
@@ -602,7 +615,7 @@ for $n\ge0$, and Proposition~\ref{prop:I1} gives the claim (\file{i1\_rec25.py})
 \end{proof}
 
 % ===========================================================================
-\section{Proof of Theorem~\ref{thm:4T}}\label{sec:proof4T}
+\section{Proofs of Theorems~\ref{thm:4T} and \ref{cor:F1}}\label{sec:proof4T}
 % ===========================================================================
 
 Fix $q$ with $26\le q\le53$. Write $f=(f_1(q),f_2(q),f_3(q))$, $P_n=(P_{1,n}(q),P_{2,n}(q),P_{3,n}(q))$ and
@@ -643,8 +656,9 @@ Let $a\in\CC^3\setminus\{0\}$. The $14$ functions $1,H_a,\vartheta H_a,\dots,\va
 independent over $\CC(y)$, hence over $\QQ(y)$.
 \end{proposition}
 
-The rest of this section proves Proposition~\ref{prop:indep}. For $a=(0,0,1)$ it is the case used for
-Corollary~\ref{cor:F1}, which we also certified separately (Remark~\ref{rem:F1cert}).
+The rest of this section, up to Section~\ref{sec:nonuniv}, proves Proposition~\ref{prop:indep}. For $a=(0,0,1)$ it is the case used
+for Theorem~\ref{cor:F1}, which we also certified separately (Remark~\ref{rem:F1cert}).
+Section~\ref{sec:nonuniv} treats $22\le q\le25$.
 
 \subsection{An independence lemma}
 Fix a base point $y_*\in(y_1,y_2)$ which is a regular point of $L_{13}$, and consider germs at $y_*$; $\gamma$ runs
@@ -816,15 +830,16 @@ $q$ & $\fm_{\min}$ & $M_{14}(q)$ & $y_2$ & $y_*$ & det (a) & det (c)\\
 \end{tabular}
 \end{table}
 
-\begin{proof}[Proof of Proposition~\ref{prop:indep}, Theorem~\ref{thm:4T} and Corollary~\ref{cor:F1}]
+\begin{proof}[Proof of Proposition~\ref{prop:indep}, Theorem~\ref{thm:4T}, and Theorem~\ref{cor:F1} for $25\le N\le31$]
 By Lemma~\ref{lem:nonzero}, $U_a$ is a nonzero monodromy-invariant subspace of $S$, so $U_a=S$ by
 Proposition~\ref{prop:irred}; then Lemma~\ref{lem:indep} with $u=13$ gives Proposition~\ref{prop:indep}, and the
-reduction above gives Theorem~\ref{thm:4T}. Corollary~\ref{cor:F1} is the case $26\le q\le32$ of Theorem~\ref{thm:4T}:
+reduction above gives Theorem~\ref{thm:4T}. Theorem~\ref{cor:F1} for $25\le N\le31$ is the case $26\le q\le32$ of
+Theorem~\ref{thm:4T}:
 if $\theta_q=u/v$ with $u,v\in\ZZ$, $v\ne0$, then $(r_0,a)=(-u,0,0,v)$ is a nonzero relation.
 \end{proof}
 
-\begin{remark}[Independent certificate for Corollary~\ref{cor:F1}]\label{rem:F1cert}
-Corollary~\ref{cor:F1} was first proved by a different final step: for $26\le q\le32$ the $14$ continuations of $H_3$
+\begin{remark}[Independent certificate for Theorem~\ref{cor:F1}, $25\le N\le31$]\label{rem:F1cert}
+Theorem~\ref{cor:F1} for $25\le N\le31$ was first proved by a different final step: for $26\le q\le32$ the $14$ continuations of $H_3$
 along the words $\varnothing,2,3,A2,A3,A^22,A^23,A^32,A^33,A^42,A^43,A^52,A^62,A^72$ have a nonzero $14\times14$ Arb
 determinant (\file{cert\_det.py}), for example
 \[
@@ -845,6 +860,216 @@ and give the same irreducibility certificates.
 Smaller holonomy budgets suffice for larger $q$ ($\fm_{\min}$ in Table~\ref{tab:4T}), but the proof uses $\fm=14$ at
 every $q$. No case analysis on the relation vector and no input from linear forms in logarithms is needed: only $a\ne0$
 is used.
+\end{remark}
+
+% ---------------------------------------------------------------------------
+\subsection{Theorem~\ref{cor:F1} for \texorpdfstring{$22\le q\le25$}{22 <= q <= 25}: a non-univalent map}\label{sec:nonuniv}
+% ---------------------------------------------------------------------------
+For $q\le25$ the Koebe map fails ($M_{14}(25)\approx-0.067$, Section~\ref{sec:limits}). Theorem~\ref{thm:CDT701} does not
+ask $\varphi$ to be univalent, nor its image to avoid the singular points of the functions: it asks only that the pullbacks
+be meromorphic on $\DD$. By Proposition~\ref{prop:exponents} every branch of $H_a$ near $y_2$ or $y_3$ has the form
+$h_0(t)+c\,t^{1/2}h(t)$, so the branching is undone by any map $\varphi$ for which $\varphi-y_k$ ($k=2,3$) has a zero of even
+order at each of its zeros. In this subsection we construct such a $\varphi$, rational of degree $8$, and prove
+Theorem~\ref{cor:F1} for $21\le N\le24$, that is, $\theta_q\notin\QQ$ for $22\le q\le25$. We use only $H_3$
+($a=(0,0,1)$) and a rank certificate in the style of Remark~\ref{rem:F1cert}.
+
+Fix $q$ with $22\le q\le25$, and let $y_1<y_2<y_3<y_4$ be as in Section~\ref{sec:lysov} (for these $q$ the four roots are
+real, positive and distinct, and $y_1<2^{-20}q^2$, by the same root isolation).
+
+\subsubsection*{Rank}
+\begin{proposition}\label{prop:rankK}
+For $22\le q\le25$ the $14$ functions $1,H_3,\vartheta H_3,\dots,\vartheta^{12}H_3$ are linearly independent over $\CC(y)$.
+\end{proposition}
+
+\begin{proof}[Proof (computer-assisted, exact and Arb)]
+For these $q$ we computed the operator of recurrence order $25$ and $n$-degree $13$ exactly as in Section~\ref{sec:lysov}
+(the recurrence $L_4$ is the specialisation of Proposition~\ref{prop:I1} at $w=q^2$), and the proof of
+Proposition~\ref{prop:I1prime} applies verbatim: the right remainder is zero and $p_4(\cdot,q^2)$ has no root at a
+nonnegative integer (\file{i1\_rec25.py}). So $L_{13}H_3=E'$. The continuation of Section~\ref{sec:irred}
+(\file{mono13.py}, same parameters) and the determinant of Remark~\ref{rem:F1cert} (\file{cert\_det.py}, the same $14$ words)
+give the nonzero Arb determinants of Table~\ref{tab:K}. As in Remark~\ref{rem:F1cert} (using $E'\ne0$), the $14$
+continuations of $H_3$ along these words are linearly independent germs at the base point, so
+$U_{(0,0,1)}=\operatorname{span}_\CC\{(\gamma-1)H_3\}$ has dimension at least $13$ (its span with $H_3$ contains all
+$14$), and Lemma~\ref{lem:indep} with $u=13$ gives the claim.
+\end{proof}
+
+\subsubsection*{The map}
+Let $J(u)=y_c+d\,(u+u^{-1})$ with $y_c=(y_2+y_3)/2$ and $d=(y_3-y_2)/4$, so that $J(-1)=y_2$, $J(1)=y_3$ and
+$J(u)=J(1/u)$. A real $y\notin[y_2,y_3]$ has two real preimages $u^{\pm}$ with $u^+u^-=1$, $|u^+|>1$; write $u_0^\pm$,
+$u_1^\pm$, $u_4^\pm$ for those of $0$, $y_1$, $y_4$. They satisfy
+$u_0^+<u_1^+<-1<u_1^-<u_0^-<0<u_4^-<1<u_4^+$. Put $e_0=u_0^-$, $e_1=u_4^-$, $e_2=u_4^+$, $k=\sqrt{(e_1-e_0)/(e_2-e_0)}
+\in(0,1)$ and
+\[
+\mathcal R(\zeta)=\frac{e_2(2k\zeta-1-k)^2-e_1(2\zeta-1-k)^2}{4(1-k^2)\,\zeta(1-\zeta)} .
+\]
+$\mathcal R$ is real on $\RR$ and of degree $2$. With $D(\zeta)=4(1-k^2)\zeta(1-\zeta)$ one has the identities
+\[
+\mathcal R-e_2=\frac{(e_2-e_1)(2\zeta-1-k)^2}{D(\zeta)},\qquad\mathcal R-e_1=\frac{(e_2-e_1)(2k\zeta-1-k)^2}{D(\zeta)},
+\]
+and, by the choice of $k$, $\mathcal R(\infty)=\mathcal R(\zeta_c)=e_0$ with $\zeta_c:=(1+k)^2/(4k)$ (checked symbolically).
+So $\mathcal R$ takes the value $e_2$ only at $\zeta_\gamma=(1+k)/2\in(0,1)$ and $e_1$ only at
+$\zeta_\beta=(1+k)/(2k)>\zeta_c$, each doubly; these are its only critical points. In particular $\mathcal R$ maps
+$(-\infty,0)$ decreasingly onto $(-\infty,e_0)$. Let
+$\zeta_1<\zeta_0<0$ be the negative solutions of $\mathcal R=u_1^-$ and $\mathcal R=u_0^+$, $B_0=\sqrt{\zeta_0/(\zeta_1-\zeta_0)}$,
+\[
+\Omega=\CC\setminus\bigl((-\infty,\zeta_1]\cup[0,\infty)\bigr),\qquad
+Z(z)=\frac{\zeta_1B_0^2(1+z)^2}{B_0^2(1+z)^2+(1-z)^2},
+\]
+so that $Z$ maps $\DD$ conformally onto $\Omega$ with $Z(0)=\zeta_0$, and put
+\[
+\Psi=J\circ\mathcal R,\qquad\varphi=\Psi\circ Z .
+\]
+Then $\varphi$ is rational of degree $8$ with $\varphi(0)=J(u_0^+)=0$, and its poles (the points where $Z(z)\in
+\mathcal R^{-1}\{0,\infty\}\subset\partial\Omega\cup\{\infty\}$) lie on $\TT$. (Origin, not used below: $\mathcal R$
+uniformises, via the ascending Landen transformation, a rectangle in the universal cover of the annulus
+$\CC\setminus([e_0,e_1]\cup[e_2,\infty))$ of the Joukowski variable, two fundamental domains wide; $\Omega$ is that
+rectangle minus a slit ending at the inner lift of $y_1$.)
+
+\begin{lemma}[preimage table; certified]\label{lem:Ktable}
+For $22\le q\le25$: on $\Omega$, $\mathcal R$ takes the values $u_0^+$, $u_1^+$ and $-1$ exactly once each, at real points
+$\zeta_1<\zeta_{-1}<\zeta_1'<\zeta_0$; the value $+1$ at a pair of nonreal conjugate points $\zeta_\pm$; and none of the
+values $u_0^-$, $u_1^-$, $u_4^\pm$, $0$, $\infty$.
+\end{lemma}
+
+\begin{proof}[Proof (Arb)]
+For a real $u_*$, $\mathcal R(\zeta)=u_*$ is a quadratic equation in $\zeta$; its roots are enclosed in Arb and located with
+respect to $\zeta_1$, $0$, $1$, $\zeta_c$ (\file{cert\_map.py}, \S2; the table is stored in the output file). The values
+$e_2=u_4^+$, $e_1=u_4^-$ are taken only at the critical points, which are positive, and $u_0^-=e_0$ only at $\zeta_c$ and
+$\infty$, by the identities above; $\infty$ at $0$, $1$, $\infty$. The equation $\mathcal R=0$ has two real roots, both
+positive; $\mathcal R=u_1^-$ has the root $\zeta_1\notin\Omega$ and a positive one; each of $\mathcal R=u_0^+$, $u_1^+$, $-1$
+has one root in $(\zeta_1,0)$ and one positive root; $\mathcal R=1$ has a nonreal conjugate pair. All of this is decided
+by Arb comparisons (positive roots lie outside $\Omega$).
+\end{proof}
+
+Since $\mathcal R'$ vanishes only at the two positive critical points, $\mathcal R'\ne0$ on $\Omega$, and $\Psi'=J'(\mathcal
+R)\mathcal R'$ vanishes on $\Omega$ only where $\mathcal R=\pm1$. So, by the lemma, on $\Omega$ the function $\Psi$ takes the
+value $0$ only at $\zeta_0$, $y_1$ only at $\zeta_1'$, $y_2$ only at $\zeta_{-1}$, $y_3$ only at $\zeta_\pm$, and never
+$y_4$ or $\infty$; and $\Psi-y_2$, $\Psi-y_3$ have double zeros at $\zeta_{-1}$, $\zeta_\pm$ ($J'(\pm1)=0\ne J''(\pm1)$).
+
+\begin{lemma}[admissibility]\label{lem:Kadm}
+For $22\le q\le25$ and every $a\in\CC^3$, the germ $H_a\circ\Psi$ at $\zeta_0$ extends to a holomorphic function on
+$\Omega$. Hence $(\vartheta^jH_a)\circ\varphi$ is meromorphic on $\DD$ for every $j\ge0$, and its germ at $0$ is the formal
+composition.
+\end{lemma}
+
+\begin{proof}
+Let $P=\{\zeta_0,\zeta_1',\zeta_{-1},\zeta_+,\zeta_-\}$ and $\Omega'=\Omega\setminus P$. Since $\Psi(\Omega')$ avoids
+$0,y_1,\dots,y_4$ and $\infty$, the germ of $H_a\circ\Psi$ at $\zeta_0$ (where $H_a$ is its power series) continues along
+every path in $\Omega'$. As $\Omega$ is simply connected, $\pi_1(\Omega')$ is generated by loops
+$\gamma_p\,c_p\,\gamma_p^{-1}$, $p\in P$, with $c_p$ a small circle around $p$ and $\gamma_p$ disjoint arcs from a base point
+near $\zeta_0$; we take $\gamma_{\zeta_0}$ trivial and $\gamma_{\zeta_1'}$ along the real segment $[\zeta_1',\zeta_0]$, and the
+other $\gamma_p$ off that segment.
+For $p=\zeta_0$ the continuation is the power series of $H_a$ near $0$, single-valued.
+For $p=\zeta_1'$: $\Psi$ maps $(\zeta_1',\zeta_0)$ into $(0,y_1)$ (it is real there and takes neither value inside), and a
+neighbourhood of the segment into the disc $|y|<y_2$, on which $H_a$ is holomorphic (Proposition~\ref{prop:continuation});
+so along $\gamma_p$ and around $p$ the continuation is $H_a\circ\Psi$ with $H_a$ the principal branch, single-valued.
+For $p\in\{\zeta_{-1},\zeta_\pm\}$, with $y_k=\Psi(p)$: whatever $\gamma_p$, the branch reached near $y_k$ solves $Lh=E_a$,
+so $h=h_0(t)+c\,t^{1/2}h_1(t)$, $t=y-y_k$ (Proposition~\ref{prop:exponents}); and $\Psi-y_k=(\zeta-p)^2g$ with $g(p)\ne0$, so
+$h\circ\Psi=h_0(\Psi-y_k)\pm c\,(\zeta-p)g^{1/2}h_1(\Psi-y_k)$ is single-valued and holomorphic near $p$.
+So the continuation is single-valued on $\Omega'$ and holomorphic at every point of $P$, hence holomorphic on $\Omega$. Finally
+$(\vartheta^jH_a)\circ\Psi=\bigl((\Psi/\Psi')\,d/d\zeta\bigr)^j(H_a\circ\Psi)$ is meromorphic on $\Omega$, and $Z$ maps $\DD$
+onto $\Omega$ with $Z(0)=\zeta_0$.
+\end{proof}
+
+\subsubsection*{The holonomy bound for a map with poles on the circle}
+The map $\varphi$ is not holomorphic on a neighbourhood of $\overline\DD$; we apply Theorem~\ref{thm:CDT701} to
+$\varphi_r(z)=\varphi(rz)$, $r<1$, and let $r\to1$. Write $\varphi=P_\varphi/Q_\varphi$ in lowest terms ($Q_\varphi\ne0$ on
+$\DD$), let $\mathrm m$ denote the Mahler measure, and put
+\[
+\begin{gathered}
+T(\varphi):=\iint_{\TT^2}\log|\varphi(z)-\varphi(w)|=\mathrm m(F)-2\,\mathrm m(Q_\varphi),\\
+F(z,w)=P_\varphi(z)Q_\varphi(w)-P_\varphi(w)Q_\varphi(z).
+\end{gathered}
+\]
+
+\begin{lemma}\label{lem:Tlim}
+$\limsup_{r\to1^-}T(\varphi_r)\le T(\varphi)$.
+\end{lemma}
+
+\begin{proof}
+$T(\varphi_r)=\mathrm m(F(r\cdot,r\cdot))-2\,\mathrm m(Q_\varphi(r\cdot))$. For fixed $(z,w)\in\TT^2$ the function
+$\lambda\mapsto\log|F(\lambda z,\lambda w)|$ is subharmonic, so its mean over $|\lambda|=r$ is nondecreasing in $r$;
+averaging over $\TT^2$ and using the invariance of the Haar measure under $(z,w)\mapsto(\lambda z,\lambda w)$ gives
+$\mathrm m(F(r\cdot,r\cdot))\le\mathrm m(F)$. And $\mathrm m(Q_\varphi(r\cdot))=\log|\mathrm{lc}(Q_\varphi)|+\deg Q_\varphi\log r+
+\sum_j\log\max(1,|\rho_j|/r)\to\mathrm m(Q_\varphi)$, the $\rho_j$ being the roots of $Q_\varphi$.
+\end{proof}
+
+Put $L_\varphi=\log|\varphi'(0)|$ and $\tau=6\cdot\frac{195}{196}$ as in Section~\ref{sec:proof4T}. If $14$ functions as in
+the reduction of Section~\ref{sec:proof4T} exist, Theorem~\ref{thm:CDT701} applies to $\varphi_r$ (the $f_i\circ\varphi_r$
+are meromorphic on $|z|<1/r$ by Lemma~\ref{lem:Kadm}; the functions are holonomic, and $L_\varphi+\log r>\tau$), so
+$14(L_\varphi+\log r-\tau)\le T(\varphi_r)$; by Lemma~\ref{lem:Tlim}, $14(L_\varphi-\tau)\le T(\varphi)$. So we get a
+contradiction as soon as
+\[
+M_\varphi(q):=L_\varphi-\tfrac1{14}T(\varphi)-\tau>0 .
+\]
+
+\emph{Jensen form.} For $w\in\TT$ not a pole of $\varphi$, Jensen's formula for the polynomial
+$P_\varphi-\varphi(w)Q_\varphi$ gives $\int_\TT\log|\varphi(z)-\varphi(w)|\,dz=\log|\varphi(w)|+\mathcal N(\varphi(w))$, where
+$\mathcal N(y)=\sum_{a\in\DD,\ \varphi(a)=y}\log(1/|a|)$ (with multiplicity); and $\int_\TT\log|\varphi|=L_\varphi$, since
+$0$ is the only zero of $\varphi$ in $\DD$ (Lemma~\ref{lem:Ktable}) and it is simple. Hence
+\[
+T(\varphi)-L_\varphi=\int_\TT\mathcal N(\varphi(w))\,|dw|/2\pi .
+\]
+On $\TT$ the values of $\varphi$ are real ($\mathcal R$ is real on $\partial\Omega\subset\RR$). For a boundary point $\zeta_b$ with
+$u_b=\mathcal R(\zeta_b)$, the points of $\Omega$ over $\Psi(\zeta_b)$ are the solutions of $\mathcal R=u_b$ and $\mathcal R=1/u_b$
+in $\Omega$. Since $u_b\in\mathcal R(\RR)=\RR\setminus(e_1,e_2)$ and $(e_1,e_2)$ is stable under $u\mapsto1/u$, these
+solutions are real, so they lie on $(\zeta_1,0)$; there $\mathcal R$ is a decreasing bijection onto $(-\infty,u_1^-)$, so
+each $u_*\in\{u_b,1/u_b\}$ with $u_*<u_1^-$ contributes exactly one point $\zeta'$, and $\log(1/|Z^{-1}(\zeta')|)=
+\log|(S+B_0)/(S-B_0)|$ with $S=\sqrt{\zeta'/(\zeta_1-\zeta')}$. Parametrising $\TT$ by $\psi\in(-\pi/2,\pi/2)$,
+$B_0\tan\psi=iB_0(1+z)/(1-z)$, the measure $|dw|/2\pi$ becomes $d\psi/\pi$, and $T(\varphi)-L_\varphi$ is a one-dimensional
+integral over $\psi\in(0,\pi/2)$ (by symmetry) of an explicit function with three logarithmic singularities (where
+$u_*=u_0^+$).
+
+\emph{Certificate} (\file{cert\_map.py}). The $\psi$-interval is cut at certified breakpoints (the images of $0$, $1$,
+$\zeta_c$ and $\zeta_1$, the boundary point with $u_b=u_0^+$, the zeros of $u_b$); on each piece $u_b$ is monotone in
+$\psi$ (the critical points of $\mathcal R$ are certified), and the integrand is increasing in $u_*$ on $(-\infty,u_0^+)$,
+decreasing on $(u_0^+,u_1^-)$ and $0$ beyond, so its supremum on a cell is bounded by its values at the endpoint values of
+$u_b$. This gives an upper sum over about $15000$ cells per $q$; on windows of half-width $10^{-7}$ around the three
+logarithmic singularities the integrand is bounded via $|S-B_0|\ge\ell|\psi-\psi_*|$ (mean value theorem, with $\ell$ from
+an Arb enclosure of the derivative chain). $L_\varphi$ is enclosed directly from $\varphi'(0)=J'(u_0^+)\mathcal R'(\zeta_0)Z'(0)$.
+All arithmetic is Arb at $512$ bits; the outputs are in Table~\ref{tab:K}. As a cross-check (not part of the proof), a
+float evaluation of the Jensen integral and a direct double sampling of $\log|\varphi(z)-\varphi(w)|$ on $\TT^2$ agree with
+the upper bounds to about $10^{-3}$ (at $q=22$: $1.1950$ and $1.1926$, against the upper bound $1.19514$).
+
+\begin{table}
+\caption{Certificates for Theorem~\ref{cor:F1} at $22\le q\le25$ (Section~\ref{sec:nonuniv}): $L_\varphi=\log|\varphi'(0)|$,
+the certified upper bound for $T(\varphi)-L_\varphi$, the certified margin $M_\varphi(q)\ge L_\varphi-\frac1{14}(\text{upper
+bound for }T)-\tau$ (all from \file{code/thm1\_cor2/nonuniv/runs/cert\_map\_q<q>.json}), and the midpoint of the imaginary part of the $14\times14$
+rank determinant of Proposition~\ref{prop:rankK} (relative radii below $10^{-29}$; real parts are balls around $0$; \file{runs/mono13\_q<q>\_cert\_det.json}
+in the same folder). In the last row, $q=21$, the number in parentheses is the certified lower bound, which is negative:
+this map does not reach $q=21$.}\label{tab:K}
+\small
+\begin{tabular}{rllll}
+\toprule
+$q$ & $L_\varphi$ & $T(\varphi)-L_\varphi\le$ & $M_\varphi(q)\ge$ & rank determinant\\
+\midrule
+22 & $6.6135276883$ & $1.1951402493$ & $0.0863779$ & $1.57727800588\cdot10^{-8}\,i$\\
+23 & $6.7041998991$ & $1.1891570623$ & $0.1710009$ & $1.26178888459\cdot10^{-9}\,i$\\
+24 & $6.7909330043$ & $1.1834433548$ & $0.2519469$ & $1.05394564451\cdot10^{-10}\,i$\\
+25 & $6.8740554994$ & $1.1779776810$ & $0.3295225$ & $9.23982995367\cdot10^{-12}\,i$\\
+\midrule
+21 & $6.5185408228$ & $1.2014174758$ & ($-0.0022725$) & (not computed)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{proof}[Proof of Theorem~\ref{cor:F1} for $21\le N\le24$]
+Let $q=N+1\in\{22,\dots,25\}$ and suppose $\theta_q=u/v$. As in Section~\ref{sec:proof4T}, with $(r_0,a)=(-u,0,0,v)$, the
+series $G=-vH_3$ has rational coefficients of denominator type $[1,\dots,4n][1,\dots,2n]$, and so do $\vartheta^jG$. The
+$14$ functions $1,G,\dots,\vartheta^{12}G$ are linearly independent over $\QQ(y)$ (Proposition~\ref{prop:rankK}), holonomic,
+and their pullbacks by $\varphi$ are meromorphic on $\DD$ with the formal germs at $0$ (Lemma~\ref{lem:Kadm}). The bound
+above gives $M_\varphi(q)\le0$, against Table~\ref{tab:K}.
+\end{proof}
+
+\begin{remark}\label{rem:Kremarks}
+(i) The map is the rectangle map suggested by the reflection structure, made explicit: in the Jacobi variable of the
+annulus, the ascending Landen transformation turns a rectangle two fundamental domains wide into a half-plane, and
+$\mathcal R$ is the result in the variable $\zeta=s^2$ (this explains where the map comes from; it is not used in the
+proof). Removing the slit at the inner lift of $y_1$ changes $L_\varphi$ by about $10^{-16}$ [numerical]. Also
+$\varphi(1/z)=\varphi(z)$. (ii) Lemma~\ref{lem:Kadm} holds for every $a$, so the four-term statement of Theorem~\ref{thm:4T} at
+$22\le q\le25$ would follow from the irreducibility certificates of Proposition~\ref{prop:irred} at these $q$; we have not
+computed them. (iii) At $q=26$ the same map gives $M_\varphi(26)\ge0.4040$, against $M_{14}(26)=0.0092$ for the Koebe
+map.
 \end{remark}
 
 % ===========================================================================
@@ -1183,6 +1408,10 @@ Local exponents, Casoratian, $p_0$ roots (Prop.~\ref{prop:exponents}, Lemma~\ref
 Certified continuation, $g_A,g_2,g_3$ & Arb & \file{mono13.py} & $\approx40$ min per $q$\\
 Irreducibility (Prop.~\ref{prop:irred}) & Arb & \file{fourterm/irred.py} & 2 s per $q$\\
 Rank-14 cross-check (Remark~\ref{rem:F1cert}) & Arb & \file{cert\_det.py} & seconds\\
+$22\le q\le25$: recurrence, $L_{13}$, I1$'$, continuation, rank-14 determinant (Prop.~\ref{prop:rankK}) & exact + Arb &
+\file{make\_rec.py}, \file{run\_findop.sh}, \file{runcert.sh} (\file{thm1\_cor2/nonuniv}) & $\approx1$ h per $q$\\
+$22\le q\le25$: preimage table, $L_\varphi$, bound for $T(\varphi)$ (Lemma~\ref{lem:Ktable}, Table~\ref{tab:K}) & Arb &
+\file{cert\_map.py} (\file{thm1\_cor2/nonuniv}) & seconds per $q$\\
 Map certificate, Theorem~\ref{thm:Cprime} & Arb + exact & \file{cert3.py}, \file{cert3d.py} (\file{thm3}) &
 $\approx8$ min\\
 $\det(a,b)$ identity and $\Phi_6$ (Prop.~\ref{prop:detid}) & exact & \file{f1\_Lsym.py}, \file{f1\_detsym.py},
@@ -1205,8 +1434,8 @@ printed digits; their outputs are not included in \file{code/}).
 
 What the computer establishes is, in each case, a finite statement: an identity of explicit polynomials, a determinant
 ball that excludes $0$, or an exact rational upper bound for an integral. What it does not establish: the hand arguments
-(Lemmas~\ref{lem:den}, \ref{lem:indep}, \ref{lem:nonzero}, the reflection criterion, Lemmas~\ref{lem:S}, \ref{lem:D},
-\ref{lem:ray}, the reductions), the theorems of \cite{CDT} we use, and the correctness of python-flint's Arb routines
+(Lemmas~\ref{lem:den}, \ref{lem:indep}, \ref{lem:nonzero}, the reflection criterion, Lemmas~\ref{lem:Kadm},
+\ref{lem:Tlim}, the Jensen form of $T(\varphi)$, Lemmas~\ref{lem:S}, \ref{lem:D}, \ref{lem:ray}, the reductions), the theorems of \cite{CDT} we use, and the correctness of python-flint's Arb routines
 (in particular \texttt{acb.modular\_eta} and matrix determinants), which we take on trust. Arb \cite{Arb} is now part of FLINT \cite{FLINT}; python-flint
 \cite{pyflint} 0.9.0, as used, is linked against FLINT 3.6.0.
 
@@ -1215,9 +1444,14 @@ ball that excludes $0$, or an exact rational upper bound for an integral. What i
 % ===========================================================================
 
 \begin{itemize}
-\item \emph{$q\le25$ is out of reach of this route.} At $q=25$, $M_{14}(25)\approx-0.0665<0$, and $14$ is the largest
-budget available for this module (order $13$ plus the constant). Neither the rank nor the irreducibility can help; a new
-family of forms, a better denominator type or a better map would be needed.
+\item \emph{$q\le25$ is out of reach of the Koebe map, and $q\le21$ of the map of Section~\ref{sec:nonuniv}.} At $q=25$,
+$M_{14}(25)\approx-0.0665<0$, and $14$ is the largest budget available for this module (order $13$ plus the constant);
+neither the rank nor the irreducibility can help. The degree-$8$ map of Section~\ref{sec:nonuniv} reaches $q=22$, but at
+$q=21$ its margin is $M_\varphi(21)\approx-0.0023$, and this is its true value, not slack of the certificate (the upper
+sum exceeds the float value of $T(\varphi)$ by about $6\cdot10^{-5}$ in the margin) [numerical]. Since all four
+singular points $y_1,\dots,y_4$ are reflection points (Proposition~\ref{prop:exponents}), larger admissible domains
+exist, branched over $y_1$ and $y_4$ as well; we have not computed their budgets. A better denominator type (a smaller
+$\tau$) would also help.
 \item \emph{$10^{-5}$ is not reached.} For Theorem~\ref{thm:Cprime} the best range margin we found at $4\cdot10^{-6}$
 is $-0.013$ (partition form), and even for a single pair the best margin at $10^{-5}$ is $-0.0086$ [numerical, local
 optima]. We have no certified ceiling: the only rigorous ceiling we know is far from tight.
@@ -1241,7 +1475,9 @@ re-proved above); the holonomy bounds and the construction for products of two l
 \cite{CDT}, used as stated; Hata's theorem \cite{Hat98}, used only for the extension to $q\ge54$ and for
 Theorem~\ref{thm:F2}(iv). The scheme of Section~\ref{sec:proof4T} is the one suggested in \cite[\S15.1.10]{CDT}. The
 recurrence of Proposition~\ref{prop:I1} was found by modular linear algebra and then proved by creative telescoping; the
-minimal operators were found the same way. Apart from the preprints cited above (\cite{CDT}, \cite{Lys18} and, for
+minimal operators were found the same way. The map of Section~\ref{sec:nonuniv} came from a search for admissible
+domains in the universal cover of the Joukowski annulus; its closed form was then found through the Landen
+transformation. Apart from the preprints cited above (\cite{CDT}, \cite{Lys18} and, for
 Lemma~\ref{lem:H}, \cite{LSS20}), nothing in this paper depends on unpublished work by others.
 
 \subsection*{Use of AI tools}
@@ -1250,6 +1486,23 @@ search the literature, to develop the proofs, to write the scripts and produce t
 arguments, and to draft this text. The referee reports were also produced by Claude models, working adversarially on
 separate copies of the files; they are not a substitute for a human expert's reading. The author directed the project
 and is responsible for its content. None of the results is verified in Lean or another proof assistant.
+
+% ===========================================================================
+\section*{Changes in version 2}
+% ===========================================================================
+Version~1 (Hexagon 2611.00703v1, 20 November 2026) stated the irrationality of $\log(1+1/N)\log(1+1/(N+1))$ for
+$25\le N\le31$ as Corollary~2. In version~2:
+\begin{itemize}
+\item Corollary~2 becomes Theorem~\ref{cor:F1} and covers $21\le N\le31$ (eleven numbers instead of seven). The new
+cases $21\le N\le24$ ($22\le q\le25$) are proved in the new Section~\ref{sec:nonuniv}, with a non-univalent rational map
+of degree~$8$, Lemma~\ref{lem:Tlim} for maps with poles on the circle, the Jensen form of $T(\varphi)$, Arb certificates
+(Table~\ref{tab:K}), and rank-14 certificates at the new $q$. Theorem numbers~1, 3 and~4 are unchanged.
+\item The abstract, the introduction (results, method, what is new, status), Sections~\ref{sec:computer}
+and~\ref{sec:limits} and the provenance are updated accordingly; the literature search was repeated on 21 November 2026.
+\item The code for the new section is in \file{code/thm1\_cor2/nonuniv/}. Absolute paths of the original working
+folders, recorded in some certificate outputs of version~1, were replaced by placeholders.
+\end{itemize}
+Theorems~\ref{thm:4T}, \ref{thm:Cprime} and~\ref{thm:F2} and their proofs are unchanged.
 
 % ===========================================================================
 \bibliographystyle{amsplain}

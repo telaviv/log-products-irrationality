@@ -2,7 +2,7 @@
  .. 100000 intervals 77s
  .. 150000 intervals 123s
 {
- "src": "C:/Users/Shawn Krisman/math/handoff/log2log3/cdt/range_pilot/runs/p4_D_eps3.0e-05.json",
+ "src": "<working folder>/range_pilot/runs/p4_D_eps3.0e-05.json",
  "eps": "3/100000",
  "m": 27,
  "tau": "1106977681/262702440",
